@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &108678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 408678}
+  - 114: {fileID: 11408678}
+  m_Layer: 0
+  m_Name: _Physics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &408678
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108678}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11408678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718c849abb4d13c4491f0a37b2ccaaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _airDensity: 1.29299998
+  _baseWindVelocity: {x: 0, y: 0, z: 0}
+  _borderBottomLeft: {x: -4000, y: 0, z: -4000}
+  _borderTopRight: {x: 4000, y: 0, z: 4000}
+  _borderSize: 750
+  _borderWindSpeed: 120
+  _turbulence:
+  - Scale: .00200000009
+    Frequency: .00999999978
+    Amplitude: 7
+  - Scale: .00999999978
+    Frequency: .0500000007
+    Amplitude: 7
+  - Scale: .25
+    Frequency: 1
+    Amplitude: 7
+  _turbulenceAltitudeFalloff:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: .299319923
+      inSlope: 1.90821345e-10
+      outSlope: 1.90821345e-10
+      tangentMode: 0
+    - time: 4290.55811
+      value: .899499118
+      inSlope: .000346438668
+      outSlope: .000346438668
+      tangentMode: 0
+    - time: 4986.16455
+      value: 1
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  _verticalWindScale: .300000012
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 108678}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

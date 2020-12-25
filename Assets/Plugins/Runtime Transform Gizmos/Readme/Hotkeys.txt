@@ -1,0 +1,36 @@
+1. Camera:
+	> WASD + QE + RMB - move camera;
+	> F - focus camera on selection;
+	> ALT + RMB - orbit around focus point (works only after the camera has been focused);
+	> Mouse Scroll Wheel - zoom camera;
+	> Middle MB - pan camera;
+2. Gizmos:
+	> W, E, R - cycle through different gizmo types;
+	> Q - toggle gizmos on/off;
+	> P - cycle between Mesh and Center pivot points;
+	> G - change transform space to global;
+	> L - change transform space to local;
+3. Move Gizmo:
+	> LSHIFT - translate along camera local axes;
+	> V - activate vertex snapping;
+	> SPACE - activate terrain/grid surface placement with Y axis alignment;
+	> SPACE + X - activate terrain/grid surface placement with X axis alignment;
+	> SPACE + Z - activate terrain/grid surface placement with Z axis alignment;
+	> SPACE + LCTRL - activate terrain/grid surface placement with no axis alignment;
+	> LCTRL - activate step snapping;
+4. Rotation Gizmo:
+	> LCTRL - activate step snapping;
+5. Scale Gizmo:
+	> LCTRL - activate step snapping;
+6. Object Selection:
+	> left click - select object;
+	> left click + LCTRL - add object to selection or deselect if already selected;
+	> left click + mouse drag - select objects using the selection rectangle;
+	> left click + mouse drag + LSHIFT - deselect objects using the selection rectangle;
+7. Misc:
+	> (Editor Play Mode) LSHIFT + LCTRL + Z - Undo;
+	> (Editor Play Mode) LSHIFT + LCTRL + Y - Redo;
+	> (Build) LCTRL + Z - Undo;
+	> (Build) LCTRL + Y - Redo;
+	> (Editor Play Mode) LSHIFT + D - duplicate selected objects;
+	> (Build) LCTRL + D - duplicate selected objects.

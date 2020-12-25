@@ -1,0 +1,4 @@
+[[actions]]
+name = "play"
+path = "volo_airsport.exe"
+scope = "profile:me"

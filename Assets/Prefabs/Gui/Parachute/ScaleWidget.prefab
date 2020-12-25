@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &160510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 418090}
+  - 114: {fileID: 11498366}
+  m_Layer: 0
+  m_Name: ScaleWidget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &418090
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11498366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c276881dd94934fb5ef12ed48eca8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _axesColors:
+  - {r: 0.85882354, g: 0.24313726, b: 0.11372549, a: 1}
+  - {r: 0.6039216, g: 0.9529412, b: 0.28235295, a: 1}
+  - {r: 0.22745098, g: 0.47843137, b: 0.972549, a: 1}
+  _selectedAxisColor: {r: 0.9647059, g: 0.9490196, b: 0.19607843, a: 1}
+  _gizmoBaseScale: 0.77
+  _preserveGizmoScreenSize: 1
+  _axisLength: 5
+  _scaleBoxWidth: 0.5
+  _scaleBoxHeight: 0.5
+  _scaleBoxDepth: 0.5
+  _scaleAlongAllAxes: 0
+  _screenSizeOfAllAxesSquare: 25
+  _colorOfAllAxesSquareLines: {r: 1, g: 1, b: 1, a: 1}
+  _colorOfAllAxesSquareLinesWhenSelected: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _adjustAllAxesScaleSquareWhileScalingObjects: 1
+  _areScaleBoxesLit: 1
+  _adjustAxisLengthWhileScalingObjects: 1
+  _multiAxisTriangleColors:
+  - {r: 0.85882354, g: 0.24313726, b: 0.11372549, a: 0.2}
+  - {r: 0.6039216, g: 0.9529412, b: 0.28235295, a: 0.2}
+  - {r: 0.22745098, g: 0.47843137, b: 0.972549, a: 0.2}
+  _multiAxisTriangleLineColors:
+  - {r: 0.85882354, g: 0.24313726, b: 0.11372549, a: 1}
+  - {r: 0.6039216, g: 0.9529412, b: 0.28235295, a: 1}
+  - {r: 0.22745098, g: 0.47843137, b: 0.972549, a: 1}
+  _selectedMultiAxisTriangleColor: {r: 0.9647059, g: 0.9529412, b: 0.28235295, a: 0.2}
+  _selectedMultiAxisTriangleLineColor: {r: 0.9647059, g: 0.9490196, b: 0.19607843,
+    a: 1}
+  _multiAxisTriangleSideLength: 1.3
+  _adjustMultiAxisForBetterVisibility: 1
+  _adjustMultiAxisTrianglesWhileScalingObjects: 1
+  _drawObjectsLocalAxesWhileScaling: 1
+  _objectsLocalAxesLength: 1
+  _preserveObjectLocalAxesScreenSize: 1
+  _adjustObjectLocalAxesWhileScalingObjects: 0
+  _snapSettings:
+    _isSnappingEnabled: 0
+    _stepValueInWorldUnits: 1
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 160510}
+  m_IsPrefabParent: 1

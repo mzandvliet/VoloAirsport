@@ -1,0 +1,39 @@
+﻿using RamjetAnvil.DependencyInjection;
+using UnityEngine;
+
+public class WindParticleEffect : MonoBehaviour {
+	[Dependency, SerializeField] private WindManager _wind;
+
+	[SerializeField] private ParticleSystem _system;
+	[SerializeField] private float _velocityScale = 1f;
+	[SerializeField] private Vector3 _gravity;
+	[SerializeField] private int _updateFrameSpread = 4; // Used to spread expensive updates over multiple frames.
+
+	private ParticleSystemRenderer _renderer;
+	private ParticleSystem.Particle[] _particles;
+	private int _subsetIndex;
+
+	private void Start () {
+		if (!_wind) {
+			_wind = FindObjectOfType<WindManager>();
+		}
+
+		_renderer = _system.GetComponent<ParticleSystemRenderer>();
+		_particles = new ParticleSystem.Particle[_system.main.maxParticles];
+	}
+	
+	void LateUpdate () {
+		int numParticles = _system.GetParticles(_particles);
+
+		/* Update velocities (Todo: if introducing inertia, need to initialize new particles with a non-zero velocity. */
+		
+		int subsetSize = numParticles/_updateFrameSpread;
+		int subsetStartIndex = subsetSize*_subsetIndex;
+		int subsetEndIndex = Mathf.Min(subsetStartIndex + subsetSize, numParticles);
+
+		_wind.GetWindVelocities(_particles, subsetStartIndex, subsetEndIndex, _renderer.bounds, _velocityScale);
+		_system.SetParticles(_particles, numParticles);
+
+		_subsetIndex = (_subsetIndex + 1) % _updateFrameSpread;
+	}
+}

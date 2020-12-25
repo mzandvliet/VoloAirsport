@@ -1,0 +1,4 @@
+[[actions]]
+name = "play"
+path = "volo_airsport.app"
+scope = "profile:me"

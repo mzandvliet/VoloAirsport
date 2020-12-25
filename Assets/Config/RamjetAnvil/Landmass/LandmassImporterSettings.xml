@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImporterConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BatchLimit>48</BatchLimit>
+  <HeightmapExtention>.raw</HeightmapExtention>
+  <SplatmapExtention>png</SplatmapExtention>
+  <TerrainDataExtention>asset</TerrainDataExtention>
+  <SceneExtention>unity</SceneExtention>
+  <HeightmapTag>_h</HeightmapTag>
+  <SplatmapTag>_s</SplatmapTag>
+  <DetailmapTag>_d</DetailmapTag>
+  <TreemapTag>_t</TreemapTag>
+  <HeightFormat>Windows</HeightFormat>
+  <NormalizationMode>Equal</NormalizationMode>
+  <LodLevels>
+    <LodLevel>
+      <FolderPath>Assets/Terrains/SwissAlps/lod_0</FolderPath>
+      <Level>0</Level>
+      <GridSize>8</GridSize>
+      <HasDetailMap>false</HasDetailMap>
+      <HasTreeMap>false</HasTreeMap>
+      <HeightmapResolution>513</HeightmapResolution>
+      <SplatmapResolution>512</SplatmapResolution>
+      <DetailmapResolution>128</DetailmapResolution>
+      <DetailResolutionPerPatch>8</DetailResolutionPerPatch>
+      <NormalmapResolution>512</NormalmapResolution>
+      <ColormapResolution>512</ColormapResolution>
+      <TerrainWidth>1000</TerrainWidth>
+      <TerrainHeight>4000</TerrainHeight>
+    </LodLevel>
+    <LodLevel>
+      <FolderPath>Assets/Terrains/SwissAlps/lod_1</FolderPath>
+      <Level>1</Level>
+      <GridSize>3</GridSize>
+      <HasDetailMap>false</HasDetailMap>
+      <HasTreeMap>false</HasTreeMap>
+      <HeightmapResolution>513</HeightmapResolution>
+      <SplatmapResolution>512</SplatmapResolution>
+      <DetailmapResolution>16</DetailmapResolution>
+      <DetailResolutionPerPatch>8</DetailResolutionPerPatch>
+      <NormalmapResolution>256</NormalmapResolution>
+      <ColormapResolution>256</ColormapResolution>
+      <TerrainWidth>8000</TerrainWidth>
+      <TerrainHeight>4000</TerrainHeight>
+    </LodLevel>
+  </LodLevels>
+  <SplatPrototypes>
+    <SplatPrototypeConfiguration>
+      <DiffusePath />
+      <NormalPath />
+      <HeightPath />
+      <TileOffset>
+        <x>0</x>
+        <y>0</y>
+      </TileOffset>
+      <TileSize>
+        <x>15</x>
+        <y>15</y>
+      </TileSize>
+    </SplatPrototypeConfiguration>
+    <SplatPrototypeConfiguration>
+      <DiffusePath />
+      <NormalPath />
+      <HeightPath />
+      <TileOffset>
+        <x>0</x>
+        <y>0</y>
+      </TileOffset>
+      <TileSize>
+        <x>15</x>
+        <y>15</y>
+      </TileSize>
+    </SplatPrototypeConfiguration>
+    <SplatPrototypeConfiguration>
+      <DiffusePath />
+      <NormalPath />
+      <HeightPath />
+      <TileOffset>
+        <x>0</x>
+        <y>0</y>
+      </TileOffset>
+      <TileSize>
+        <x>15</x>
+        <y>15</y>
+      </TileSize>
+    </SplatPrototypeConfiguration>
+    <SplatPrototypeConfiguration>
+      <DiffusePath />
+      <NormalPath />
+      <HeightPath />
+      <TileOffset>
+        <x>0</x>
+        <y>0</y>
+      </TileOffset>
+      <TileSize>
+        <x>15</x>
+        <y>15</y>
+      </TileSize>
+    </SplatPrototypeConfiguration>
+  </SplatPrototypes>
+  <DetailPrototypes>
+    <DetailPrototypeConfiguration>
+      <PrototypePath />
+      <PrototypeTexturePath />
+      <MinWidth>0.5</MinWidth>
+      <MaxWidth>1</MaxWidth>
+      <MinHeight>0.5</MinHeight>
+      <MaxHeight>1</MaxHeight>
+      <NoiseSpread>0.1</NoiseSpread>
+      <BendFactor>0.3</BendFactor>
+      <HealthyColor>
+        <r>1</r>
+        <g>1</g>
+        <b>1</b>
+        <a>1</a>
+      </HealthyColor>
+      <DryColor>
+        <r>1</r>
+        <g>1</g>
+        <b>1</b>
+        <a>1</a>
+      </DryColor>
+      <RenderMode>Grass</RenderMode>
+      <UsePrototypeMesh>false</UsePrototypeMesh>
+    </DetailPrototypeConfiguration>
+  </DetailPrototypes>
+  <TreePrototypes>
+    <TreePrototypeConfiguration>
+      <BendFactor>0.2</BendFactor>
+      <PrefabPath />
+    </TreePrototypeConfiguration>
+  </TreePrototypes>
+  <TerrainConfiguration>
+    <DrawTreesAndFoliage>true</DrawTreesAndFoliage>
+    <TreeDistance>2000</TreeDistance>
+    <TreeBillboardDistance>80</TreeBillboardDistance>
+    <TreeCrossFadeLength>10</TreeCrossFadeLength>
+    <TreeMaximumFullLODCount>50</TreeMaximumFullLODCount>
+    <DetailObjectDistance>80</DetailObjectDistance>
+    <DetailObjectDensity>1</DetailObjectDensity>
+    <HeightmapPixelError>32</HeightmapPixelError>
+    <HeightmapMaximumLOD>0</HeightmapMaximumLOD>
+    <BasemapDistance>500000</BasemapDistance>
+    <CastShadows>true</CastShadows>
+    <SnowAltitude>2750</SnowAltitude>
+    <Fogginess>0</Fogginess>
+    <TreeQuality>Low</TreeQuality>
+  </TerrainConfiguration>
+  <HeightmapFlipX>false</HeightmapFlipX>
+  <HeightmapFlipY>false</HeightmapFlipY>
+  <SplatmapFlipX>false</SplatmapFlipX>
+  <SplatmapFlipY>false</SplatmapFlipY>
+  <TrimEmptyChannels>false</TrimEmptyChannels>
+</ImporterConfiguration>

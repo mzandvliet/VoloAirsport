@@ -1,0 +1,14 @@
+- Download the SteamWorks SDK
+- Copy the ContentBuilder directory to volo_airsport/SteamBuild
+- From the SteamBuild directory run ./builder/steamcmd.exe from the command-line. This is a one time setup step.
+- To build the app and upload it make sure you created builds in Unity and placed them in the volo_airsport/Build directory.
+
+- (Mac only) Run the ContentPrep application that same with the Steamworks SDK and use it to prepare your content for Mac. 
+  This tools makes sure file permissions of the build are set correctly.
+  When the ContentPrep app asks where to store the prepped files set it to 'Build/mac_prepped', this is where the Steam build script will search for files.
+- Then run the following command from the command-line interface:
+  (Windows) PS C:\Users\frank\projects\my_projects\volo_airsport\SteamBuild> .\builder\steamcmd.exe +login ramjet_anvil_build password_goes_here +run_app_build_http ..\scripts\app_build_329190.vdf +quit
+  (Mac OS X) SteamBuild> ./builder/steamcmd.exe +login ramjet_anvil_build password_goes_here +run_app_build_http ../../../../scripts/app_build_329190.vdf +quit
+  Due to a bug in SteamSDK 1.31 we need to add '../../../../'
+
+For more info see: https://partner.steamgames.com/documentation/steampipe

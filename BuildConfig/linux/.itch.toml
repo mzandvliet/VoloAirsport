@@ -1,0 +1,4 @@
+[[actions]]
+name = "play"
+path = "run.sh"
+scope = "profile:me"

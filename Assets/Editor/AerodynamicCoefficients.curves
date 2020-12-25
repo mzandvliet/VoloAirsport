@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 4
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12322, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: AerodynamicCoefficients
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: 
+    m_Curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: -89.9674225
+        value: 2.31631566e-06
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: -23.8059368
+        value: -.799173951
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: -.115474224
+        value: 0
+        inSlope: .0829376876
+        outSlope: .0829376876
+        tangentMode: 0
+      - time: 29.9207077
+        value: 1
+        inSlope: 1.02972768e-08
+        outSlope: 1.02972768e-08
+        tangentMode: 0
+      - time: 90.2881546
+        value: .00156494509
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+  - m_Name: 
+    m_Curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: .0469596833
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 89.917038
+        value: .999522924
+        inSlope: -8.98456128e-05
+        outSlope: -8.98456128e-05
+        tangentMode: 0
+      - time: 179.786453
+        value: .0474220365
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 0
+      m_PostInfinity: 0

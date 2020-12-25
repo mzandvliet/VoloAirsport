@@ -1,0 +1,37 @@
+<!--
+	Volo Airsport LOD Terrain Export World Machine Script.
+-->
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<automation version="WMP2">
+	<load file="swiss_alps.tmd"/>
+	
+	<echo text="Exporting LOD0"/>
+	
+	<section name="lod0" enable="true">
+		<modify>
+			<world res="4097" use_extents="1"/>
+			<enable group="lod0_export"/>
+			<disable group="lod1_export"/>
+		</modify>
+		
+		<build mode="normal"/>
+	</section>
+	
+	<echo text="Exporting LOD1"/>
+	
+	<section name="lod1" enable="true">
+		<modify>
+			<world res="4097" use_extents="2"/>
+			<disable group="lod0_export"/>
+			<enable group="lod1_export"/>
+		</modify>
+		
+		<build mode="normal"/>
+	</section>
+	
+	<echo text="Done exporting"/>
+	
+	<load file="swiss_alps.tmd"/>
+</automation>

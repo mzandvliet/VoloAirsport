@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: _AeroManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718c849abb4d13c4491f0a37b2ccaaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initializedInEditMode: 1
+  _initializedInPlayMode: 0
+  airDensity: 1.29299998
+  _seaTemp: 21
+  _stratosTemp: -50
+  _seaAltitude: 0
+  _stratosAltitude: 2000
+  _globalHeightMix:
+    m_Curve:
+    - time: 0
+      value: .100000001
+      inSlope: 0
+      outSlope: .899999976
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: .899999976
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  _minWindAmplitudeFactor: .10000000000000001
+  _windHorizontalFrequency: 1
+  _windVerticalFrequency: 1
+  _maxAltitude: 3000
+  _maxWindHorAmplitude: 2
+  _maxWindVertAmplitude: 2
+  _windChangeFrequency: 1
+  _forceCustomSeed: 0
+  _customSeed: 12345
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

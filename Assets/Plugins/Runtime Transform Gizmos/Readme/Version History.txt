@@ -1,0 +1,138 @@
+// V 1.1.6
+Improvements:
+	-it is no longer necessary to attach colliders to game objects. The system can now interact with 3D and 2D
+	 objects even if no colliders are present;
+	-2D sprites can now be selected correctly even if they do not reside totally inside the XY plane;
+	-the selection box scale factor has been transformed into an offset (value which is added instead of multiplied). 
+	 This was necessary because a scale factor will produce inconsistent results for objects of different sizes;
+	-it is now possible to specify if lights, particle systems or sprites can be selected;
+	-improved performance for visible object determination. This data was necessary in some situations (such as when
+	 selecting objects with the selection rectangle) and it is now cached and only updated when necessary;
+	-it is now possible to specify if the object selection boxes can be drawn. This can be controlled from the 
+	 EditorObjectSelection Inspector or 
+	 from script: EditorObjectSelection.Instance.ObjectSelectionSettings.ObjectSelectionBoxRenderSettings.DrawBoxes = desiredValue;
+	-the application no longer acquires the vertx snapping data at startup. For larger scenes, this can lead to big load times. The
+	 system now acquires the vertex snapping data only when it is needed. The algorithm used to calculate the veretx snapping data
+	 has also been improved (e.g. the floor object from the Survival Shooter Unity package was taking around 16 seconds to have
+	 this data calculated. Now it is computed almost instantly);
+
+Bug fixes (some of these may have been introduced during the development of this version):
+	-fixed bug which was causing selection boxes to be rendered incorrectly for terrain objects;
+	-fixed bug which was preventing the selection system to work correctly after using the move gizmo's
+     terrain surface placement functionality (i.e. the selection system would become disabled);
+
+// V 1.1.5
+New features:
+	-it is now possible to select and manipulate 2D sprites. The sprites can also be used in conjunction with 
+	 snapping when using the move gizmo. NOTE: sprite selection by left click works best when the sprites exist
+	 in the XY plane. Also, transparent pixels are filtered only as long as the sprite textures have the Read/Write
+	 Enabled flag set inside the Editor;
+
+Improvements:
+	-default collider attachement settings for mesh objects has been changed back to Box. In most situations,
+	 this provides a well enough selection/click precision and it also reduces level load times;
+
+Bug fixes:
+	-fixed bug which was causing the editor camera background to obscure 2D sprite objects;
+	-fixed line rendering bugs which COULD occur due to legacy shaders;
+
+// V 1.1.4
+New features:
+	-terrain and grid surface placement with axis alignment for the move gizmo;
+	-scene XZ grid with zoom fade effect;
+	-move gizmo can vertex snap to XZ grid;
+	-object duplication;
+	-it is now possible to specify if terrain objects can be selected in the EditorObjectSelection 
+	 Inspector GUI;
+	-it is now possible to specify if the camera zoom factor should be taken into account. If checked,
+	 camera zooming and moving using the WASD + QE keys will be scaled appropriately so that when the
+	 camera is moved too far or to near the scene grid, no evident slow downs or speed ups are observed;
+
+Improvements:
+	-the gizmo transform space and transform pivot point property changes are no longer recorded for Undo/Redo. This
+	 seems to be much more intuitive because users will usually want to undo/redo property changes that have a clear
+	 visual effect. Otherwise, the undo/redo will be invisible to them and can get confusing;
+	-gizmos defaut colors have been adjusted to match the Unity gizmos colors;
+	-improved lighting/shading for gizmo components (e.g. the move gizmo arrow cones were sometimes rendered dark);
+	-the number of materials needed to render the gizmos has been reduced;
+	-the system no longer creates an additional light in the scene and creating a gizmo layer is no longer required;
+	-scene setup is now performed by going to Tool->Runtime Transform Gizmos->Initialize;
+	-it is now possible to specify if terrain objects can be selected;
+	-WASD keys can now be used with an orthographic camera;
+	-changed default mesh collider type to MeshCollider for mesh objects in the collider attachment settings. Selecting
+	 objects is more precise using mesh colliders instead of the alternatives;
+	-changed default collider attachement settings to ignore light and particle system objects. This is because most
+	 of the times only mesh objects need to be manipulated;
+	-removed GUI hints (also removed the GUI hints toggle button);
+	-for the object selection box render settings, a percentage is now used (instead of length) for selection box corner
+	 lines. This allows the lines to scale properly along with the size of the objects;
+
+Bug fixes:
+	-fixed bug which was causing the rotation gizmo guide discs to not render correctly due to culling issues;
+	-fixed bug which was causing the last layer (number 31) to be ignored when displaying layers in the selectable
+	 layers list inside the Editor Object Selection Inspector;
+	-fixed model space AABB was not calculated correctly for object colliders. This could have caused problems when
+	 selecting objects or when rendering non-mesh objects;
+	-fixed object selection problem which was occuring when smaller selectable objects were contained by larger 
+	 non-selectable ones. The system was not taking the selectable layers into account properly;
+	-fixed bug which was causing the gizmos, selection rectangle, selection boxes etc to render for every camera in
+	 the scene even for those used to render to texture;
+	-fixed bug which was causing orthographic camera scrolling to cut away from geometry;
+
+// V 1.1.1
+New features:
+	-each gizmo now has an associated object collection and object layer mask. Objects that are masked will not be
+	manipulated by that gizmo;
+
+Improvements:
+	-added toggle button which can be used to turn playmode GUI hints on/off. This toggle button resides in
+	the Runtime Editor Application mono Inspector;
+	-added ability to toggle camera scrolling on/off;
+	-by default all object layers are now selectable;
+
+// V 1.1
+New features:
+	-layer selection masks (can be configured from the 'EditorObjectSelection' inspector);
+	-added 'OnGizmoDragStart', 'OnGizmoDragUpdate' and 'OnGizmoDragEnd' events to the 'Gizmo' class (documentation chapter 6.1);
+	
+Improvements:
+	-Unity style camera movement using the WASD and QE keys (camera speed can be controlled from the 'EditorCamera' inspector);
+
+Bug fixes:
+	-fixed bug which was causing gizmos to render incorrectly for different viewport offset/size configurations;
+	-fixed bug which was causing objects to get deselected when a UI element was clicked;
+
+Removed:
+	-Bootstrap scene. Prefabs should be used instead for a much cleaner and comfortable solution;
+
+// V 1.0.7
+New features:
+	-camera focus on object selection;
+	-camera orbit around focus point;
+	-invert camera pan axes;
+	-added possibility to disable the object selection mechanism;
+	-it is now possible to customize the object selection mechanism;
+	-3 selection modes are now available;
+	-added Bootstrap scene;
+
+Bug fixes:
+	-the system now performs any necessary cleanup and performs any needed actions when
+	 a new scene is loaded at runtime (e.g. clear object selection, disable gizmos etc);
+	-fixed vertex snapping bug which occured when trying to snap a parent object to one of
+	 its children.
+
+// V 1.0.1
+New features:
+	-object selection masks;
+	-added support for mesh colliders;
+	-the 'ObjectColliderAttachmentSettings' class now contains 3 new properties which allow
+	 you to specify what types of objects should be ignored during the collider attachment
+	 process;
+	-added support for camera smooth zoom and smooth pan.
+
+Bug fixes:
+	-fixed bug which was happening in Unity 5.3.1. This was related to calling 'DontDestroyOnLoad' from
+	 the editor. For some reason, in Unity 5.3.1, this makes your objects dissappear from the hierarchy
+	 view. The fix involved calling this function at runtime where it was necessary.
+
+// V 1.0 - First release

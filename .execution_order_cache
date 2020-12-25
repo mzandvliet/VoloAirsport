@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <string>WhispAuthority</string>
+  <string>RamjetAnvil.Volo.ParachuteController</string>
+  <string>FlightStatistics</string>
+  <string>Contrail</string>
+  <string>Airfoil1D</string>
+  <string>ParachuteWingSound</string>
+  <string>WingSound</string>
+  <string>AdaptiveTrailRenderer</string>
+  <string>EarDistortionSound</string>
+  <string>ThirdPersonCameraController</string>
+  <string>TrajectoryVisualizer</string>
+  <string>ProximitySound</string>
+  <string>GroundSpray</string>
+  <string>RamjetAnvil.Volo.Parachute</string>
+  <string>WhispClient</string>
+</ArrayOfString>o.Parachute</string>
+  <string>RamjetAnvil.Volo.PowerUpMeterUI</string>
+  <string>RamjetAnvil.Volo.RingChallenge</string>
+  <string>WhispClient</string>
+</ArrayOfString>

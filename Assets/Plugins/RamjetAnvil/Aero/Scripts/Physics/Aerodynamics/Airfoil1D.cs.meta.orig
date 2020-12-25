@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 6605ce8db24c97e408eab65c448add78
+<<<<<<< local
+timeCreated: 1495634960
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 107
+=======
+timeCreated: 1491817535
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 104
+>>>>>>> other
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
