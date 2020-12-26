@@ -24,21 +24,21 @@ https://ramjetanvil.itch.io/volo-airsport
   
 ## Credits:
 
-- Lead Designer, Programmer
-Martijn Zandvliet
+Designer, Programmer
+- Martijn Zandvliet
 
-- Designer, Programmer
-Frank Versnel
+Designer, Programmer
+- Frank Versnel
 
-- Designer, Ramjet Anvil Show Host
-Xalavier Nelson
+Designer, Ramjet Anvil Show Host
+- Xalavier Nelson
 
-- Sound Design & Music
-Michael Manning
+Sound Design & Music
+- Michael Manning
 
-- Concept Art
-Diana van Houten
-J.J. Epping
+Concept Art
+- Diana van Houten
+- J.J. Epping
 
 ## Input
 The game reads input from the `Config/Input/GameInputConfig_User.xml` file. If that file cannot be found, which means that there is no user-defined input configuration, a default input configuration will be used. Currently it uses the file `Config/Input/GameInputConfig_KeyboardDefault.xml` for that.
