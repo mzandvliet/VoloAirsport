@@ -24,7 +24,7 @@ https://ramjetanvil.itch.io/volo-airsport
   
 ## Credits:
 
-Designer, Programmer
+Lead Designer, Programmer
 - Martijn Zandvliet
 
 Designer, Programmer
