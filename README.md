@@ -2,7 +2,7 @@
 
 A wingsuiting and parachuting simulation by Ramjet Anvil.
 
-[![SC2 Video](https://i.imgur.com/CI9w4XF.png)](https://www.youtube.com/watch?v=y2NQVOPU1nU)
+[![Volo Trailer](https://i.imgur.com/CI9w4XF.png)](https://www.youtube.com/watch?v=y2NQVOPU1nU)
 
 Released in Early Access programon Steam, Humble in 2014 (later on Itch.io). We halted development in 2017.
 
@@ -12,7 +12,7 @@ https://ramjetanvil.itch.io/volo-airsport
 
 ## Instructions:
 
-- Download Unity Editor 5.5.0f3 from the Unity Download Archives
+- Download Unity Editor 5.5.0f3 from the [Unity Download Archives](https://unity3d.com/get-unity/download/archive)
 - Open the project folder
 
 ## Known Issues:
