@@ -1,0 +1,110 @@
+[LOG] System::create                           : Header version = 1.08.00. Current version = 1.08.00.
+[LOG] SystemI::init                            : FMOD Studio Version: 00010800 (73592)
+[LOG] SystemI::init                            : maxchannels = 256, flags = 00020000, extradriverdata = 0000000000000000
+[LOG] SystemI::close                           : 
+[LOG] SystemI::close                           : Stop all sounds
+[LOG] SystemI::close                           : done.
+
+[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEX): wFormatTag=0xFFFE, nChannels=2, nSamplesPerSec=48000, nAvgBytesPerSec=384000, nBlockAlign=8, wBitsPerSample=32, cbSize=22.
+[LOG] OutputWASAPI::init                       : Mix Format (WAVEFORMATEXTENSIBLE): wValidBitsPerSample=32, dwChannelMask=0x00000003, SubFormat=00000003-0000-0010-8000-00AA00389B71.
+[LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
+[LOG] Thread::initThread                       : Initializing FMOD mixer thread.  priority 3
+[LOG] Thread::initThread                       : - Stacksize 49152.  Stack pointer 0000000000000000 : usesemaphore = 0 : sleeptime = 0
+[LOG] Thread::callback                         : * FMOD mixer thread started
+[LOG] SystemI::init                            : Set up emulated output
+[LOG] SystemI::init                            : create the channel pool
+[LOG] Thread::initThread                       : Initializing FMOD stream thread.  priority 2
+[LOG] Thread::initThread                       : - Stacksize 65536.  Stack pointer 0000000000000000 : usesemaphore = 0 : sleeptime = 10
+[LOG] Thread::callback                         : * FMOD stream thread started
+[LOG] Thread::initThread                       : Initializing FMOD Studio sample load thread.  priority 0
+[LOG] Thread::initThread                       : - Stacksize 65536.  Stack pointer 0000000000000000 : usesemaphore = 0 : sleeptime = 1
+[LOG] Thread::callback                         : * FMOD Studio sample load thread started
+[LOG] Thread::initThread                       : Initializing FMOD Studio bank load thread.  priority 0
+[LOG] Thread::initThread                       : - Stacksize 65536.  Stack pointer 0000000000000000 : usesemaphore = 0 : sleeptime = 1
+[LOG] Thread::callback                         : * FMOD Studio bank load thread started
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {e58fa008-a918-47ed-af6f-3e9b9e2e3fd9}
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {f92d1b2d-e222-4e28-bd5d-537b7d40050d}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {f92d1b2d-e222-4e28-bd5d-537b7d40050d}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {74de8e9d-db5c-4286-b716-fdd570fe3664}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {528675c4-cf00-4c00-91f3-1c49076470e1}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {7b96698b-1790-42ce-904d-7d6c31ef5844}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {aee2063e-f7cf-48b5-a05b-628d88d713df}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {5119c5b2-23f3-431c-bc9f-be2bbcac9ace}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {528675c4-cf00-4c00-91f3-1c49076470e1}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {e58fa008-a918-47ed-af6f-3e9b9e2e3fd9}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {1c9de492-4c97-4e0c-9a53-778b81d67d3b}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {1c9de492-4c97-4e0c-9a53-778b81d67d3b}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {1c9de492-4c97-4e0c-9a53-778b81d67d3b}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {606c96ad-481e-4b4d-b6b1-57f099191d0c}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {606c96ad-481e-4b4d-b6b1-57f099191d0c}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {606c96ad-481e-4b4d-b6b1-57f099191d0c}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {606c96ad-481e-4b4d-b6b1-57f099191d0c}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {606c96ad-481e-4b4d-b6b1-57f099191d0c}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {606c96ad-481e-4b4d-b6b1-57f099191d0c}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {3720c73f-75ae-499c-a615-f2ee6ebe26ee}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {3720c73f-75ae-499c-a615-f2ee6ebe26ee}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {3720c73f-75ae-499c-a615-f2ee6ebe26ee}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {3720c73f-75ae-499c-a615-f2ee6ebe26ee}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {3720c73f-75ae-499c-a615-f2ee6ebe26ee}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {3720c73f-75ae-499c-a615-f2ee6ebe26ee}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {3720c73f-75ae-499c-a615-f2ee6ebe26ee}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 72)
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {c327dc03-3f9f-4675-985f-c9474ab8f59a}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {c327dc03-3f9f-4675-985f-c9474ab8f59a}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {c327dc03-3f9f-4675-985f-c9474ab8f59a}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {c327dc03-3f9f-4675-985f-c9474ab8f59a}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {e58fa008-a918-47ed-af6f-3e9b9e2e3fd9}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {e58fa008-a918-47ed-af6f-3e9b9e2e3fd9}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {e58fa008-a918-47ed-af6f-3e9b9e2e3fd9}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithInputs: {c327dc03-3f9f-4675-985f-c9474ab8f59a}
+[WRN] ObjectLookup::get                        : Lookup failed for BusWithSends: {7ced0bf7-8d23-48e6-b09c-1c8d4795c332}
+[LOG] Thread::callback                         : * FMOD Studio bank load thread finished
+[LOG] Thread::close                            : FMOD Studio bank load thread thread destroyed
+[LOG] Thread::callback                         : * FMOD Studio sample load thread finished
+[LOG] Thread::close                            : FMOD Studio sample load thread thread destroyed
+[LOG] LiveUpdate::release                      : 
+[LOG] SystemI::close                           : 
+[LOG] SystemI::close                           : Stop all sounds
+[LOG] Thread::callback                         : * FMOD stream thread finished
+[LOG] Thread::close                            : FMOD stream thread thread destroyed
+[LOG] SystemI::close                           : Stream thread destroyed
+[LOG] Thread::callback                         : * FMOD mixer thread finished
+[LOG] Thread::close                            : FMOD mixer thread thread destroyed
+[LOG] SystemI::close                           : Free master channel group.
+[LOG] SystemI::close                           : Remove 'master' sound group.
+[LOG] SystemI::close                           : Free software output.
+[LOG] SystemI::close                           : Free emulated output.
+[LOG] SystemI::close                           : Free channel pool.
+[LOG] SystemI::close                           : done.
+
+[LOG] System::create                           : Header version = 1.08.00. Current version = 1.08.00.

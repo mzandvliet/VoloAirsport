@@ -1,51 +1,20 @@
 Library/
 Temp/
 obj/
+*.csproj
+*.sln
+.vs/
+Assets/Images/
 Assets/Imported/
 Assets/Poly/
-*.csproj
-Assets/Images/
 Build/
 .vscode/
-Assets/Models/Museum/
-Assets/Models/PaintOvers/
-Assets/Packs/
-Assets/MT Assets/
-Assets/Skinned/
-Assets/_Decimated/
-Assets/_Chunked/
-Assets/_Split/
 Screenshots/
-Assets/CombinedMeshes/
-.vs/
-Tilt Brush Test.sln
+
 SerializedBuildInfo/
 Assets/_TerrainAutoUpgrade/
 Assets/Heureka/
-*.sln
-Assets/HTC.UnityPlugin/
+
 Recordings/
 Builds/
 Logs/
-Assets/SteamVR/
-Assets/Textures/
-Assets/StreamingAssets/
-Assets/SteamVR_Input/
-Assets/Starfield Skybox/
-Assets/Standard Assets/
-Assets/SkythianCat/
-Assets/Scenes/FP Echoes/
-Assets/SampleScenes/
-Assets/Materials/WorldMaterialsFree/
-Assets/3Skyboxes/
-Assets/Footage/
-Assets/Scenes/SteamAudioClubHeavy/
-Assets/Sound/
-Assets/Scenes/SampleScene/
-Assets/Oculus/
-Music/
-Assets/Samples/
-Assets/Scenes/GnessinOrchestra/
-ClubConnector/node_modules/
-SoundOutput/
-Assets/Scenes/SteamAudioClub/

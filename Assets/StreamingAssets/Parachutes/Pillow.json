@@ -1,0 +1,97 @@
+﻿{
+    "Id": "ee9ac057-621a-4df5-80d5-571e2e7af947",
+    "Name": "Pillow",
+    "Color": {
+        "r": 1.0,
+        "g": 0.4012766480445862,
+        "b": 0.9464775323867798,
+        "a": 0.0
+    },
+    "RadiusHorizontal": 3.4196901321411135,
+    "RadiusVertical": 2.105205535888672,
+    "HeightOffset": 3.7197771072387697,
+    "Span": 4.481822490692139,
+    "Chord": 1.7355248928070069,
+    "NumCells": 13,
+    "Mass": 4.0,
+    "AirfoilDefinition": {
+        "instanceID": 15134
+    },
+    "RiggingAngle": 12.416194915771485,
+    "PlanformAreaEllipse": {
+        "serializedVersion": "2",
+        "m_Curve": [
+            {
+                "serializedVersion": "2",
+                "time": 0.000645994849037379,
+                "value": 0.6522679328918457,
+                "inSlope": 1.378114938735962,
+                "outSlope": 1.378114938735962,
+                "tangentMode": 0
+            },
+            {
+                "serializedVersion": "2",
+                "time": 0.4617452621459961,
+                "value": 1.0000081062316895,
+                "inSlope": -0.0017881393432617188,
+                "outSlope": -0.0017881393432617188,
+                "tangentMode": 0
+            },
+            {
+                "serializedVersion": "2",
+                "time": 0.5,
+                "value": 1.0,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "tangentMode": 0
+            }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 0,
+        "m_RotationOrder": 0
+    },
+    "PressureMultiplier": 2.7376368045806886,
+    "RigAttachPos": {
+        "x": 0.9047800898551941,
+        "y": 0.7499765753746033,
+        "z": 0.1044844388961792
+    },
+    "NumToggleControlledCells": 4,
+    "RearRiserPullMagnitude": -1.0,
+    "FrontRiserPullMagnitude": -1.0,
+    "WeightshiftMagnitude": 0.25,
+    "PilotWeight": 79.828857421875,
+    "InputGamma": 1.5,
+    "InputSmoothing": 0.25,
+    "ChordLineCurvature": {
+        "serializedVersion": "2",
+        "m_Curve": [],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+    },
+    "ChordUpperThickness": {
+        "serializedVersion": "2",
+        "m_Curve": [],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+    },
+    "ChordLowerThickness": {
+        "serializedVersion": "2",
+        "m_Curve": [],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+    },
+    "SpanCellCurvature": {
+        "serializedVersion": "2",
+        "m_Curve": [],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 2,
+        "m_RotationOrder": 4
+    },
+    "CellChordLoops": 0,
+    "CellSpanLoops": 0,
+    "IsEditable": true
+}

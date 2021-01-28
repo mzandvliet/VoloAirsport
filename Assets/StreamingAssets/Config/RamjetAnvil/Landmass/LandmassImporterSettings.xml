@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImporterConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BatchLimit>48</BatchLimit>
+  <BuildBundleOptions>CollectDependencies CompleteAssets</BuildBundleOptions>
+  <BuildOptions>ShowBuiltPlayer</BuildOptions>
+  <BuildTarget>StandaloneWindows</BuildTarget>
+  <HeightmapExtention>r16</HeightmapExtention>
+  <SplatmapExtention>png</SplatmapExtention>
+  <TerrainDataExtention>asset</TerrainDataExtention>
+  <SceneExtention>unity</SceneExtention>
+  <PrefabExtention>prefab</PrefabExtention>
+  <AssetBundleExtention>unity3d</AssetBundleExtention>
+  <HeightmapTag>_h</HeightmapTag>
+  <SplatmapTag>_s</SplatmapTag>
+  <DetailmapTag>_d</DetailmapTag>
+  <TreemapTag>_t</TreemapTag>
+  <ItemmapTag>_d</ItemmapTag>
+  <HeightmapWidth>2049</HeightmapWidth>
+  <SplatmapWidth>2048</SplatmapWidth>
+  <HeightFormat>Windows</HeightFormat>
+  <NormalizationMode>Normalize</NormalizationMode>
+  <EqualizationMode>FirstChannel</EqualizationMode>
+  <SplatPrototypes />
+  <TerrainSettings>
+    <TreeDistance>2000</TreeDistance>
+    <TreeBillboardDistance>50</TreeBillboardDistance>
+    <TreeCrossFadeLength>5</TreeCrossFadeLength>
+    <TreeMaximumFullLODCount>50</TreeMaximumFullLODCount>
+    <DetailObjectDistance>80</DetailObjectDistance>
+    <DetailObjectDensity>1</DetailObjectDensity>
+    <HeightmapPixelError>5</HeightmapPixelError>
+    <HeightmapMaximumLOD>0</HeightmapMaximumLOD>
+    <BasemapDistance>1000</BasemapDistance>
+    <CastShadows>true</CastShadows>
+  </TerrainSettings>
+  <HeightmapFlipX>false</HeightmapFlipX>
+  <HeightmapFlipY>false</HeightmapFlipY>
+  <SplatmapFlipX>false</SplatmapFlipX>
+  <SplatmapFlipY>false</SplatmapFlipY>
+  <TrimEmptyChannels>false</TrimEmptyChannels>
+  <TerrainWidth>5000</TerrainWidth>
+  <TerrainHeight>5000</TerrainHeight>
+  <HeightmapFolder>Assets/TerrainSources</HeightmapFolder>
+  <SplatmapFolder>Assets/TerrainSources</SplatmapFolder>
+  <AssetBundleFolder>Assets/AssetBundles</AssetBundleFolder>
+  <AssetBundleBuildFolder>Build/AssetBundles</AssetBundleBuildFolder>
+  <TerrainDataFolder>Assets/Terrains</TerrainDataFolder>
+  <PrefabFolder>Assets/StreamingPrefabs</PrefabFolder>
+  <BuildPath>Build/landmass_demo.exe</BuildPath>
+</ImporterConfig>

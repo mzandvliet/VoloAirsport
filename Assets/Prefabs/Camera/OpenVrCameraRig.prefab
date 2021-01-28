@@ -53,7 +53,9 @@ GameObject:
   - component: {fileID: 4803394810292444}
   - component: {fileID: 20756728861787224}
   - component: {fileID: 124971640736144032}
+  - component: {fileID: 114286164696329540}
   - component: {fileID: 114065924819442128}
+  - component: {fileID: 114142095018337532}
   - component: {fileID: 114667779642042336}
   - component: {fileID: 114993474126093612}
   - component: {fileID: 114251725190711128}
@@ -958,6 +960,22 @@ MonoBehaviour:
   index: 0
   origin: {fileID: 0}
   isValid: 0
+--- !u!114 &114142095018337532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085893351233976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5a618c43a8d4e2aab80f67424cb7f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sky: {fileID: 0}
+  DomePosToCamera: 0
+  DomePosOffset: {x: 0, y: 0, z: 0}
+  DomeScaleToFarClip: 1
+  DomeScaleFactor: 0.95
 --- !u!114 &114143927300773854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1032,6 +1050,23 @@ MonoBehaviour:
   _head: {fileID: 4600250455457952}
   _ears: {fileID: 4110495669909434}
   wireframe: 0
+--- !u!114 &114286164696329540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085893351233976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 872ad7533cc5443188d2965011e98378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sky: {fileID: 0}
+  ScatteringShader: {fileID: 4800000, guid: fdd320689879e4151a6d37fa30a2a572, type: 3}
+  DitheringTexture: {fileID: 2800000, guid: 0cad0b965ebef4d4ba864861b866e2e5, type: 3}
+  GlobalDensity: 0.001
+  HeightFalloff: 0.001
+  ZeroLevel: 1000
 --- !u!114 &114462235973648982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1057,6 +1092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d181005d93dd8b54e87115af109698c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetInterpolationSpeed: 1
 --- !u!114 &114510652524725474
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,0 +1,67 @@
+﻿{
+    "Id": "4469241b-438a-447b-b0ab-a61528e27da1",
+    "Name": "Blanket",
+    "Color": {
+        "r": 1.0,
+        "g": 0.4012766480445862,
+        "b": 0.9464775323867798,
+        "a": 0.0
+    },
+    "RadiusHorizontal": 3.4196901321411135,
+    "RadiusVertical": 2.1146793365478517,
+    "HeightOffset": 4.472200870513916,
+    "Span": 6.169544219970703,
+    "Chord": 1.6809804439544678,
+    "NumCells": 13,
+    "Mass": 4.0,
+    "AirfoilDefinition": {
+        "instanceID": 13812
+    },
+    "RiggingAngle": 7.555680751800537,
+    "PlanformAreaEllipse": {
+        "serializedVersion": "2",
+        "m_Curve": [
+            {
+                "serializedVersion": "2",
+                "time": 0.000645994849037379,
+                "value": 0.6522679328918457,
+                "inSlope": 1.378114938735962,
+                "outSlope": 1.378114938735962,
+                "tangentMode": 0
+            },
+            {
+                "serializedVersion": "2",
+                "time": 0.4617452621459961,
+                "value": 1.0000081062316895,
+                "inSlope": -0.0017881393432617188,
+                "outSlope": -0.0017881393432617188,
+                "tangentMode": 0
+            },
+            {
+                "serializedVersion": "2",
+                "time": 0.5,
+                "value": 1.0,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "tangentMode": 0
+            }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 0,
+        "m_RotationOrder": 0
+    },
+    "PressureMultiplier": 2.7376368045806886,
+    "RigAttachPos": {
+        "x": 0.7568848729133606,
+        "y": 0.6435468792915344,
+        "z": 0.1044844388961792
+    },
+    "NumToggleControlledCells": 4,
+    "RearRiserPullMagnitude": -1.0,
+    "FrontRiserPullMagnitude": -1.0,
+    "WeightshiftMagnitude": 0.25,
+    "PilotWeight": 79.828857421875,
+    "InputGamma": 1.5,
+    "InputSmoothing": 0.25,
+    "IsEditable": false
+}

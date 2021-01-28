@@ -1,0 +1,81 @@
+{
+    "FormatVersion":5,
+    "Graphics":{
+        "ScreenResolution":{
+            "Width":1280,
+            "Height":720
+        },
+        "ScreenshotMagnificationFactor":1.0,
+        "FieldOfView":85,
+        "ScreenShakeIntensity":1.0,
+        "IsWindowed":true,
+        "ShadowDistance":1000.0,
+        "ShadowQuality":"High",
+        "TreeQuality":"Medium",
+        "DetailObjectDistance":4,
+        "DetailObjectDensity":2,
+        "TreeDistance":670.0,
+        "MaxTrees":2000,
+        "TerrainRenderingAccuracy":25.0,
+        "TerrainCastShadows":true,
+        "IsBloomEnabled":false,
+        "BloomQuality":"Cheap",
+        "IsMotionBlurEnabled":false,
+        "MotionBlurQualitySteps":2,
+        "AntiAliasingMode":"Off",
+        "AntiAliasingQuality":"Low",
+        "IsVSyncEnabled":false,
+        "TargetFrameRate":60,
+        "MaxParticles":1.0,
+        "TextureQuality":"Full",
+        "AnisotropicFilteringMode":"None",
+        "LodBias":1.0
+    },
+    "Audio":{
+        "IsMuted":false,
+        "SoundEffectsVolume":1.0,
+        "MusicVolume":0.5
+    },
+    "Input":{
+        "WingsuitMouseSensitivity": 1,
+        "ParachuteMouseSensitivity": 1,
+        "InputGamma":2.0,
+        "InputSpeedScaling":1.0,
+        "JoystickDeadzone":0.2
+    },
+    "Gameplay":{
+        "ShowHud":true,
+        "UnitSystem":"Metric",
+        "VisualizeTrajectory":true,
+        "VisualizeAerodynamics":false,
+        "CoursesEnabled":true,
+        "IsRingCollisionOn":true,
+        "StallLimiterStrength":0.6,
+        "RollLimiterStrength":0.6,
+        "PitchAttitude":-0.5,
+        "Time":{
+            "IsTimeSimulated":true,
+            "CurrentDateTime":"2015-03-24T09:00:00.003Z",
+            "DayLengthInMinutes":15.0,
+            "IsNightSkipped":true,
+            "Longitude":-55.0,
+            "Latitude":-51.0
+        },
+        "Weather":{
+            "Season":0.0,
+            "IsWeatherSimulated":true,
+            "SnowAltitude":2876.0,
+            "SnowfallIntensity":0.34,
+            "FogIntensity":0.06,
+            "DaysPerSeason":7.0
+        }
+    },
+    "Other": {
+        "Language": "en-US",
+        "AutomaticNetworkPort": true,
+        "NetworkPort": 5676,
+        "NatFacilitatorEndpoint": "45.55.238.138:15493",
+        "ConnectionAttemptTimeOut": 30.0,
+        "MasterServerUrl": "https://masterserver.volo-airsport.com"
+    }
+}

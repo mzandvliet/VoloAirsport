@@ -46,8 +46,10 @@ GameObject:
   m_Component:
   - component: {fileID: 411580}
   - component: {fileID: 2020418}
+  - component: {fileID: 11420916}
   - component: {fileID: 11403302}
   - component: {fileID: 11451900}
+  - component: {fileID: 11469946}
   - component: {fileID: 11492678}
   - component: {fileID: 114273797155792286}
   - component: {fileID: 11499780}
@@ -720,7 +722,7 @@ Camera:
   m_GameObject: {fileID: 110518}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -842,6 +844,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11420916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 872ad7533cc5443188d2965011e98378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sky: {fileID: 0}
+  ScatteringShader: {fileID: 4800000, guid: fdd320689879e4151a6d37fa30a2a572, type: 3}
+  DitheringTexture: {fileID: 2800000, guid: 0cad0b965ebef4d4ba864861b866e2e5, type: 3}
+  GlobalDensity: 0.001
+  HeightFalloff: 0.001
+  ZeroLevel: 1000
 --- !u!114 &11421374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1017,6 +1036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d181005d93dd8b54e87115af109698c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetInterpolationSpeed: 1
 --- !u!114 &11457174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1066,6 +1086,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 2077996}
   _blitMaterial: {fileID: 2100000, guid: 2dd2c99550d7968418182aab6c3698cb, type: 2}
+--- !u!114 &11469946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5a618c43a8d4e2aab80f67424cb7f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sky: {fileID: 0}
+  DomePosToCamera: 0
+  DomePosOffset: {x: 0, y: 0, z: 0}
+  DomeScaleToFarClip: 1
+  DomeScaleFactor: 0.95
 --- !u!114 &11475830
 MonoBehaviour:
   m_ObjectHideFlags: 1

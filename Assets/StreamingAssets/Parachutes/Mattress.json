@@ -1,0 +1,64 @@
+﻿{
+    "Id": "f7bc060e-a04a-4ea4-be1d-bbe021891d03",
+    "Name": "Mattrass",
+    "Color": {
+        "r": 0.0,
+        "g": 0.9511567950248718,
+        "b": 0.5015478730201721,
+        "a": 0.0
+    },
+    "RadiusHorizontal": 4.183866500854492,
+    "RadiusVertical": 2.8831558227539062,
+    "HeightOffset": 4.895499229431152,
+    "Span": 10.0,
+    "Chord": 2.710583209991455,
+    "NumCells": 13,
+    "Mass": 4,
+    "AirfoilDefinition": {
+        "m_FileID": 2790,
+        "m_PathID": 0
+    },
+    "RiggingAngle": 7.104241847991943,
+    "PlanformAreaEllipse": {
+        "serializedVersion": "2",
+        "m_Curve": [
+            {
+                "serializedVersion": "2",
+                "time": 0.000645994849037379,
+                "value": 0.6522679328918457,
+                "inSlope": 1.378114938735962,
+                "outSlope": 1.378114938735962
+            },
+            {
+                "serializedVersion": "2",
+                "time": 0.4617452621459961,
+                "value": 1.0000081062316895,
+                "inSlope": -0.0017881393432617188,
+                "outSlope": -0.0017881393432617188
+            },
+            {
+                "serializedVersion": "2",
+                "time": 0.5,
+                "value": 1,
+                "inSlope": 0,
+                "outSlope": 0
+            }
+        ],
+        "m_PreInfinity": 2,
+        "m_PostInfinity": 0,
+        "m_RotationOrder": 0
+    },
+    "PressureMultiplier": 2.691620349884033,
+    "RigAttachPos": {
+        "x": 0.6305777430534363,
+        "y": 0.4663246273994446,
+        "z": 0.1044844388961792
+    },
+    "NumToggleControlledCells": 4,
+    "RearRiserPullMagnitude": -1,
+    "FrontRiserPullMagnitude": -1,
+    "WeightshiftMagnitude": 0.25,
+    "PilotWeight": 79.828857421875,
+    "InputGamma": 1.5,
+    "InputSmoothing": 0.25
+}
