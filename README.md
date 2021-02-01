@@ -51,12 +51,12 @@ Assets\Plugins\RamjetAnvil\Aero\Scripts\Physics\Aerodynamics
 Input routing from our input system to the parachute controller:
 
 Assets\Scripts\Player\PlayerController.cs
-E:\code\unity\volo_airsport_open\Assets\Scripts\Input\ParachuteInput.cs
+Assets\Scripts\Input\ParachuteInput.cs
 
 Most code for it lives here:
 
-E:\code\unity\volo_airsport_open\Assets\Scripts\Test\Parachute
-E:\code\unity\volo_airsport_open\Assets\Scripts\Test\Cell.cs
+Assets\Scripts\Test\Parachute
+Assets\Scripts\Test\Cell.cs
 
 The parachute system creates controllable parafoils through procedural generation, and broadly functions as follows:
 
