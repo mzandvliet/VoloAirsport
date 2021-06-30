@@ -14,6 +14,8 @@ https://ramjetanvil.itch.io/volo-airsport
 
 - Download Unity Editor 5.5.0f3 from the [Unity Download Archives](https://unity3d.com/get-unity/download/archive)
 - Open the project folder
+- In the editor, open the _LoadingScreen.unity_ scene file
+- Press play
 
 ## Known Issues:
 
@@ -65,8 +67,3 @@ Parachute.cs - Top-level component for a parachute instance
 ParachuteFactory.cs - System for producing an instance of a parachute from a config, including physics and visuals
 ParachuteEditor.cs - In-game editor GUI for modifying ParachuteConfigs, which Factory then produces
 ParachuteSpawner.cs - Uses the above to create a parachute in game
-
-## Input
-The game reads input from the `Config/Input/GameInputConfig_User.xml` file. If that file cannot be found, which means that there is no user-defined input configuration, a default input configuration will be used. Currently it uses the file `Config/Input/GameInputConfig_KeyboardDefault.xml` for that.
-
-If you want to use the Xbox 360 controller instead of the keyboard simply copy the `Config/Input/GameInputConfig_ControllerDefault.xml` to `Config/Input/GameInputConfig_User.xml`.
