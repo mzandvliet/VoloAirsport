@@ -1,12 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using RamjetAnvil.DependencyInjection;
-using RamjetAnvil.Impero.Unity;
-using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Util;
-using RamjetAnvil.Volo;
-using RamjetAnvil.Volo.Input;
 
 public class NetworkInterpolationTester : MonoBehaviour {
 //    [SerializeField] private GameObject _remotePilot;

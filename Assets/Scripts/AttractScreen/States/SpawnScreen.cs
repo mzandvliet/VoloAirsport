@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using RamjetAnvil.Cameras;
 using RamjetAnvil.Coroutine;
 using RamjetAnvil.DependencyInjection;
-using RamjetAnvil.Impero.StandardInput;
 using RamjetAnvil.StateMachine;
 using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Volo.Input;
 using RamjetAnvil.Volo.UI;
-using RamjetAnvil.Volo.Util;
 using UnityEngine;
 using UnityEngine.UI;
-using Fmod = FMODUnity.RuntimeManager;
-using Animation = RamjetAnvil.Coroutine.Routines.Animation;
 
 namespace RamjetAnvil.Volo.States {
 
@@ -82,7 +77,6 @@ namespace RamjetAnvil.Volo.States {
 
             _data.SelectedSpawnpointName.text =_spawnpoints[spawnpointUiState.Get().HighlightedIndex].Name;
             spawnpointIndexChanged.Subscribe(i => {
-                Fmod.PlayOneShot("event:/ui/drop_hover");
                 var spawnpoint = _spawnpoints[i];
                 _data.SelectedSpawnpointName.text = spawnpoint.Name;
                 _data.CameraAnimator.LookTarget = spawnpointBillboards[i].transform;
@@ -156,15 +150,15 @@ namespace RamjetAnvil.Volo.States {
         }
 
         void Update() {
-            _uiList.Update(new UISketch.NavigableUIList.Input {
-                Confirm = _data.MenuActionMap.V.PollButtonEvent(MenuAction.Confirm) == ButtonEvent.Down,
-                Cursor = _data.MenuActionMap.V.PollDiscreteCursor()
-            });
+            Debug.LogWarning("I want to handle input");
+            
+            // _uiList.Update(new UISketch.NavigableUIList.Input {
+            //     Confirm = _data.MenuActionMap.V.PollButtonEvent(MenuAction.Confirm) == ButtonEvent.Down,
+            //     Cursor = _data.MenuActionMap.V.PollDiscreteCursor()
+            // });
         }
 
         void SpawnpointSelected(Events.SpawnpointSelected @event) {
-            Fmod.PlayOneShot("event:/ui/drop_select");
-
             Machine.Transition(VoloStateMachine.States.Playing, @event.Spawnpoint);
         }
 

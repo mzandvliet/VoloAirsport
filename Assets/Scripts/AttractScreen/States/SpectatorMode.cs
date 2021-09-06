@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using RamjetAnvil.Coroutine;
-using RamjetAnvil.Coroutine.Time;
-using RamjetAnvil.Impero.StandardInput;
 using RamjetAnvil.StateMachine;
 using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Volo.Input;
-using RamjetAnvil.Volo.Util;
 using UnityEngine;
 
 namespace RamjetAnvil.Volo.States {
@@ -62,15 +56,17 @@ namespace RamjetAnvil.Volo.States {
         }
 
         void Update() {
-            var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
-            var shouldQuitSpectator = 
-                pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down ||
-                _respawnRequest.IsJust ||
-                _transitToParachuteEditor;
+            Debug.LogWarning("I want to handle input");
 
-            if (shouldQuitSpectator) {
-                Machine.TransitionToParent(_respawnRequest, _transitToParachuteEditor);
-            }
+            // var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
+            // var shouldQuitSpectator = 
+            //     pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down ||
+            //     _respawnRequest.IsJust ||
+            //     _transitToParachuteEditor;
+
+            // if (shouldQuitSpectator) {
+            //     Machine.TransitionToParent(_respawnRequest, _transitToParachuteEditor);
+            // }
         }
 
     }

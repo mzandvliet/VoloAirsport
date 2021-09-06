@@ -6,16 +6,12 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using RamjetAnvil.Coroutine;
 using RamjetAnvil.Coroutine.Time;
-using RamjetAnvil.Impero.StandardInput;
 using RamjetAnvil.InputModule;
 using RamjetAnvil.StateMachine;
 using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Volo.Input;
-using RamjetAnvil.Volo;
-using RamjetAnvil.Volo.Util;
 using RxUnity.Schedulers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace RamjetAnvil.Volo.States {
 
@@ -149,31 +145,33 @@ namespace RamjetAnvil.Volo.States {
             }
 
             private void Update() {
-                var parachuteActionMap = _data.ParachuteActionMap.V;
-                var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
-                var shouldRespawn = pilotActionMap.PollButtonEvent(WingsuitAction.Respawn) == ButtonEvent.Down;
-                var shouldSwitchVehicleType = pilotActionMap.PollButtonEvent(WingsuitAction.UnfoldParachute) == ButtonEvent.Down;
+                Debug.LogWarning("I want to handle input");
+                
+                // var parachuteActionMap = _data.ParachuteActionMap.V;
+                // var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
+                // var shouldRespawn = pilotActionMap.PollButtonEvent(WingsuitAction.Respawn) == ButtonEvent.Down;
+                // var shouldSwitchVehicleType = pilotActionMap.PollButtonEvent(WingsuitAction.UnfoldParachute) == ButtonEvent.Down;
 
-                _data.GameHud.SetParachuteInput(_data.ParachuteController.Input);
+                // _data.GameHud.SetParachuteInput(_data.ParachuteController.Input);
 
-                if (shouldRespawn || _isRespawnRequested) {
-                    _isRespawnRequested = false;
-                    Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Just(new RespawnRequest()));
-                } else {
-                    if (_transitToEditor) {
-                        _transitToEditor = false;
-                        Machine.Transition(Playing.PlayingStates.EditingParachute, _environment);
-                    } else if (parachuteActionMap.ParachuteConfigToggle == ButtonEvent.Down) {
-                        TransitToEditingState();
-                    } else if (shouldSwitchVehicleType) {
-                        Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Nothing<RespawnRequest>());
-                    } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ChangeCamera) == ButtonEvent.Down) {
-                        _environment = _environment.NextMount();
-                        SwitchToMount(_environment.SelectedCameraMount);
-                    } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down) {
-                        Machine.Transition(Playing.PlayingStates.Spectating);
-                    }
-                }
+                // if (shouldRespawn || _isRespawnRequested) {
+                //     _isRespawnRequested = false;
+                //     Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Just(new RespawnRequest()));
+                // } else {
+                //     if (_transitToEditor) {
+                //         _transitToEditor = false;
+                //         Machine.Transition(Playing.PlayingStates.EditingParachute, _environment);
+                //     } else if (parachuteActionMap.ParachuteConfigToggle == ButtonEvent.Down) {
+                //         TransitToEditingState();
+                //     } else if (shouldSwitchVehicleType) {
+                //         Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Nothing<RespawnRequest>());
+                //     } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ChangeCamera) == ButtonEvent.Down) {
+                //         _environment = _environment.NextMount();
+                //         SwitchToMount(_environment.SelectedCameraMount);
+                //     } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down) {
+                //         Machine.Transition(Playing.PlayingStates.Spectating);
+                //     }
+                // }
             }
 
             private void SwitchToMount(PilotCameraMountId cameraMountId) {

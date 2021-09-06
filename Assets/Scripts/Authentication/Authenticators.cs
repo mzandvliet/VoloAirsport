@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
-using RamjetAnvil.RamNet;
 using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Padrone.Client;
 using RamjetAnvil.Volo.Networking;
-using Steamworks;
 using UnityEngine;
 
 namespace RamjetAnvil.Volo {
@@ -79,27 +75,29 @@ namespace RamjetAnvil.Volo {
         }
 
         public static ProvideAuthToken SteamAuthTokenProvider() {
-            const int maxTicketLength = 256;
-            var cacheTimeOut = TimeSpan.FromMinutes(30);
+            return () => Maybe.Nothing<AuthToken>();
 
-            Maybe<AuthToken> cachedAuthToken = Maybe.Nothing<AuthToken>();
-            DateTime? cacheTime = null;
+            // const int maxTicketLength = 256;
+            // var cacheTimeOut = TimeSpan.FromMinutes(30);
 
-            return () => {
-                if (SteamAPI.IsSteamRunning() && SteamManager.Initialized) {
-                    if (!cacheTime.HasValue || (DateTime.Now - cacheTime) > cacheTimeOut) {
-                        uint ticketLength;
-                        var ticket = new byte[maxTicketLength];
-                        SteamUser.GetAuthSessionTicket(ticket, maxTicketLength, out ticketLength);
-                        cachedAuthToken = Maybe.Just(Authentication.SteamAuthToken(ticket, ticketLength));
-                        cacheTime = DateTime.Now;
-                    }
-                } else {
-                    cachedAuthToken = Maybe.Nothing<AuthToken>();
-                }
+            // Maybe<AuthToken> cachedAuthToken = Maybe.Nothing<AuthToken>();
+            // DateTime? cacheTime = null;
 
-                return cachedAuthToken;
-            };
+            // return () => {
+            //     if (SteamAPI.IsSteamRunning() && SteamManager.Initialized) {
+            //         if (!cacheTime.HasValue || (DateTime.Now - cacheTime) > cacheTimeOut) {
+            //             uint ticketLength;
+            //             var ticket = new byte[maxTicketLength];
+            //             SteamUser.GetAuthSessionTicket(ticket, maxTicketLength, out ticketLength);
+            //             cachedAuthToken = Maybe.Just(Authentication.SteamAuthToken(ticket, ticketLength));
+            //             cacheTime = DateTime.Now;
+            //         }
+            //     } else {
+            //         cachedAuthToken = Maybe.Nothing<AuthToken>();
+            //     }
+
+            //     return cachedAuthToken;
+            // };
         }
 
         public static ProvideAuthToken AdminAuthTokenProvider() {

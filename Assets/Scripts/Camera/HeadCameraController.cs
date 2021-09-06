@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using RamjetAnvil.DependencyInjection;
-using RamjetAnvil.Impero.StandardInput;
-using RamjetAnvil.Volo.Input;
 
 public class HeadCameraController : MonoBehaviour {
     [Dependency, SerializeField] private PilotActionMapProvider _playerActionMapProvider;
@@ -24,27 +22,29 @@ public class HeadCameraController : MonoBehaviour {
     private Quaternion _lastRotation;
 
     private void Update() {
-        var playerActionMap = _playerActionMapProvider.ActionMap;
+        Debug.LogWarning("I want to handle input");
 
-        Quaternion rotation = _transform.parent.rotation * _baseLocalRotation;
-        rotation = Quaternion.Slerp(_lastRotation, rotation, 5f * Time.deltaTime);
-        _lastRotation = rotation;
+        // var playerActionMap = _playerActionMapProvider.ActionMap;
 
-        Quaternion inputRotation;
+        // Quaternion rotation = _transform.parent.rotation * _baseLocalRotation;
+        // rotation = Quaternion.Slerp(_lastRotation, rotation, 5f * Time.deltaTime);
+        // _lastRotation = rotation;
 
-        var input = new Vector2(playerActionMap.PollAxis(WingsuitAction.LookHorizontal),
-                                playerActionMap.PollAxis(WingsuitAction.LookVertical));
+        // Quaternion inputRotation;
 
-        if (playerActionMap.PollButton(WingsuitAction.ActivateMouseLook) == ButtonState.Pressed) {
-            _mouseInput += input * 0.5f;
-            _mouseInput.x = Mathf.Clamp(_mouseInput.x, -50f, 50f);
-            _mouseInput.y = Mathf.Clamp(_mouseInput.y, -50f, 50f);
-            inputRotation = Quaternion.Euler(0f, -_mouseInput.x, 0f) * Quaternion.Euler(-_mouseInput.y, 0f, 0f);
-        } else {
-            _mouseInput = Vector2.zero;
-            inputRotation = Quaternion.Euler(0f, -input.x * 50f, 0) * Quaternion.Euler(-input.y * 50f, 0f, 0f);
-        }
+        // var input = new Vector2(playerActionMap.PollAxis(WingsuitAction.LookHorizontal),
+        //                         playerActionMap.PollAxis(WingsuitAction.LookVertical));
 
-        _transform.rotation = rotation * inputRotation;
+        // if (playerActionMap.PollButton(WingsuitAction.ActivateMouseLook) == ButtonState.Pressed) {
+        //     _mouseInput += input * 0.5f;
+        //     _mouseInput.x = Mathf.Clamp(_mouseInput.x, -50f, 50f);
+        //     _mouseInput.y = Mathf.Clamp(_mouseInput.y, -50f, 50f);
+        //     inputRotation = Quaternion.Euler(0f, -_mouseInput.x, 0f) * Quaternion.Euler(-_mouseInput.y, 0f, 0f);
+        // } else {
+        //     _mouseInput = Vector2.zero;
+        //     inputRotation = Quaternion.Euler(0f, -input.x * 50f, 0) * Quaternion.Euler(-input.y * 50f, 0f, 0f);
+        // }
+
+        // _transform.rotation = rotation * inputRotation;
     }
 }

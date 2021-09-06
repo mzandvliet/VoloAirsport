@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FMODUnity;
 using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Util;
 using RamjetAnvil.Volo;
 using UnityEngine;
 
@@ -15,14 +13,14 @@ public class Ring : MonoBehaviour, ISpawnable {
     private IList<Renderer> _renderers;
     private IList<RingAnimator> _animators;
     private IList<Collider> _colliders;
-    private IList<StudioEventEmitter> _audioSources;
+    // private IList<StudioEventEmitter> _audioSources;
     private IList<Light> _lights;
 
     void Awake() {
         _renderers = GetComponentsInChildren<Renderer>(includeInactive: true);
         _animators = GetComponentsInChildren<RingAnimator>(includeInactive: true);
         _colliders = GetComponentsInChildren<Collider>(includeInactive: true);
-        _audioSources = GetComponentsInChildren<StudioEventEmitter>(includeInactive: true);
+        // _audioSources = GetComponentsInChildren<StudioEventEmitter>(includeInactive: true);
         _lights = GetComponentsInChildren<Light>(includeInactive: true);
     }
 
@@ -40,15 +38,16 @@ public class Ring : MonoBehaviour, ISpawnable {
             _colliders[i].enabled = isRingEnabled;
         }
         _ringMeshCollider.enabled = isRingEnabled && isCollisionOn;
-        for (int i = 0; i < _audioSources.Count; i++) {
-            if (!isRingEnabled) {
-                _audioSources[i].Stop();
-            }
-            _audioSources[i].enabled = isRingEnabled;
-            if (isRingEnabled) {
-                _audioSources[i].Play();
-            }
-        }
+        // Todo: play a sound
+        // for (int i = 0; i < _audioSources.Count; i++) {
+        //     if (!isRingEnabled) {
+        //         _audioSources[i].Stop();
+        //     }
+        //     _audioSources[i].enabled = isRingEnabled;
+        //     if (isRingEnabled) {
+        //         _audioSources[i].Play();
+        //     }
+        // }
         for (int i = 0; i < _lights.Count; i++) {
             _lights[i].enabled = isRingEnabled;
         }

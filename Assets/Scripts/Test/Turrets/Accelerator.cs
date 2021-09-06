@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FMODUnity;
-using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Volo;
+﻿using RamjetAnvil.Volo;
 using UnityEngine;
 
 public class Accelerator : MonoBehaviour {

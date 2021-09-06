@@ -1,13 +1,7 @@
-﻿using RamjetAnvil.Impero;
-using RamjetAnvil.Impero.StandardInput;
-using RamjetAnvil.Impero.Unity;
-using RamjetAnvil.Util;
-using RamjetAnvil.Volo;
-using RamjetAnvil.Volo.Input;
+﻿using RamjetAnvil.Volo.Input;
 using UnityEngine;
 using RamjetAnvil.DependencyInjection;
 using RamjetAnvil.Unity.Utility;
-using XInputDotNetPure;
 
 public class PilotTestSpawner : MonoBehaviour {
     [SerializeField] private GameObject _pilot;
@@ -21,24 +15,13 @@ public class PilotTestSpawner : MonoBehaviour {
     private IPooledObject<GameObject> _pooledPilot;
     private IObjectPool<GameObject> _pilotPool;
     private ImmutableTransform _originalTransform;
-    private PilotActionMap _pilotActionMap;
 
     private void Awake() {
-        var inputMapping = PilotInput.Bindings.DefaultXbox360Mapping.Value;
-
-        _pilotActionMap = PilotInput.ActionMap.Create(
-            new ActionMapConfig<WingsuitAction> {
-                ControllerId = new ControllerId.XInput((PlayerIndex)_controllerId),
-                InputSettings = InputSettings.Default,
-                InputMapping = inputMapping
-            }, _gameClock);
-
         _pilotPool = new ObjectPool<GameObject>(() => _pilot);
 
         var container = new DependencyContainer();
         container.AddDependency("eventSystem", _eventSystem);
         container.AddDependency("windManager", _windManager);
-        container.AddDependency("actionMap", new Ref<PilotActionMap>(_pilotActionMap));
         container.AddDependency("gameClock", _gameClock);
         container.AddDependency("fixedClock", _fixedClock);
 
@@ -50,10 +33,5 @@ public class PilotTestSpawner : MonoBehaviour {
     }
 
     private void Update() {
-        if (_pilotActionMap.PollButtonEvent(WingsuitAction.Respawn) == ButtonEvent.Down) {
-            _pooledPilot.Dispose();
-            _pilot.transform.Set(_originalTransform);
-            _pooledPilot = _pilotPool.Take();
-        }
     }
 }

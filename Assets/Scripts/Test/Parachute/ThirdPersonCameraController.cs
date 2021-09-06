@@ -13,7 +13,6 @@
 
 using System;
 using RamjetAnvil.DependencyInjection;
-using RamjetAnvil.Impero.StandardInput;
 using RamjetAnvil.Volo.Input;
 using UnityEngine;
 using RamjetAnvil.Unity.Utility;
@@ -60,10 +59,6 @@ public class ThirdPersonCameraController : MonoBehaviour, ICameraMount {
     private Config _config;
     private double _transitionStartTime;
     private AvatarType _targetType;
-
-    public IReadonlyRef<PilotActionMap> PlayerActionMap {
-        set { _playerActionMap = value; } // todo: please, no real input handling in this class
-    }
 
     public bool VrMode {
         get { return _vrMode; }
@@ -291,8 +286,6 @@ public class ThirdPersonCameraController : MonoBehaviour, ICameraMount {
             Vector2 input = new Vector2(_playerActionMap.V.PollAxis(WingsuitAction.LookHorizontal),
                                         _playerActionMap.V.PollAxis(WingsuitAction.LookVertical));
             _input = InputUtilities.CircularizeInput(input);
-
-            _mouseLook = _playerActionMap.V.PollButton(WingsuitAction.ActivateMouseLook) == ButtonState.Pressed;
         }
     }
 

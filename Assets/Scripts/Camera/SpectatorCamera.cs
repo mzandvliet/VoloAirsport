@@ -1,11 +1,6 @@
 using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Volo;
 using RamjetAnvil.Volo.Input;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using RamjetAnvil.Impero;
 
 public class SpectatorCamera : MonoBehaviour, ISpawnable {
 

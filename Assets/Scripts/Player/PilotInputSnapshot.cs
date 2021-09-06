@@ -1,5 +1,4 @@
-﻿using RamjetAnvil.Impero.StandardInput;
-using RamjetAnvil.Unity.Utility;
+﻿using RamjetAnvil.Unity.Utility;
 using UnityEngine;
 
 namespace RamjetAnvil.Volo {
@@ -38,15 +37,16 @@ namespace RamjetAnvil.Volo {
         }
 
         public PilotInputSnapshot Merge(PilotInputSnapshot c) {
-            return new PilotInputSnapshot {
-                Timestamp = c.Timestamp,
-                Pitch = Adapters.MergeAxes(Pitch, c.Pitch),
-                Roll = Adapters.MergeAxes(Roll, c.Roll),
-                Yaw = Adapters.MergeAxes(Yaw, c.Yaw),
-                Cannonball = Adapters.MergeAxes(Cannonball, c.Cannonball),
-                CloseLeftArm = Adapters.MergeAxes(CloseLeftArm, c.CloseLeftArm),
-                CloseRightArm = Adapters.MergeAxes(CloseRightArm, c.CloseRightArm),
-            };
+            return PilotInputSnapshot.Zero;
+            // return new PilotInputSnapshot {
+            //     Timestamp = c.Timestamp,
+            //     Pitch = Adapters.MergeAxes(Pitch, c.Pitch),
+            //     Roll = Adapters.MergeAxes(Roll, c.Roll),
+            //     Yaw = Adapters.MergeAxes(Yaw, c.Yaw),
+            //     Cannonball = Adapters.MergeAxes(Cannonball, c.Cannonball),
+            //     CloseLeftArm = Adapters.MergeAxes(CloseLeftArm, c.CloseLeftArm),
+            //     CloseRightArm = Adapters.MergeAxes(CloseRightArm, c.CloseRightArm),
+            // };
         }
 
         public static readonly PilotInputSnapshot Zero = new PilotInputSnapshot();

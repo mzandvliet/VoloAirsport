@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using RamjetAnvil.Coroutine;
-using RamjetAnvil.Impero.StandardInput;
-using RamjetAnvil.RamNet;
 using RamjetAnvil.StateMachine;
 using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Volo.Input;
 using RamjetAnvil.Volo.Networking;
 using RamjetAnvil.Volo.Ui;
-using RamjetAnvil.Volo.Util;
 using UnityEngine;
 
 namespace RamjetAnvil.Volo.States {
@@ -106,19 +103,21 @@ namespace RamjetAnvil.Volo.States {
         }
 
         void Update() {
-            var menuActionMap = _data.MenuActionMapProvider.ActionMap.V;
+            Debug.LogWarning("I want to handle input");
+            
+            // var menuActionMap = _data.MenuActionMapProvider.ActionMap.V;
 
-            // TODO Only update the flying state if we're actually flying
+            // // TODO Only update the flying state if we're actually flying
 
-            if (!_playingStateMachine.IsTransitioning && !_isTransitioning) {
-                if (menuActionMap.PollButtonEvent(MenuAction.Pause) == ButtonEvent.Down) {
-                    _data.CoroutineScheduler.Run(ToOptionsMenu());
-                }
-            }
+            // if (!_playingStateMachine.IsTransitioning && !_isTransitioning) {
+            //     if (menuActionMap.PollButtonEvent(MenuAction.Pause) == ButtonEvent.Down) {
+            //         _data.CoroutineScheduler.Run(ToOptionsMenu());
+            //     }
+            // }
 
-            if (InternalStateMachineTick != null) {
-                InternalStateMachineTick();
-            }
+            // if (InternalStateMachineTick != null) {
+            //     InternalStateMachineTick();
+            // }
         }
 
         IEnumerator<WaitCommand> ToOptionsMenu() {

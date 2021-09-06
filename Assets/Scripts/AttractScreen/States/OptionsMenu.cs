@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
-using FMODUnity;
-using Fmod = FMODUnity.RuntimeManager;
 using RamjetAnvil.Coroutine;
 using RamjetAnvil.StateMachine;
 using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Volo.Util;
 using UnityEngine;
 
 namespace RamjetAnvil.Volo.States {
@@ -106,7 +102,6 @@ namespace RamjetAnvil.Volo.States {
             // the options menu
             yield return WaitCommand.WaitForNextFrame;
             _data.OptionsMenu.Open(menuId, CloseMenu(menuId));
-            RuntimeManager.PlayOneShot("event:/ui/open");
 
             // Update the game settings with the ecology settings
             var currentSettings = _data.GameSettingsProvider.ActiveSettings;
@@ -119,7 +114,6 @@ namespace RamjetAnvil.Volo.States {
             // Wait for next frame to prevent any input events from the options menu
             // being interpreted by the next state
             yield return WaitCommand.WaitForNextFrame;
-            Fmod.PlayOneShot("event:/ui/back");
         }
 
         private Action<MenuActionId, Action> CloseMenu(MenuId menuId) {

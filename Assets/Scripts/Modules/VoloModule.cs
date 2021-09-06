@@ -1,11 +1,8 @@
 using System;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using RamjetAnvil.DependencyInjection.Unity;
 using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Unity.Vr;
 using RamjetAnvil.Volo.Input;
-using RamjetAnvil.Volo.Ui;
 using UnityEngine;
 using System.Collections.Generic;
 using RamjetAnvil.Cameras;
@@ -17,7 +14,6 @@ using RamjetAnvil.Volo.Util;
 using RxUnity.Schedulers;
 using UnityEngine.SceneManagement;
 using UnityEngine.VR;
-using Valve.VR;
 using Object = UnityEngine.Object;
 
 ///
@@ -53,7 +49,7 @@ public class VoloModule : IModule {
             .Subscribe(settings => gameSettingsApplier.ApplySettings(settings, gameSettingsProvider.ActiveVrMode));
         gameSettingsProvider.SettingChanges
             .Select(gameSettings => gameSettings.Audio)
-            .CombineLatest(FMODUtil.StudioSystem(), (audioSettings, fmodSystem) => audioSettings)
+            // .CombineLatest(FMODUtil.StudioSystem(), (audioSettings, fmodSystem) => audioSettings)
             .Subscribe(audioSettings => {
                 gameSettingsApplier.ApplyAudioSettings(audioSettings);
             });
@@ -69,101 +65,101 @@ public class VoloModule : IModule {
                 gameSettings.Serialize2Disk(settingsConfig.FilePath);
             }));
 
-        var inputSettings = gameSettingsProvider.SettingChanges
-            .Select(settings => InputSettings.FromGameSettings(settings.Input));
-        var menuActionMapProvider = Object.FindObjectOfType<MenuActionMapProvider>();
-        var pilotActionMapProvider = Object.FindObjectOfType<PilotActionMapProvider>();
-        var parachuteActionMapProvider = Object.FindObjectOfType<ParachuteActionMapProvider>();
-        JoystickActivator joystickActivator = Object.FindObjectOfType<JoystickActivator>();
-        InputBindings<MenuAction> menuInputBindings = new InputBindings<MenuAction>(
-            MenuInput.Bindings.InitialMapping(),
-            inputSettings,
-            MenuInput.Bindings.DefaultControllerMappings.Value);
-        InputBindings<WingsuitAction> pilotInputBindings = new InputBindings<WingsuitAction>(
-            PilotInput.Bindings.InitialMapping(),
-            inputSettings,
-            PilotInput.Bindings.DefaultControllerMappings.Value);
-        InputBindings<SpectatorAction> spectatorInputBindings = new InputBindings<SpectatorAction>(
-            SpectatorInput.Bindings.InitialMapping(),
-            inputSettings,
-            SpectatorInput.Bindings.DefaultControllerMappings.Value);
-        InputBindings<ParachuteAction> parachuteInputBindings = new InputBindings<ParachuteAction>(
-            ParachuteControls.InitialMapping(),
-            inputSettings,
-            ParachuteControls.DefaultMappings.Value);
-        joystickActivator.ActiveController.Subscribe(controllerId => {
-            menuInputBindings.UpdateControllerId(controllerId);
-            pilotInputBindings.UpdateControllerId(controllerId);
-            spectatorInputBindings.UpdateControllerId(controllerId);
-            parachuteInputBindings.UpdateControllerId(controllerId);
-        });
+        var inputSettings = gameSettingsProvider.SettingChanges;
+        //     .Select(settings => InputSettings.FromGameSettings(settings.Input));
+        // var menuActionMapProvider = Object.FindObjectOfType<MenuActionMapProvider>();
+        // var pilotActionMapProvider = Object.FindObjectOfType<PilotActionMapProvider>();
+        // var parachuteActionMapProvider = Object.FindObjectOfType<ParachuteActionMapProvider>();
+        // JoystickActivator joystickActivator = Object.FindObjectOfType<JoystickActivator>();
+        // InputBindings<MenuAction> menuInputBindings = new InputBindings<MenuAction>(
+        //     MenuInput.Bindings.InitialMapping(),
+        //     inputSettings,
+        //     MenuInput.Bindings.DefaultControllerMappings.Value);
+        // InputBindings<WingsuitAction> pilotInputBindings = new InputBindings<WingsuitAction>(
+        //     PilotInput.Bindings.InitialMapping(),
+        //     inputSettings,
+        //     PilotInput.Bindings.DefaultControllerMappings.Value);
+        // InputBindings<SpectatorAction> spectatorInputBindings = new InputBindings<SpectatorAction>(
+        //     SpectatorInput.Bindings.InitialMapping(),
+        //     inputSettings,
+        //     SpectatorInput.Bindings.DefaultControllerMappings.Value);
+        // InputBindings<ParachuteAction> parachuteInputBindings = new InputBindings<ParachuteAction>(
+        //     ParachuteControls.InitialMapping(),
+        //     inputSettings,
+        //     ParachuteControls.DefaultMappings.Value);
+        // joystickActivator.ActiveController.Subscribe(controllerId => {
+        //     menuInputBindings.UpdateControllerId(controllerId);
+        //     pilotInputBindings.UpdateControllerId(controllerId);
+        //     spectatorInputBindings.UpdateControllerId(controllerId);
+        //     parachuteInputBindings.UpdateControllerId(controllerId);
+        // });
 
         applicationLifeCycleEvents.OnDestroyEvent += () => {
-            menuInputBindings.Dispose();
-            pilotInputBindings.Dispose();
-            parachuteInputBindings.Dispose();
-            spectatorInputBindings.Dispose();
+            // menuInputBindings.Dispose();
+            // pilotInputBindings.Dispose();
+            // parachuteInputBindings.Dispose();
+            // spectatorInputBindings.Dispose();
         };
 
-        menuActionMapProvider.SetInputMappingSource(menuInputBindings.InputMappingChanges);
-        parachuteActionMapProvider.SetInputMappingSource(parachuteInputBindings.InputMappingChanges);
-        pilotActionMapProvider.SetInputMappingSource(pilotInputBindings.InputMappingChanges);
+        // menuActionMapProvider.SetInputMappingSource(menuInputBindings.InputMappingChanges);
+        // parachuteActionMapProvider.SetInputMappingSource(parachuteInputBindings.InputMappingChanges);
+        // pilotActionMapProvider.SetInputMappingSource(pilotInputBindings.InputMappingChanges);
         // Spectator input
         var spectatorCamera = GameObject.Find("InGameSpectatorCamera")
             .GetComponent<SpectatorCamera>();
         var menuClock = GameObject.Find("_RealtimeClock").GetComponent<AbstractUnityClock>();
-        spectatorInputBindings.InputMappingChanges.Subscribe(actionMapConfig => {
-            spectatorCamera.ActionMap = SpectatorInput.ActionMap.Create(actionMapConfig, menuClock);
-        });
+        // spectatorInputBindings.InputMappingChanges.Subscribe(actionMapConfig => {
+        //     spectatorCamera.ActionMap = SpectatorInput.ActionMap.Create(actionMapConfig, menuClock);
+        // });
 
         // TODO Create serializer component and add it to the scene
-        menuInputBindings.InputMappingChanges
-            .Skip(1)
-            .Select(
-                actionMapConfig => new SerializeTask<InputSourceMapping<MenuAction>> {
-                        FilePath = MenuInput.Bindings.CustomInputMappingFilePath.Value,
-                        SerializableValue = actionMapConfig.InputMapping })
-            .ObserveOn(Schedulers.FileWriterScheduler)
-            .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<MenuAction>>>(mappingConfig => {
-                mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
-            }));
-        pilotInputBindings.InputMappingChanges
-            .Skip(1)
-            .Select(actionMapConfig => new SerializeTask<InputSourceMapping<WingsuitAction>>{
-                FilePath = PilotInput.Bindings.CustomInputMappingFilePath.Value,
-                SerializableValue = actionMapConfig.InputMapping})
-            .ObserveOn(Schedulers.FileWriterScheduler)
-            .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<WingsuitAction>>>(mappingConfig => {
-                mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
-            }));
-        spectatorInputBindings.InputMappingChanges
-            .Skip(1)
-            .Select(actionMapConfig => new SerializeTask<InputSourceMapping<SpectatorAction>>{
-                FilePath = SpectatorInput.Bindings.CustomInputMappingFilePath.Value,
-                SerializableValue = actionMapConfig.InputMapping})
-            .ObserveOn(Schedulers.FileWriterScheduler)
-            .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<SpectatorAction>>>(mappingConfig => {
-                mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
-            }));
-        parachuteInputBindings.InputMappingChanges
-            .Skip(1)
-            .Select(actionMapConfig => new SerializeTask<InputSourceMapping<ParachuteAction>> {
-                FilePath = ParachuteControls.CustomInputMappingFilePath.Value,
-                SerializableValue = actionMapConfig.InputMapping })
-            .ObserveOn(Schedulers.FileWriterScheduler)
-            .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<ParachuteAction>>>(mappingConfig => {
-                mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
-            }));
+        // menuInputBindings.InputMappingChanges
+        //     .Skip(1)
+        //     .Select(
+        //         actionMapConfig => new SerializeTask<InputSourceMapping<MenuAction>> {
+        //                 FilePath = MenuInput.Bindings.CustomInputMappingFilePath.Value,
+        //                 SerializableValue = actionMapConfig.InputMapping })
+        //     .ObserveOn(Schedulers.FileWriterScheduler)
+        //     .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<MenuAction>>>(mappingConfig => {
+        //         mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
+        //     }));
+        // pilotInputBindings.InputMappingChanges
+        //     .Skip(1)
+        //     .Select(actionMapConfig => new SerializeTask<InputSourceMapping<WingsuitAction>>{
+        //         FilePath = PilotInput.Bindings.CustomInputMappingFilePath.Value,
+        //         SerializableValue = actionMapConfig.InputMapping})
+        //     .ObserveOn(Schedulers.FileWriterScheduler)
+        //     .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<WingsuitAction>>>(mappingConfig => {
+        //         mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
+        //     }));
+        // spectatorInputBindings.InputMappingChanges
+        //     .Skip(1)
+        //     .Select(actionMapConfig => new SerializeTask<InputSourceMapping<SpectatorAction>>{
+        //         FilePath = SpectatorInput.Bindings.CustomInputMappingFilePath.Value,
+        //         SerializableValue = actionMapConfig.InputMapping})
+        //     .ObserveOn(Schedulers.FileWriterScheduler)
+        //     .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<SpectatorAction>>>(mappingConfig => {
+        //         mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
+        //     }));
+        // parachuteInputBindings.InputMappingChanges
+        //     .Skip(1)
+        //     .Select(actionMapConfig => new SerializeTask<InputSourceMapping<ParachuteAction>> {
+        //         FilePath = ParachuteControls.CustomInputMappingFilePath.Value,
+        //         SerializableValue = actionMapConfig.InputMapping })
+        //     .ObserveOn(Schedulers.FileWriterScheduler)
+        //     .Subscribe(applicationLock.RunWithLock<SerializeTask<InputSourceMapping<ParachuteAction>>>(mappingConfig => {
+        //         mappingConfig.SerializableValue.Serialize2Disk(mappingConfig.FilePath);
+        //     }));
 
 
         LoadVrConfig(gameSettingsProvider);
 
         var dependencyResolver = new GameObject("GlobalDependencyResolver").AddComponent<UnityDependencyResolver>();
         dependencyResolver.NonSerializableRefs.Add(new DependencyReference("fileWriterScheduler", Schedulers.FileWriterScheduler));
-        dependencyResolver.NonSerializableRefs.Add(new DependencyReference("menuInputBindings", menuInputBindings));
-        dependencyResolver.NonSerializableRefs.Add(new DependencyReference("pilotInputBindings", pilotInputBindings));
-        dependencyResolver.NonSerializableRefs.Add(new DependencyReference("spectatorInputBindings", spectatorInputBindings));
-        dependencyResolver.NonSerializableRefs.Add(new DependencyReference("parachuteInputBindings", parachuteInputBindings));
+        // dependencyResolver.NonSerializableRefs.Add(new DependencyReference("menuInputBindings", menuInputBindings));
+        // dependencyResolver.NonSerializableRefs.Add(new DependencyReference("pilotInputBindings", pilotInputBindings));
+        // dependencyResolver.NonSerializableRefs.Add(new DependencyReference("spectatorInputBindings", spectatorInputBindings));
+        // dependencyResolver.NonSerializableRefs.Add(new DependencyReference("parachuteInputBindings", parachuteInputBindings));
         dependencyResolver.Resolve();
 
         // Create and inject the player interface dynamically
@@ -172,16 +168,16 @@ public class VoloModule : IModule {
         var canvasManager = Object.FindObjectOfType<UICanvasManager>();
         canvasManager.Initialize(cameraManager);
 
-        if (gameSettingsProvider.ActiveVrMode == VrMode.Oculus) {
-            new GameObject("__OculusGlobalEventEmitter").AddComponent<OculusGlobalEventEmitter>();
-        }
+        // if (gameSettingsProvider.ActiveVrMode == VrMode.Oculus) {
+        //     new GameObject("__OculusGlobalEventEmitter").AddComponent<OculusGlobalEventEmitter>();
+        // }
 
         // Create a cursor
         var cursor = CreateCursor(gameSettingsProvider.ActiveVrMode, cameraManager.Rig.GetMainCamera());
         dependencyResolver.NonSerializableRefs.Add(new DependencyReference("cursor", cursor));
         var inputModule = GameObject.FindObjectOfType<CursorInputModule>();
         inputModule.Cursor = cursor;
-        inputModule.NavigationDevice = new MenuActionMapCursor(menuActionMapProvider);
+        // inputModule.NavigationDevice = new MenuActionMapCursor(menuActionMapProvider);
         var raycasters = GameObject.FindObjectsOfType<PhysicsRayBasedRaycaster>();
         foreach (var raycaster in raycasters) {
             raycaster.SetCamera(cameraManager.Rig.GetMainCamera());
@@ -284,10 +280,10 @@ public class VoloModule : IModule {
             Debug.LogError("Oculus mode selected, but Oculus Rift was not found.");
             mode = VrMode.None;
         }
-        else if (mode == VrMode.OpenVr && !OpenVR.IsHmdPresent()) {
-            Debug.LogError("OpenVR mode selected, but HTC Vive was not found.");
-            mode = VrMode.None;
-        }
+        // else if (mode == VrMode.OpenVr && !OpenVR.IsHmdPresent()) {
+        //     Debug.LogError("OpenVR mode selected, but HTC Vive was not found.");
+        //     mode = VrMode.None;
+        // }
         return mode;
     }
 

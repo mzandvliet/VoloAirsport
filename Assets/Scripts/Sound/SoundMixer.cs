@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using FMOD.Studio;
 using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Volo.Util;
 using UnityEngine;
 
 // 
@@ -53,16 +51,13 @@ public class SoundMixer : MonoBehaviour {
     private class Layer {
         private float _maxVolume;
         private float _volume;
-        private readonly Bus _bus;
 
         public Layer(string busPath) {
-            _bus = FMODUtil.GetBus(busPath);
             _volume = 1f;
             _maxVolume = 1f;
         }
 
         public void Pause(bool isPaused) {
-            _bus.setPaused(isPaused);
         }
 
         public float MaxVolume {
@@ -82,7 +77,6 @@ public class SoundMixer : MonoBehaviour {
         }
 
         private void Apply() {
-            _bus.setFaderLevel(_maxVolume * _volume);
         }
     }
 }

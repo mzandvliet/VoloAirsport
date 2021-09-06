@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using FMODUnity;
 using RamjetAnvil.Coroutine;
 using RamjetAnvil.DependencyInjection;
-using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Volo.Util;
 using UnityEngine;
 
 public class Pickup : MonoBehaviour {
-    [SerializeField] private StudioEventEmitter _pickupSound;
     [SerializeField, Dependency] private ParticleSystemPool _particleSystemPool;
     [SerializeField, Dependency] private UnityCoroutineScheduler _coroutineScheduler;
 
@@ -21,7 +18,7 @@ public class Pickup : MonoBehaviour {
         if (other.CompareTag("Player")) {
             var flightStats = other.gameObject.GetComponentInParent<FlightStatistics>();
             _coroutineScheduler.Run(EmitParticles(flightStats));
-            _pickupSound.Play();
+            // Todo: Play a sound
             GetComponent<Collider>().enabled = false;
             GetComponent<MeshRenderer>().enabled = false;
         }

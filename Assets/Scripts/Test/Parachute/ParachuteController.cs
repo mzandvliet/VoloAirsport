@@ -19,10 +19,9 @@ namespace RamjetAnvil.Volo {
             scalingPower: 1.5f);
         [SerializeField] private float _mouseInputSensitivityMultiplier = 3f;
         [SerializeField] private ParachuteInputConfig _inputConfig;
-        private IReadonlyRef<IParachuteActionMap> _actionMap;
 
         private int _renderFrame;
-        private ParachuteInput _input;
+        // private ParachuteInput _input;
 
         public Parachute Parachute {
             get { return _parachute; }

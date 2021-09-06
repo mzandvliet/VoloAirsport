@@ -1,14 +1,11 @@
 ﻿using System;
-using RamjetAnvil.Impero.StandardInput;
 using RamjetAnvil.Util;
-using RamjetAnvil.Volo.Input;
 using UnityEngine;
 
 namespace RamjetAnvil.Volo {
     
     public interface IParachuteActionMap {
-        ButtonEvent ParachuteConfigToggle { get; }
-        ParachuteInput Input { get; }
+        // ParachuteInput Input { get; }
     }
 
     public enum ParachuteLine {

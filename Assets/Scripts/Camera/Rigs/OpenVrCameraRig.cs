@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using RamjetAnvil.DependencyInjection;
-using RamjetAnvil.Impero.StandardInput;
-using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Volo.Input;
 using UnityEngine;
-using UnityEngine.VR;
 
 public class OpenVrCameraRig : CameraRig {
     [SerializeField]
@@ -42,9 +39,11 @@ public class OpenVrCameraRig : CameraRig {
     }
 
     private void Update() {
-        if (_menuActionMapProvider.ActionMap.V.PollButton(MenuAction.RecenterVrHeadset) == ButtonState.Pressed) {
-            Debug.Log("Recentering...");
-            Valve.VR.OpenVR.System.ResetSeatedZeroPose();
-        }
+        Debug.LogWarning("I want to handle input");
+        
+        // if (_menuActionMapProvider.ActionMap.V.PollButton(MenuAction.RecenterVrHeadset) == ButtonState.Pressed) {
+        //     Debug.Log("Recentering...");
+        //     Valve.VR.OpenVR.System.ResetSeatedZeroPose();
+        // }
     }
 }

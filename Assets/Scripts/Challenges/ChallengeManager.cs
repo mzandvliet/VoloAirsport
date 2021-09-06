@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using RamjetAnvil.Coroutine;
 using RamjetAnvil.DependencyInjection;
-using RamjetAnvil.Impero.StandardInput;
 using RamjetAnvil.Unity.Utility;
-using RamjetAnvil.Volo.Input;
 using RamjetAnvil.Volo.Ui;
 using UnityEngine;
 
@@ -43,14 +38,14 @@ namespace RamjetAnvil.Volo {
         }
 
         void Update() {
-            if (_actionMapProvider == null) {
-                return;
-            }
+            // if (_actionMapProvider == null) {
+            //     return;
+            // }
 
-            var actionMap = _actionMapProvider.ActionMap;
-            if (actionMap.PollButtonEvent(WingsuitAction.Respawn) == ButtonEvent.Down) {
+            // var actionMap = _actionMapProvider.ActionMap;
+            // if (actionMap.PollButtonEvent(WingsuitAction.Respawn) == ButtonEvent.Down) {
                 
-            }
+            // }
         }
 
         private void OnChallengeTriggered(int challengeIndex, FlightStatistics player) {
