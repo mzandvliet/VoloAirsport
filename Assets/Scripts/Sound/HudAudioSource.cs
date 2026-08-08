@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Fmod = FMODUnity.RuntimeManager;
 /*
  * Todo:
  * This system is pretty bad right now.
@@ -24,7 +23,7 @@ public class HudAudioSource : MonoBehaviour {
         for (int i = 0; i < _sounds.Length; i++) {
             var sound = _sounds[i];
             if (id.Equals(sound.Id)) {
-                Fmod.PlayOneShot(sound.FmodEventId, Vector3.zero);
+                // Fmod.PlayOneShot(sound.FmodEventId, Vector3.zero);
             }
         }
     }
@@ -32,7 +31,6 @@ public class HudAudioSource : MonoBehaviour {
     [System.Serializable]
     public class InterfaceSound {
         public string Id;
-        public FMODAsset Asset;
         public string FmodEventId;
     }
 }

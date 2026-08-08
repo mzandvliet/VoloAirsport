@@ -5,20 +5,14 @@ using RamjetAnvil.Coroutine;
 using RamjetAnvil.DependencyInjection;
 using RamjetAnvil.Volo;
 using UnityEngine;
-using UnityEngine.VR;
 
 public class GameLoader : MonoBehaviour {
     [Dependency, SerializeField] private UnityCoroutineScheduler _scheduler;
 
     private void Awake() {
 
-        // This disables VR in case a VR device is hooked up but we don't want to use it   
+        // VR is not supported in this build; VoloModule.DetermineVrMode() always resolves to VrMode.None.
         var vrMode = VoloModule.DetermineVrMode();
-        if (vrMode == VrMode.None) {
-            VRSettings.enabled = false;
-        } else {
-            VRSettings.enabled = true;
-        }
 
         if (Application.runInBackground != true) {
             Application.runInBackground = true;
@@ -67,7 +61,7 @@ public class GameLoader : MonoBehaviour {
                       SystemInfo.graphicsMultiThreaded + "\n";
         systemInfo += "Reverse-Z Support: " + (SystemInfo.usesReversedZBuffer ? "Yes" : "No") + "\n";
 
-        systemInfo += "VR: Enabled:" + (VRSettings.enabled ? "Yes" : "No") + ", Present: " + (VRDevice.isPresent ? "Yes" : "No") + ", Loaded Device: " + VRSettings.loadedDeviceName + ", Model: " + VRDevice.model + "\n";
+        systemInfo += "VR: not supported in this build\n";
         Debug.Log(systemInfo);
         if (!SystemInfo.usesReversedZBuffer) {
             Debug.LogError("Reverse-Z not supported");

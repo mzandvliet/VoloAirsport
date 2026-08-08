@@ -8,7 +8,6 @@ using RamjetAnvil.DependencyInjection;
 using RamjetAnvil.Unity.Utility;
 using UnityEngine;
 using UnityExecutionOrder;
-using Fmod = FMODUnity.RuntimeManager;
 
 namespace RamjetAnvil.Volo {
 
@@ -69,7 +68,7 @@ namespace RamjetAnvil.Volo {
 
             _notificationList.AddTimedNotification(_activeLanguage.Table["course"] + ": " + Name, _notificationTimeout.Seconds());
 
-            Fmod.PlayOneShot("event:/Objects/ring_pass_start");
+            // Fmod.PlayOneShot("event:/Objects/ring_pass_start");
 
             yield return WaitCommand.DontWait;
         }
@@ -77,7 +76,7 @@ namespace RamjetAnvil.Volo {
         private void OnRingPassed(int ringIndex) {
             _ringsPassed.Add(ringIndex);
             _nextRing = ringIndex + 1;
-            Fmod.PlayOneShot("event:/Objects/ring_pass_norm");
+            // Fmod.PlayOneShot("event:/Objects/ring_pass_norm");
         }
 
         private void OnCourseFinished() {
@@ -101,7 +100,7 @@ namespace RamjetAnvil.Volo {
                 ringsSkippedStr, _notificationTimeout.Seconds());
 
 
-            Fmod.PlayOneShot("event:/Objects/ring_pass_start");
+            // Fmod.PlayOneShot("event:/Objects/ring_pass_start");
 
             for (int i = 0; i < _rings.Count; i++) {
                 var ring = _rings[i];

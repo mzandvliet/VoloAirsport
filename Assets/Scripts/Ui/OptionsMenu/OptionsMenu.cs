@@ -29,7 +29,6 @@ using RamjetAnvil.Volo.Util;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Fmod = FMODUnity.RuntimeManager;
 using VersionInfo = RamjetAnvil.Volo.VersionInfo;
 
 /* Review 08-04-2014 This model has an explicit reference to its view. But I realize moving the
@@ -163,7 +162,7 @@ public class OptionsMenu : MonoBehaviour {
     private IEnumerator<WaitCommand> StartRebindInternal(InputBindingViewModel binding) {
         var bindingId = binding.Id;
         // TODO Update selected binding in the menu model
-        Fmod.PlayOneShot("event:/ui/forward");
+        // Fmod.PlayOneShot("event:/ui/forward");
         // Disable menu input to view
         //_mouseInputToView.Disable();
         _inputModule.DeactivateModule();
@@ -209,9 +208,9 @@ public class OptionsMenu : MonoBehaviour {
 
     private IEnumerator<WaitCommand> CompleteRebind(bool isCanceled) {
         if (isCanceled) {
-            Fmod.PlayOneShot("event:/ui/back");
+            // Fmod.PlayOneShot("event:/ui/back");
         } else {
-            Fmod.PlayOneShot("event:/ui/forward");
+            // Fmod.PlayOneShot("event:/ui/forward");
         }
 
         yield return WaitCommand.WaitForNextFrame;

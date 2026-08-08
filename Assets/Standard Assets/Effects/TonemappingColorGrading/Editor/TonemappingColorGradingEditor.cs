@@ -367,7 +367,7 @@ namespace UnityStandardAssets.CinematicEffects
                     bool valid = importer.anisoLevel == 0
                         && importer.mipmapEnabled == false
                         && importer.linearTexture == true
-                        && (importer.textureFormat == TextureImporterFormat.RGB24 || importer.textureFormat == TextureImporterFormat.AutomaticTruecolor);
+                        && importer.textureFormat == TextureImporterFormat.RGB24;
 
                     if (!valid)
                     {

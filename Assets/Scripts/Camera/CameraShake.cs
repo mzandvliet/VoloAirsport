@@ -2,7 +2,6 @@
 using RamjetAnvil.DependencyInjection;
 using UnityEngine;
 using RamjetAnvil.Volo;
-using UnityEngine.VR;
 
 /*
  * Create generic shake interface. Refrain from implementing game/vehicle specific logic here
@@ -98,7 +97,7 @@ public class CameraShake : MonoBehaviour {
 
         float time = Time.time * _baseFrequency; // Todo: also modulate with intensity
 
-	    if (!VRSettings.enabled) {
+	    if (true) { // VR is not supported in this build
             _transform.localRotation = Quaternion.Euler(
             Mathf.PerlinNoise(time * 0.25f, time * 0.50f) * intensity,
             Mathf.PerlinNoise(time * 0.10f, time * 0.25f) * intensity,

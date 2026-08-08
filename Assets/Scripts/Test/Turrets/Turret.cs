@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FMODUnity;
 using RamjetAnvil.Volo;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -21,9 +20,6 @@ public class Turret : MonoBehaviour {
     private float _force = 500f;
 
     [SerializeField] private Transform _barrel;
-    [SerializeField] private StudioEventEmitter _shotSound;
-    [SerializeField] private StudioEventEmitter _detectSound;
-    [SerializeField] private StudioEventEmitter _idleSound;
     [SerializeField] private Light _light;
 
     private Transform _transform;
@@ -102,7 +98,7 @@ public class Turret : MonoBehaviour {
         _firingRoutine = StartCoroutine(ShootRepeadely());
 
         _light.enabled = true;
-        _detectSound.Play();
+        // _detectSound.Play();
     }
 
     private void Idle() {
@@ -118,7 +114,7 @@ public class Turret : MonoBehaviour {
         }
 
         _light.enabled = false;
-        _idleSound.Play();
+        // _idleSound.Play();
     }
 
     private IEnumerator ShootRepeadely() {
@@ -139,6 +135,6 @@ public class Turret : MonoBehaviour {
             (_barrel.forward + Random.insideUnitSphere * _shotScattering) * _force
             );
 
-        _shotSound.Play();
+        // _shotSound.Play();
     }
 }

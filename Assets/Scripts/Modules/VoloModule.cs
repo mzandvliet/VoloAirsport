@@ -13,7 +13,6 @@ using RamjetAnvil.Volo;
 using RamjetAnvil.Volo.Util;
 using RxUnity.Schedulers;
 using UnityEngine.SceneManagement;
-using UnityEngine.VR;
 using Object = UnityEngine.Object;
 
 ///
@@ -276,8 +275,8 @@ public class VoloModule : IModule {
     }
 
     private static VrMode ValidateVrMode(VrMode mode) {
-        if (mode == VrMode.Oculus && !VRDevice.isPresent) {
-            Debug.LogError("Oculus mode selected, but Oculus Rift was not found.");
+        if (mode == VrMode.Oculus) {
+            Debug.LogError("Oculus mode selected, but VR is not supported in this build.");
             mode = VrMode.None;
         }
         // else if (mode == VrMode.OpenVr && !OpenVR.IsHmdPresent()) {
