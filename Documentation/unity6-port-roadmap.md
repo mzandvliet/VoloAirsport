@@ -1,7 +1,7 @@
 # Unity 6 Port Roadmap
 
-Status: planning, pre-upgrade
-Branch: `unity6-port` (to be branched from `butcher`)
+Status: mid-port, engine layer done, Input System replacement in progress
+Branch: `unity6-port` (branched from `butcher`)
 Last updated: 2026-08-08
 
 ## Why
@@ -221,3 +221,61 @@ Unity 6 (`6000.3.18f1`) is already installed via Unity Hub on this machine, alon
   revenue, <$500k dev budget) before relying on the free tier for a Steam re-release.
 - Decide open-source-release vs. Steam-release-first once a playable Unity 6 build
   exists — not a week-one decision.
+
+## Progress log
+
+### 2026-08-08, session 1 — engine/API port
+
+Got the project compiling clean against Unity 6 for everything except input. Fixed,
+in order: `com.unity.ugui` package missing from manifest (uGUI/EventSystems moved out
+of core engine modules since ~2019); `ImmutableCollections.dll`/`Rx.NET35.dll` swapped
+for modern equivalents (both were .NET-3.5-era backports whose bundled BCL interfaces
+collided with mscorlib — see [[feedback-unity-port-workflow]] memory for the diagnostic
+pattern); `Disruptor.dll` swapped for official NuGet `Disruptor-net` 6.0.1 with
+`JobManager.cs`'s construction calls updated for its modern API; FMOD/SteamVR/native-VR
+call sites stubbed to match the existing `butcher`-branch pattern; Ramnet's one dead
+`UnityEngine.Network` call patched; two unrelated bugs fixed (`Tuple<,>` ambiguity,
+obsolete `TextureImporterFormat` enum value).
+
+### 2026-08-08, session 1 — Input System replacement, first pass
+
+Confirmed with Mar: both InControl and Impero (Mar's own input-mapping framework, whose
+`StandardInput`/`Unity` adapter layers turned out to be genuinely missing from the repo,
+not just stripped) get replaced by Unity's new Input System — clean break on the old
+XML config format, Impero deleted outright, gamepad support goes broad via the generic
+`Gamepad` device abstraction (works across Xbox/PlayStation/Switch automatically)
+rather than staying Xbox-360-only.
+
+Added `com.unity.inputsystem` (1.11.2) and set `activeInputHandler: 2` ("Both") in
+Player Settings so the ~14 files still using the legacy `UnityEngine.Input` class
+don't break while this migrates incrementally.
+
+Built the core plumbing at `Assets/Scripts/Input/`:
+- `Core/ActionMap.cs` — generic `ActionMap<TAction>` wrapping the Input System, exposing
+  the same `PollAxis`/`PollMouseAxis`/`PollButton`/`PollButtonEvent` surface the rest of
+  the codebase already called against Impero+InControl, so most consumers needed zero
+  changes beyond a `using` fix.
+- `PilotActionMap.cs`, `MenuActionMap.cs`, `ParachuteActionMap.cs` (+ their
+  `...Provider` MonoBehaviours, matching each type's existing `.ActionMap` /
+  `.ActionMapRef` / `.V` access pattern exactly) — placeholder keyboard+gamepad
+  bindings, explicitly flagged `Todo` for real tuning later.
+- `ParachuteInput` struct (didn't exist anywhere in the repo despite being referenced —
+  invented a plausible shape: weight-shift X/Y, brake left/right; needs revisiting once
+  parachute flight is actually being tuned).
+
+Result: 285 compile errors / 28 files → 147 errors / 13 files. Every remaining error is
+now confined to the rebinding UI (`OptionsMenu`, `OptionsMenuModel`,
+`OptionsMenuInitializer`, `InputMappingsViewModel`, `InputBindingView`,
+`JoystickActivator`, `ActiveJoystickNotifier`, `InputBinder`, `InputBindingViewModel`,
+`InputBindings<T>`, `ControllerId`/`ControllerType`) and a not-yet-built
+`SpectatorActionMap` (4th action map, for spectator-mode camera) — deliberately
+deferred, this is a real feature (controller-connect detection, live rebinding flow,
+per-device profiles) that deserves its own design pass, not a rushed add-on. One
+unrelated stray also still open: missing `ColorPicker` widget type in
+`ParachuteEditor.cs` (in-editor parachute tuning tool, not core gameplay).
+
+**Next session should start with:** designing the rebinding UI / `JoystickActivator` /
+`InputBindings<T>` replacement (device-connected detection + live rebind flow using the
+Input System's own `InputUser`/`PlayerInput` APIs and rebinding overlay support), then
+building `SpectatorActionMap`. After that, the flight model retuning against Unity 6's
+PhysX (expected to be "borked" per Mar) becomes the next big body of work.

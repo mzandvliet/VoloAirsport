@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using RamjetAnvil.DependencyInjection;
+using RamjetAnvil.Volo.Input;
 
 public class HeadCameraController : MonoBehaviour {
     [Dependency, SerializeField] private PilotActionMapProvider _playerActionMapProvider;
