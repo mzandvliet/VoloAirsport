@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 
 Shader "Gizmo Solid Component"
 {
@@ -51,7 +53,7 @@ Shader "Gizmo Solid Component"
 			vOutput vert(vInput input)
 			{
 				vOutput o;
-				o.clipPos = mul(UNITY_MATRIX_MVP, input.vertexPos);
+				o.clipPos = UnityObjectToClipPos(input.vertexPos);
 				o.worldNormal = mul(input.vertexNormal, unity_WorldToObject);
 
 				return o;

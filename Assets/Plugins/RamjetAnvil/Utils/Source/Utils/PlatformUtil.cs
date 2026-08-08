@@ -24,7 +24,6 @@ namespace RamjetAnvil.Unity.Utility
         }
 
         private static readonly IDictionary<RuntimePlatform, OperatingSystem> OperatingSystems = new Dictionary<RuntimePlatform, OperatingSystem> {
-			{RuntimePlatform.OSXDashboardPlayer, OperatingSystem.MacOsx},
 			{RuntimePlatform.OSXEditor, OperatingSystem.MacOsx},
 			{RuntimePlatform.OSXPlayer, OperatingSystem.MacOsx},
 			{RuntimePlatform.LinuxPlayer, OperatingSystem.Linux},

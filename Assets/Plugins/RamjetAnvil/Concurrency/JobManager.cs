@@ -56,9 +56,10 @@ namespace RamjetAnvil.Threading {
                 _asyncThreadPoolScheduler = new FixedThreadPoolScheduler(numAsyncThreads, isBackground: false);
                 _asyncDisruptor = new Disruptor<DisruptorTask>(
                     () => new DisruptorTask(),
-                    new MultiThreadedClaimStrategy(_jobPoolSize),
-                    new BlockingWaitStrategy(),
-                    _asyncThreadPoolScheduler);
+                    _jobPoolSize,
+                    _asyncThreadPoolScheduler,
+                    ProducerType.Multi,
+                    new BlockingWaitStrategy());
                 _asyncDisruptor.HandleEventsWith(new DisruptorJobHandler());
                 _asyncDisruptor.Start();
 
@@ -70,9 +71,10 @@ namespace RamjetAnvil.Threading {
                 _asyncThreadPoolScheduler = new FixedThreadPoolScheduler(numAsyncThreads, isBackground: false);
                 _asyncDisruptor = new Disruptor<DisruptorTask>(
                     () => new DisruptorTask(),
-                    new MultiThreadedClaimStrategy(_jobPoolSize),
-                    new BlockingWaitStrategy(),
-                    _asyncThreadPoolScheduler);
+                    _jobPoolSize,
+                    _asyncThreadPoolScheduler,
+                    ProducerType.Multi,
+                    new BlockingWaitStrategy());
                 _asyncDisruptor.HandleEventsWith(new DisruptorJobHandler());
                 _asyncDisruptor.Start();
 
@@ -80,9 +82,10 @@ namespace RamjetAnvil.Threading {
                 _asyncIoThreadPoolScheduler = new FixedThreadPoolScheduler(numIoThreads, isBackground: false);
                 _asyncIoDisruptor = new Disruptor<DisruptorTask>(
                     () => new DisruptorTask(),
-                    new MultiThreadedClaimStrategy(_jobPoolSize),
-                    new BlockingWaitStrategy(),
-                    _asyncThreadPoolScheduler);
+                    _jobPoolSize,
+                    _asyncThreadPoolScheduler,
+                    ProducerType.Multi,
+                    new BlockingWaitStrategy());
                 _asyncIoDisruptor.HandleEventsWith(new DisruptorJobHandler());
                 _asyncIoDisruptor.Start();
 
@@ -271,7 +274,7 @@ namespace RamjetAnvil.Threading {
 
         private class DisruptorJobHandler : IEventHandler<DisruptorTask> {
 
-            public void OnNext(DisruptorTask disruptorTask, long sequence, bool endOfBatch) {
+            public void OnEvent(DisruptorTask disruptorTask, long sequence, bool endOfBatch) {
                 disruptorTask.Task.Run();
             }
         }

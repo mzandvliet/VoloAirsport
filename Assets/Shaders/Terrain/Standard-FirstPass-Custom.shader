@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Nature/Terrain/StandardCustom" {
@@ -90,7 +92,7 @@ Shader "Nature/Terrain/StandardCustom" {
 				//UNITY_TRANSFER_INSTANCE_ID(v, o);
 
 				//o.pos = UnityObjectToClipPos(v.vertex);
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 				fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
@@ -290,7 +292,7 @@ Shader "Nature/Terrain/StandardCustom" {
 				v.tangent.xyz = cross(v.normal, float3(0,0,1));
 				v.tangent.w = -1;
 
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 				
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 				float3 worldNormal = UnityObjectToWorldNormal(v.normal);

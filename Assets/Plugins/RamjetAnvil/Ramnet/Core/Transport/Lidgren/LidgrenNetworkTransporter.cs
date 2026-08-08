@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using Lidgren.Network;
 using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Util;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace RamjetAnvil.RamNet {
     public class LidgrenNetworkTransporter : MonoBehaviour, IConnectionTransporter, IConnectionlessTransporter, ILatencyInfo {
@@ -62,8 +62,10 @@ namespace RamjetAnvil.RamNet {
             _netPeer = new NetPeer(config);
             _netPeer.Start();
             
-            Debug.Log("internal endpoint is: " + UnityEngine.Network.player.ipAddress);
-            _internalEndpoint = new IPEndPoint(IPAddress.Parse(UnityEngine.Network.player.ipAddress), _netPeer.Port);
+            var localAddress = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+                .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork) ?? IPAddress.Loopback;
+            Debug.Log("internal endpoint is: " + localAddress);
+            _internalEndpoint = new IPEndPoint(localAddress, _netPeer.Port);
             _status = TransporterStatus.Open;
 
             Debug.Log("Opened Lidgren transporter at " + _netPeer.Socket.LocalEndPoint);

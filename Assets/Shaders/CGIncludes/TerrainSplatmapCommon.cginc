@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 #ifndef TERRAIN_SPLATMAP_COMMON_CGINC_INCLUDED
@@ -32,7 +34,7 @@ void SplatmapVert(inout appdata_full v, out Input data)
 {
 	UNITY_INITIALIZE_OUTPUT(Input, data);
 	data.tc_Control = TRANSFORM_TEX(v.texcoord, _Control);	// Need to manually transform uv here, as we choose not to use 'uv' prefix for this texcoord.
-	float4 pos = mul (UNITY_MATRIX_MVP, v.vertex);
+	float4 pos = UnityObjectToClipPos (v.vertex);
 	UNITY_TRANSFER_FOG(data, pos);
 
 	data.myWorldPos = mul(unity_ObjectToWorld, v.vertex).xyz;

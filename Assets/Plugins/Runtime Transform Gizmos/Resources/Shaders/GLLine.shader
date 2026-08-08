@@ -1,4 +1,6 @@
-﻿Shader "GLLine"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "GLLine"
 {
 	SubShader
 	{
@@ -29,7 +31,7 @@
 			vOutput vert(vInput input)
 			{
 				vOutput o;
-				o.clipPos = mul(UNITY_MATRIX_MVP, input.vertexPos);
+				o.clipPos = UnityObjectToClipPos(input.vertexPos);
 				o.color = input.vertexColor;
 
 				return o;

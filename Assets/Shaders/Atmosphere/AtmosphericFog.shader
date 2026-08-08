@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Custom/AtmosphericFog" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "black" {}
@@ -32,7 +34,7 @@ CGINCLUDE
 		v2f o;
 		float index = v.vertex.z;
 		v.vertex.z = 0.1;
-		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+		o.pos = UnityObjectToClipPos(v.vertex);
 		o.uv = v.texcoord.xy;
 		o.uv_depth = v.texcoord.xy;
 
