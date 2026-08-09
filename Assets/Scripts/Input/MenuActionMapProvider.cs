@@ -7,6 +7,7 @@ namespace RamjetAnvil.Volo.Input {
     public class MenuActionMap : ActionMap<MenuAction> {
         public MenuActionMap() : base(new InputActionMap("Menu")) {
             SetupBindings();
+            EnableActions();
         }
 
         private void SetupBindings() {

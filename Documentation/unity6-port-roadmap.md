@@ -1,8 +1,9 @@
 # Unity 6 Port Roadmap
 
-Status: mid-port, engine layer done, Input System replacement in progress
+Status: mid-port, compiles clean, boots and runs - gamepad now reaches the
+title screen's Play/Title-screen selection. Not yet fully playable.
 Branch: `unity6-port` (branched from `butcher`)
-Last updated: 2026-08-08
+Last updated: 2026-08-08 (runtime debugging session)
 
 ## Why
 
@@ -334,8 +335,141 @@ per-device profiles) that deserves its own design pass, not a rushed add-on. One
 unrelated stray also still open: missing `ColorPicker` widget type in
 `ParachuteEditor.cs` (in-editor parachute tuning tool, not core gameplay).
 
-**Next session should start with:** designing the rebinding UI / `JoystickActivator` /
-`InputBindings<T>` replacement (device-connected detection + live rebind flow using the
-Input System's own `InputUser`/`PlayerInput` APIs and rebinding overlay support), then
-building `SpectatorActionMap`. After that, the flight model retuning against Unity 6's
-PhysX (expected to be "borked" per Mar) becomes the next big body of work.
+**(Superseded — see the "runtime debugging" entry further below.)** `SpectatorActionMap`
+and a real (if minimal) `ColorPicker` got built the same session, and the project moved
+past compiling into actually booting and running. The rebinding UI / `JoystickActivator`
+/ `InputBindings<T>` replacement is still the next real feature-scoped piece of work,
+just no longer the *very* next thing — see the bottom of this doc for current status.
+
+### 2026-08-08, session 1 — runtime debugging: compiles clean → actually boots and runs
+
+Mar did the Editor upgrade click-through and scene wiring (re-attaching the new
+`PilotActionMapProvider`/`MenuActionMapProvider`/`ParachuteActionMapProvider`/
+`JoystickActivator`/`InputBinder` components where scenes showed "Missing Script" —
+Unity requires a MonoBehaviour's filename to match its class name to be addable via the
+Editor, so `PilotActionMap.cs` etc got renamed to `PilotActionMapProvider.cs` etc,
+keeping the non-component helper class in the same file). From there, booting through
+the loading screen surfaced a long chain of runtime-only bugs — things that compiled
+fine but only broke once actually executed. In rough chronological order:
+
+- **`.execution_order_cache` corruption** — a stale, partially-overwritten cache file at
+  the project root (`UnityExecutionOrder` plugin's `[Run.Before]`/`[Run.After]`
+  execution-order cache) had a stray `</ArrayOfString>` mid-file, crashing an
+  `[InitializeOnLoad]` static constructor and silently skipping all execution-order
+  application for the session. Deleted; it's fully regenerable.
+- **`MutableString` reflection crash** — `GarbageFreeString()` used reflection to reach
+  into `StringBuilder`'s *private* `"_str"` field as a no-allocation `ToString()` trick.
+  That field only existed in the old Mono `StringBuilder` layout; modern .NET doesn't
+  have it, so `GetField` returned `null` and the next call threw, breaking most of the
+  UI (this class is used pervasively). Removed the reflection entirely; `ToString()` now
+  just calls the builder's own `ToString()` — loses a minor GC micro-optimization, gains
+  correctness.
+- **`Newtonsoft.Json.dll` (v6.0.0.0, ~2014) had a hard-coded runtime dependency** on an
+  assembly literally named `ImmutableCollections, Version=999.999.999.0` — Newtonsoft's
+  own old immutable-collections add-on, tied to that specific old package name. Our
+  earlier compile-time swap of `ImmutableCollections.dll`'s content didn't help here
+  since Newtonsoft's own dependency table is frozen at whenever *they* built it, and
+  couldn't be patched (precompiled, no source). Replaced with Unity's official
+  `com.unity.nuget.newtonsoft-json` (3.2.1) package instead of a raw NuGet fetch, since
+  it's built for Unity/IL2CPP; disabled the old plugin dll.
+- **`MainMenu`'s constructor called `PadroneClient.Me(...)` unconditionally** with
+  nothing catching failures — `PadroneClient` (precompiled, no source) uses the legacy
+  `UnityEngine.WWW` class internally, whose *native* binding (`WWW.InitWWW`) was removed
+  in modern Unity even though the managed wrapper still compiles, so it threw
+  `MissingMethodException` at runtime and aborted the whole state-machine boot (the
+  "camera rig frozen at 0,0,-6" symptom). Wrapped in try/catch — can't fix
+  `PadroneClient` itself, and the master server is confirmed unreachable/unused anyway.
+- **`InputMappingsViewModel`'s `[Dependency]`-only fields never resolved** (nothing
+  wires them, unlike `OptionsMenu`'s equivalent fields which `OptionsMenuInitializer`
+  sets explicitly) — unresolved `[Dependency]` fields make the DI system disable the
+  component outright, so `OnEnable()` never ran and `InputMappings` stayed permanently
+  null, crashing `OptionsMenu.Initialize()`'s `.Subscribe()` call. Made it
+  self-initializing with a graceful empty-list fallback, called from both `OnEnable()`
+  and the getter itself (so it can't be beaten by DI-disable or early-access timing).
+  Same null-guard pattern applied to `OptionsMenu._joystickActivator` and
+  `GlobalMenuInputEventEmitter`'s two dependency fields, and `UnityMasterServerClient`
+  got an empty-URL guard so it stops attempting a malformed request every boot.
+- **The News/Continue button took mouse clicks but not keyboard/gamepad** —
+  `CursorInputModule.Process()` (the custom `RamjetAnvil.InputModule` pipeline, predates
+  this port) gates its *entire* pipeline — mouse and keyboard/gamepad navigation both —
+  behind `Cursor != null && NavigationDevice != null`. `VoloModule.cs` set `Cursor` (a
+  real `MouseCursor`) but had `NavigationDevice = new MenuActionMapCursor(...)`
+  commented out from the original stub pass, so *nothing* processed, not even mouse —
+  except mouse clicks on `Button` components work via a separate raycast+click path that
+  doesn't need `NavigationDevice` at all, which is why mouse alone appeared to work.
+  Restored the missing `MenuActionMapProvider` lookup and the `NavigationDevice`
+  assignment.
+- **`TitleScreen`'s "press any button to continue" logic was fully dead-commented**,
+  same "I want to handle input" pattern as `GlobalMenuInputEventEmitter` and
+  `OpenVrCameraRig` from earlier, using the fully-removed Impero `Peripherals`/
+  `ImperoCore` machinery. Rather than reimplement raw device polling, hooked it into the
+  already-restored `Events.OnConfirmPressed` global event instead (`_data.EventSystem
+  .Listen<Events.OnConfirmPressed>(...)`), replicating the original two-stage
+  show-logo-then-transition behaviour.
+- **A systemic DI-registration-timing bug**, found while chasing why the TitleScreen fix
+  still didn't fire: `UnityDependencyResolver.Resolve()` injects `[Dependency]` fields
+  across every scene object in one pass, using whatever's in `NonSerializableRefs` *at
+  that exact moment*. In `VoloModule.cs`, `Resolve()` ran before the action-map providers
+  and `cursor` were ever looked up, so every bare `[Dependency]` field of those types
+  anywhere in the game was silently unresolvable from the start — not a one-off, the same
+  bug surfacing repeatedly across different components. First attempt: manually register
+  the four providers into `NonSerializableRefs` before `Resolve()`. That caused a
+  `ArgumentException: An item with the same key has already been added` — turned out
+  `Core.unity` already has ~22 `IsDependency` marker components (the DI system's actual
+  intended scene-registration mechanism, found by grepping the scene YAML for the
+  component's GUID, not its class name string — Unity serializes component types by
+  GUID) already registering these singletons; once Mar re-attached the real components
+  those markers' stale references healed and they started resolving correctly on their
+  own, making the manual registration redundant rather than additive. Reverted to a
+  plain `FindObjectOfType` lookup (still needed for direct, non-DI use constructing
+  `MenuActionMapCursor`) and left DI registration to the scene's own mechanism. `cursor`
+  still needed its own explicit registration + a second `Resolve()` call, since it's
+  created fresh in code after the camera rig exists and has no scene-placed equivalent.
+- **The actual root cause of "nothing responds to any input device"**: `ActionMap<T>`'s
+  base constructor called `_inputActionMap.Enable()` immediately — before any derived
+  class's `SetupBindings()` (called from the derived constructor body, which always runs
+  *after* the base constructor completes in C#) had added a single binding. Every one of
+  the four action maps (`Pilot`/`Menu`/`Parachute`/`Spectator`) was being enabled while
+  still empty. Restructured: the base class now exposes a `protected void
+  EnableActions()` instead of auto-enabling, and each derived map calls it as the last
+  line of its own constructor, after `SetupBindings()`. This fixed both the earlier
+  "Continue button ignores keyboard/gamepad" symptom and the TitleScreen block in one
+  shot, since both ultimately depend on `MenuActionMap`'s bindings actually being live.
+- **`ColorPicker`** (the `ParachuteEditor.cs` stray from the previous entry) got a real,
+  minimal implementation — a single `Image`-backed swatch component with
+  `onValueChanged`/`CurrentColor` — rather than a full HSV picker, since the original
+  (a stripped commercial/custom asset) is unrecoverable and this is a level-editor
+  convenience tool, not core gameplay. `_cellColorPicker`'s child hierarchy
+  (`BoxSlider`, `Hue`, `Hue/Background`) confirms the original was a real interactive
+  HSV picker — flagged as a known downgrade, not silently glossed over.
+
+**Result:** boots past the loading screen, through the news panel, into the title
+screen, and gamepad input now reaches the Play/Title-screen selection. Not yet fully
+playable — that's the next milestone to chase.
+
+**Debugging technique worth reusing:** when a `[SerializeField]` reference *looks*
+assigned in the Inspector but the component behaves as if it's null, don't guess —
+grep the `.unity`/`.prefab` file directly. Unity serializes component *types* by GUID
+(from the `.meta` file), not by class name string, so search by GUID
+(`grep -n "^guid:" Foo.cs.meta`) to find every scene instance of a component type, and
+follow a specific field's `{fileID: N}` to `--- !u!114 &N` in the same file to check
+whether that fileID resolves to a real, currently-existing object of the expected type,
+or a dangling reference to something that was deleted and replaced. This resolved two
+separate bugs this session (the DI duplicate-key crash, and ruling out a stale/mismatched
+`EventSystem` reference) faster and more reliably than reasoning about it blind.
+
+**Next session should pick up with:** getting further past the title screen into actual
+gameplay (spawn, flight), then the rebinding UI / `JoystickActivator` / `InputBindings<T>`
+real implementation, then flight-model retuning against Unity 6's PhysX.
+
+**Known landmine directly in that path:** the "`Debug.LogWarning("I want to handle
+input")`, real logic commented out beneath it" dead-stub pattern (same shape as the
+`GlobalMenuInputEventEmitter`/`TitleScreen` bugs just fixed) still exists in **5 more
+files** — `grep -rl "I want to handle" Assets/Scripts` finds `FlyWingsuit.cs`,
+`ParachuteStates.cs`, `Playing.cs`, `SpawnScreen.cs`, `SpectatorMode.cs`, plus
+`HeadCameraController.cs` and `OpenVrCameraRig.cs` (lower priority — VR/head-look).
+`Playing.cs` and `SpawnScreen.cs` are almost certainly the very next ones to bite,
+since they're on the direct path from title screen into spawn/flight. Expect the same
+"nothing responds to input in this state" symptom, same fix shape (reconnect to the
+already-working `MenuActionMapProvider`/`PilotActionMapProvider`/`Events.*` rather than
+trying to resurrect the commented-out Impero code).

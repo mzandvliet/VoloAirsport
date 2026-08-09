@@ -11,6 +11,7 @@ namespace RamjetAnvil.Volo.Input {
     public class SpectatorActionMap : ActionMap<SpectatorAction> {
         public SpectatorActionMap() : base(new InputActionMap("Spectator")) {
             SetupBindings();
+            EnableActions();
         }
 
         private void SetupBindings() {

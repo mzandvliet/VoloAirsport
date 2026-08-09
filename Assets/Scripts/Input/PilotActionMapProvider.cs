@@ -9,6 +9,7 @@ namespace RamjetAnvil.Volo.Input {
     public class PilotActionMap : ActionMap<WingsuitAction> {
         public PilotActionMap() : base(new InputActionMap("Pilot")) {
             SetupBindings();
+            EnableActions();
         }
 
         private void SetupBindings() {

@@ -37,6 +37,7 @@ namespace RamjetAnvil.Volo.Input {
     public class ParachuteActionMap : ActionMap<ParachuteAction>, IParachuteActionMap {
         public ParachuteActionMap() : base(new InputActionMap("Parachute")) {
             SetupBindings();
+            EnableActions();
         }
 
         private void SetupBindings() {

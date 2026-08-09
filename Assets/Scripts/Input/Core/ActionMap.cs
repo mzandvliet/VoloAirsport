@@ -20,6 +20,13 @@ namespace RamjetAnvil.Volo.Input {
 
         protected ActionMap(InputActionMap inputActionMap) {
             _inputActionMap = inputActionMap;
+        }
+
+        // Derived classes must call this as the last line of their own constructor, after
+        // SetupBindings() has added every action - base constructors run before the derived
+        // constructor body, so enabling here (rather than in this base constructor) is the only
+        // way to guarantee every binding exists before the map goes live.
+        protected void EnableActions() {
             _inputActionMap.Enable();
         }
 
