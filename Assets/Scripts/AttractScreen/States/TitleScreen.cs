@@ -36,7 +36,6 @@ namespace RamjetAnvil.Volo.States {
         private Data _data;
         private ParticleSystemRenderer _logoParticleRenderer;
         private CompositeDisposable _startListener;
-        // private Func<ButtonEvent> _buttonEvents;
         private IDisposable _logoFadeIn;
 
         private bool _isRunning;
@@ -44,18 +43,19 @@ namespace RamjetAnvil.Volo.States {
         public TitleScreen(IStateMachine machine, Data data) : base(machine) {
             _data = data;
             _data.TitleScreenLogo.SetActive(false); // Note: due to obscure crashbug, this has to be active in the serialized scene
-            
-            Debug.LogWarning("I want to handle input");
-            
-            // var buttonInput = ImperoCore
-            //     .MergeAll(
-            //         Adapters.MergeButtons,
-            //         UnityInputIds.ControllerIds.Select(joystickId => Peripherals.Controller.Buttons(joystickId))
-            //             .Concat(new [] {Peripherals.Keyboard, Peripherals.Mouse.Buttons}));
 
-            // _buttonEvents = ImperoCore
-            //     .MergePollFns(Adapters.MergeButtons, buttonInput.Source.Values)
-            //     .Adapt(Adapters.ButtonEvents(() => Time.frameCount));
+            _startListener = new CompositeDisposable(
+                _data.EventSystem.Listen<Events.OnConfirmPressed>(OnAnyButtonPressed));
+        }
+
+        private void OnAnyButtonPressed() {
+            if (_data.Logo.IsVisible) {
+                OnStartPressed();
+                _data.Logo.Show(false);
+            } else {
+                // Fully display the logo
+                _data.Logo.Show(true);
+            }
         }
 
         private IEnumerator<WaitCommand> OnEnter() {
@@ -84,20 +84,6 @@ namespace RamjetAnvil.Volo.States {
             yield return WaitCommand.WaitSeconds(_data.LogoDelayInS);
             _data.Logo.Show(true);
             _logoFadeIn = Disposables.Empty;
-        }
-
-        private void Update() {
-            Debug.LogWarning("I want to handle input");
-
-            // if (_buttonEvents() == ButtonEvent.Down) {
-            //     if (_data.Logo.IsVisible) {
-            //         OnStartPressed();
-            //         _data.Logo.Show(false);
-            //     } else {
-            //         // Fully display the logo       
-            //         _data.Logo.Show(true);
-            //     }
-            // }
         }
 
         private void OnExit() {

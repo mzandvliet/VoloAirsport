@@ -159,7 +159,16 @@ public class VoloModule : IModule {
         // dependencyResolver.NonSerializableRefs.Add(new DependencyReference("pilotInputBindings", pilotInputBindings));
         // dependencyResolver.NonSerializableRefs.Add(new DependencyReference("spectatorInputBindings", spectatorInputBindings));
         // dependencyResolver.NonSerializableRefs.Add(new DependencyReference("parachuteInputBindings", parachuteInputBindings));
+
         dependencyResolver.Resolve();
+
+        // Todo: MenuActionMapProvider/PilotActionMapProvider/ParachuteActionMapProvider/
+        // JoystickActivator are registered as scene dependencies via IsDependency marker
+        // components already (Core.unity has ~22 of them) - the Resolve() call above already
+        // picked them up for every [Dependency]-tagged field, no manual registration needed
+        // here. This lookup is only for direct (non-DI) use below, e.g. constructing
+        // MenuActionMapCursor.
+        var menuActionMapProvider = Object.FindObjectOfType<MenuActionMapProvider>();
 
         // Create and inject the player interface dynamically
         var cameraManager = Object.FindObjectOfType<CameraManager>();
@@ -174,10 +183,17 @@ public class VoloModule : IModule {
         // Create a cursor
         var cursor = CreateCursor(gameSettingsProvider.ActiveVrMode, cameraManager.Rig.GetMainCamera());
         dependencyResolver.NonSerializableRefs.Add(new DependencyReference("cursor", cursor));
+        // Re-resolve now that "cursor" is registered - it couldn't exist before the camera rig
+        // did, so it necessarily missed the first pass above. Fields resolved by that first
+        // pass are untouched (Resolve(GameObject) injects with overrideExisting: false); this
+        // just gives ICursor-dependent components (UiEventEmitter, CursorRenderer, ...) a
+        // chance to resolve too.
+        dependencyResolver.Resolve();
         var inputModule = GameObject.FindObjectOfType<CursorInputModule>();
         inputModule.Cursor = cursor;
-        var menuActionMapProvider = Object.FindObjectOfType<MenuActionMapProvider>();
-        inputModule.NavigationDevice = new MenuActionMapCursor(menuActionMapProvider);
+        if (menuActionMapProvider != null) {
+            inputModule.NavigationDevice = new MenuActionMapCursor(menuActionMapProvider);
+        }
         var raycasters = GameObject.FindObjectsOfType<PhysicsRayBasedRaycaster>();
         foreach (var raycaster in raycasters) {
             raycaster.SetCamera(cameraManager.Rig.GetMainCamera());
