@@ -84,17 +84,9 @@ namespace RamjetAnvil.Volo.Input {
         }
     }
 
-    public class InputBinder : MonoBehaviour {
-        public void StartRebind(Action<Maybe<InputBindingSource>> onComplete) {
-            onComplete(Maybe.Nothing<InputBindingSource>());
-        }
-    }
-
-    public class JoystickActivator : MonoBehaviour {
-        public IObservable<ConnectedController?> ActiveController {
-            get { return System.Reactive.Linq.Observable.Never<ConnectedController?>(); }
-        }
-    }
+    // InputBinder and JoystickActivator are MonoBehaviours, split into their own
+    // class-name-matching files (InputBinder.cs, JoystickActivator.cs) so Unity's Editor
+    // will let them be added as components.
 
     public class InputBindings<TAction> : IDisposable {
         private readonly InputSourceMapping<TAction> _initialMapping;
