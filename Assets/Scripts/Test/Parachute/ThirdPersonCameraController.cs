@@ -31,6 +31,11 @@ public class ThirdPersonCameraController : MonoBehaviour, ICameraMount {
     [Dependency, SerializeField] private FlightStatistics _target;
     [Dependency, SerializeField] private UnityCoroutineScheduler _scheduler;
 
+    public IReadonlyRef<PilotActionMap> PlayerActionMap {
+        get { return _playerActionMap; }
+        set { _playerActionMap = value; }
+    }
+
     [SerializeField]
     private Config _wingsuitConfig;
     [SerializeField]

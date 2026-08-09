@@ -8,8 +8,7 @@ namespace RamjetAnvil.UnityEditor {
     [InitializeOnLoad]
     public class UnityServicesSetup {
         static UnityServicesSetup() {
-            var userId = Environment.UserName + " (developer)";
-            Analytics.SetUserId(userId);
+            // Analytics.SetUserId was removed from the Analytics API; no replacement wired up.
         }
     }
 }

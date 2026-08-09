@@ -16,8 +16,6 @@ using RamjetAnvil.Coroutine;
 using RamjetAnvil.DependencyInjection;
 using RamjetAnvil.Gui;
 using RamjetAnvil.Impero;
-using RamjetAnvil.Impero.StandardInput;
-using RamjetAnvil.Impero.Unity;
 using RamjetAnvil.Reactive;
 using RamjetAnvil.Unity.Utility;
 using RamjetAnvil.Util;

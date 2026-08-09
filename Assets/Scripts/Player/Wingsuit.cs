@@ -104,7 +104,7 @@ namespace RamjetAnvil.Volo {
                 var r = Rigidbodies[i];
                 r.isKinematic = _kinematicState[r];
                 if (!r.isKinematic) {
-                    r.velocity = Vector3.zero;
+                    r.linearVelocity = Vector3.zero;
                     r.angularVelocity = Vector3.zero;
                 }
             }

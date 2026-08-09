@@ -11,7 +11,7 @@ public class GuiCameraRenderer : CameraRenderer {
 
     public override void Render(RenderTexture target) {
 //        // TODO Find out what the right texture format is
-        RenderTextureFormat textureFormat = _camera.hdr ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
+        RenderTextureFormat textureFormat = _camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
         const int depth = 24;
         RenderTexture uiTexture = target != null
             ? RenderTexture.GetTemporary(target.width, target.height, depth, RenderTextureFormat.Default) 

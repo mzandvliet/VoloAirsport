@@ -75,7 +75,7 @@ public class FlightStatistics : MonoBehaviour, ISpawnable {
     private ICircularBuffer<RigidbodyState> _historyBuffer;
 
     public Vector3 RelativeVelocity { get { return _relativeVelocity; } }
-    public Vector3 WorldVelocity { get { return _body.velocity; } } 
+    public Vector3 WorldVelocity { get { return _body.linearVelocity; } } 
     public float AngleOfAttack { get { return _angleOfAttack; } }
     public float TrueAirspeed { get { return _trueAirspeed; } }
     public float AltitudeSeaLevel { get { return _altitudeSeaLevel; } }
@@ -197,7 +197,7 @@ public class FlightStatistics : MonoBehaviour, ISpawnable {
         }
 
         /* Find position derivatives. */
-        Vector3 velocity = _body.velocity;
+        Vector3 velocity = _body.linearVelocity;
         Vector3 oldVelocity = RigidbodyState.Lerp(_historyBuffer, Time.fixedTime - 0.25f).Velocity;
         _acceleration = (velocity - oldVelocity) / 0.25f;
 
@@ -207,7 +207,7 @@ public class FlightStatistics : MonoBehaviour, ISpawnable {
 
         /* Determine relative wind vector. */
         Vector3 windVelocity = _wind.GetWindVelocity(_body.transform.position);
-        _relativeVelocity = _body.velocity - windVelocity;
+        _relativeVelocity = _body.linearVelocity - windVelocity;
         _trueAirspeed = _relativeVelocity.magnitude;
 
         /* Determine angle of attack. */
@@ -217,8 +217,8 @@ public class FlightStatistics : MonoBehaviour, ISpawnable {
         _angleOfAttack = MathUtils.AngleAroundAxis(v1, v2, n);
 
         /* Determine glide ratio. */
-        float horizontalDistance = Mathf.Sqrt(Mathf.Pow(_body.velocity.x, 2f) + Mathf.Pow(_body.velocity.z, 2f));
-        float verticalDistance = -_body.velocity.y;
+        float horizontalDistance = Mathf.Sqrt(Mathf.Pow(_body.linearVelocity.x, 2f) + Mathf.Pow(_body.linearVelocity.z, 2f));
+        float verticalDistance = -_body.linearVelocity.y;
         _glideRatio = horizontalDistance / verticalDistance;
 
         /* Determine Angle to ground for local axes. */
@@ -353,7 +353,7 @@ public struct RigidbodyState {
         return new RigidbodyState {
             Timestamp = 0f,
             Position = body.position,
-            Velocity = body.velocity,
+            Velocity = body.linearVelocity,
             Acceleration = Vector3.zero,
             Rotation = body.rotation,
             AngularVelocity = body.angularVelocity,
@@ -365,7 +365,7 @@ public struct RigidbodyState {
         return new RigidbodyState {
             Timestamp = timestamp,
             Position = body.position,
-            Velocity = body.velocity,
+            Velocity = body.linearVelocity,
             Acceleration = Vector3.zero,
             Rotation = body.rotation,
             AngularVelocity = body.angularVelocity,
@@ -377,7 +377,7 @@ public struct RigidbodyState {
         return new RigidbodyState {
             Timestamp = timestamp,
             Position = body.position,
-            Velocity = body.velocity,
+            Velocity = body.linearVelocity,
             Acceleration = acceleration,
             Rotation = body.rotation,
             AngularVelocity = body.angularVelocity,
@@ -387,7 +387,7 @@ public struct RigidbodyState {
 
     public static void Apply(Rigidbody body, RigidbodyState state) {
         body.position = state.Position;
-        body.velocity = state.Velocity;
+        body.linearVelocity = state.Velocity;
         body.rotation = state.Rotation;
         body.angularVelocity = state.AngularVelocity;
     }

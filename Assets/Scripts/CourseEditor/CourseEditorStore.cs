@@ -19,7 +19,7 @@ namespace RamjetAnvil.Volo.CourseEditing
                 .Merge(actions.CreatePropOnLocation.Select(StoreAction.Create<ImmutableTransform>("createPropOnLocation")))
                 .Merge(actions.DeleteProp.Select(StoreAction.Create<PropId>("deleteProp")))
                 .Merge(actions.DeleteSelectedProp.Select(StoreAction.Create<Unit>("deleteSelectedProp")))
-                .Merge(actions.UpdateProp.Select(StoreAction.Create<Tuple<PropId, ImmutableTransform>>("updateProp")))
+                .Merge(actions.UpdateProp.Select(StoreAction.Create<RamjetAnvil.Unity.Utility.Tuple<PropId, ImmutableTransform>>("updateProp")))
                 .Merge(actions.HighlightProp.Select(StoreAction.Create<Maybe<PropId>>("highlightProp")))
                 .Merge(actions.SelectProp.Select(StoreAction.Create<Maybe<PropId>>("selectProp")))
                 .Merge(actions.SelectPropType.Select(StoreAction.Create<PropType>("selectPropType")))
@@ -40,7 +40,7 @@ namespace RamjetAnvil.Volo.CourseEditing
                         newAppState = History.AddNewState(currentAppState, currentState.AddProp((ImmutableTransform)command.Arguments));
                     } 
                     else if (command.Id.Equals("updateProp")) {
-                        var args = (Tuple<PropId, ImmutableTransform>) command.Arguments;
+                        var args = (RamjetAnvil.Unity.Utility.Tuple<PropId, ImmutableTransform>) command.Arguments;
                         var prop = currentState.Props[args._1];
                         var isTransformChanged = !prop.Transform.Equals(args._2);
                         if (isTransformChanged) {

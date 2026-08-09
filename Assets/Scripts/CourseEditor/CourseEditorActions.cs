@@ -14,7 +14,7 @@ namespace RamjetAnvil.Volo.CourseEditing
         private readonly ISubject<ImmutableTransform> _createPropOnLocation; 
         private readonly ISubject<PropId> _deleteProp;
         private readonly ISubject<Unit> _deleteSelectedProp;
-        private readonly ISubject<System.Tuple<PropId, ImmutableTransform>> _updateProp;
+        private readonly ISubject<RamjetAnvil.Unity.Utility.Tuple<PropId, ImmutableTransform>> _updateProp;
         private readonly ISubject<IImmutableList<PropId>> _reorderProps; 
         private readonly ISubject<Maybe<PropId>> _selectProp;
         private readonly ISubject<Maybe<PropId>> _highlightProp;
@@ -30,7 +30,7 @@ namespace RamjetAnvil.Volo.CourseEditing
             _createPropOnLocation = new Subject<ImmutableTransform>();
             _deleteProp = new Subject<PropId>();
             _deleteSelectedProp = new Subject<Unit>();
-            _updateProp = new Subject<System.Tuple<PropId, ImmutableTransform>>();
+            _updateProp = new Subject<RamjetAnvil.Unity.Utility.Tuple<PropId, ImmutableTransform>>();
             _reorderProps = new Subject<IImmutableList<PropId>>();
             _selectProp = new Subject<Maybe<PropId>>();
             _highlightProp = new Subject<Maybe<PropId>>();
@@ -84,7 +84,7 @@ namespace RamjetAnvil.Volo.CourseEditing
             get { return _selectPropType; }
         }
 
-        public ISubject<System.Tuple<PropId, ImmutableTransform>> UpdateProp {
+        public ISubject<RamjetAnvil.Unity.Utility.Tuple<PropId, ImmutableTransform>> UpdateProp {
             get { return _updateProp; }
         }
 

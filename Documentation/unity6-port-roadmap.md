@@ -224,6 +224,66 @@ Unity 6 (`6000.3.18f1`) is already installed via Unity Hub on this machine, alon
 
 ## Progress log
 
+### 2026-08-08, session 1 — clean compile reached
+
+After the Input System first pass (below), a full close-the-Editor-and-recompile-headless
+cycle surfaced ~225 further errors that earlier partial/incremental compiles had never
+reached (Unity's incremental compiler skips full re-analysis of files while errors are
+present elsewhere, so this was the *first* time the true full picture was visible - not a
+regression). Root causes, once traced:
+
+- `ParachuteInput`'s real shape (`Brakes`/`FrontRisers`/`RearRisers`/`WeightShift`/
+  `SelectedLine`/`SelectedLinePull`, all `Vector2`/`ParachuteLine?`) had to be reverse
+  engineered from actual call sites in `ParachuteController.cs`, `PilotAnimator.cs`, and
+  `GameHud.cs` - my first-pass guess at this struct's shape (written blind before those
+  files were reachable) was wrong.
+- A pre-existing `IParachuteActionMap` interface at
+  `Assets/Scripts/Test/Parachute/ParachuteActionMap.cs` (separate from the new
+  `Assets/Scripts/Input/ParachuteActionMap.cs`) had its `Input`/`ParachuteConfigToggle`
+  members commented out, waiting for `ParachuteInput` to exist - uncommented now that it does.
+  `ThirdPersonCameraController` needed a public `PlayerActionMap` property wrapping its
+  existing private field, `ParachuteController` needed its `_actionMap`/`_input` fields
+  restored (only `_input` was even present, commented out).
+- The `Tuple<,>` ambiguity fix from earlier in the session was wrong in both places it was
+  applied: fully-qualifying as `System.Tuple` compiled, but `RamjetAnvil.Unity.Utility.Tuple`
+  was actually intended (confirmed by `._1`/`._2` field access at the consuming call site,
+  vs. `System.Tuple`'s `.Item1`/`.Item2`) - corrected in both `CourseEditorActions.cs` and
+  `CourseEditorStore.cs`.
+- `UnityInputDeviceProfile`: a real one already exists at
+  `Assets/Plugins/RamjetAnvil/InControlDeviceProfiles/UnityInputDeviceProfile.cs` (namespace
+  `InControl`) - removed the duplicate stub from `InputBindingStubs.cs` in favor of it.
+- `RamjetAnvil.Impero.Util.DictionaryExtensions.ChangeValues` (the one surviving Impero
+  source file) just needed a missing `using` in `LanguageSettings.cs`.
+- A handful of small, genuinely unrelated pre-existing gaps surfaced alongside all this:
+  `Texture2D`'s `mipmap` constructor parameter renamed to `mipChain`; `MutableString.Append`
+  has no enum overload (need `.ToString()`); `WithLatestFrom` isn't in the Rx.NET 2.2.0.0
+  Unity ships (added to mainline Rx later) - reimplemented minimally in a new
+  `RxExtensions.cs`; two Editor-only obsolete-API errors (`BuildTarget.StandaloneOSXUniversal`
+  → `StandaloneOSX`, removed `Analytics.SetUserId`); dead Impero `Adapters.MergeAxes` call in
+  `PilotAnimator.cs` replaced with a local clamp-sum.
+
+**Result: the project compiles clean.** Zero `error CS` anywhere, headless batch run exits
+with "Exiting batchmode successfully now!" / return code 0. This covers the full engine port
+plus the first Input System pass - GameLoader path, AttractScreen state machine, player/camera
+control, parachute control, course editor, and the game-settings/language system all build.
+
+**What's NOT yet verified:** whether it actually *runs*. Compiling and loading a scene are
+different things - Mar opened the SwissAlps scene mid-session and found scattered "missing
+script" warnings (expected: old Impero/InControl-based components no longer exist, new
+`PilotActionMapProvider`/`MenuActionMapProvider`/`ParachuteActionMapProvider` components need
+to be manually added to the right GameObjects) and black terrain (the custom
+`Standard-FirstPass-Custom` terrain shader doesn't render correctly under Unity 6 - see the
+`Volo > Terrain > Use Built-in Terrain Shader (temporary fallback)` menu item added at
+`Assets/Editor/TerrainShaderFallback.cs`). Next session's actual next step is GUI work in the
+Editor: wire up scene/prefab references for the new input providers, confirm the terrain
+fallback works, then playtest.
+
+See also [input-system-complexity-assessment.md](input-system-complexity-assessment.md) for a
+grounded assessment of the old Impero+InControl input stack's complexity, written mid-session,
+plus a recommendation for what to do differently when the real rebinding UI (still just an
+inert stub - `InputBindingStubs.cs`, `JoystickActivator`, `InputBinder`, `InputBindings<T>`)
+gets built for real.
+
 ### 2026-08-08, session 1 — engine/API port
 
 Got the project compiling clean against Unity 6 for everything except input. Fixed,

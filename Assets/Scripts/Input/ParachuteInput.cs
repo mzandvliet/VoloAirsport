@@ -11,7 +11,7 @@ using UnityEngine;
 namespace RamjetAnvil.Volo.Input {
 
     public enum ParachuteAction {
-        //ParachuteConfigToggle,
+        ParachuteConfigToggle,
 
         WeightShiftLeft,
         WeightShiftRight,

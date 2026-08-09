@@ -32,9 +32,9 @@ public class OptionsMenuInitializer : MonoBehaviour {
         var gameSettingsApplier = new GameSettingsApplier(_userConfigurableSystems);
         _gameSettingsProvider.SettingChanges
             .Subscribe(settings => gameSettingsApplier.ApplySettings(settings, _gameSettingsProvider.ActiveVrMode));
+        // Todo: FMOD is not reintegrated yet - this used to gate on FMODUtil.StudioSystem() being ready.
         _gameSettingsProvider.SettingChanges
             .Select(gameSettings => gameSettings.Audio)
-            .CombineLatest(FMODUtil.StudioSystem(), (audioSettings, fmodSystem) => audioSettings)
             .Subscribe(audioSettings => {
                 gameSettingsApplier.ApplyAudioSettings(audioSettings);
             });

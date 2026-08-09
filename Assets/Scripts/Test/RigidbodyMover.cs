@@ -20,10 +20,10 @@ public class RigidbodyMover : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _body.position = Vector3.zero;
-            _body.velocity = Vector3.zero;
+            _body.linearVelocity = Vector3.zero;
 
             _otherBody.position = _offset;
-            _otherBody.velocity = Vector3.zero;
+            _otherBody.linearVelocity = Vector3.zero;
         }
     }
 }

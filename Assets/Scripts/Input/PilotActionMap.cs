@@ -73,6 +73,11 @@ namespace RamjetAnvil.Volo.Input {
             get { return _actionMapRef; }
         }
 
+        // Todo: not wired up yet - live-rebinding support (see InputBindings<T> in
+        // InputBindingStubs.cs) needs to actually push new bindings into the InputActionMap.
+        public void SetInputMappingSource(System.IObservable<ActionMapConfig<WingsuitAction>> mappingChanges) {
+        }
+
         private void OnDestroy() {
             if (_actionMap != null) {
                 _actionMap.Dispose();

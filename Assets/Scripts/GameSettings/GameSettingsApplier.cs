@@ -79,7 +79,7 @@ public class GameSettingsApplier {
             mode => QualitySettings.anisotropicFiltering = AnisotropicFilteringMode2Unity(mode));
         UpdateWhenChanged(settings, s => s.Graphics.LodBias, lodBias => QualitySettings.lodBias = lodBias);
         UpdateWhenChanged(settings, s => s.Graphics.TextureQuality, 
-            textureQuality => QualitySettings.masterTextureLimit = TextureQuality2MasterTextureLimit(settings.Graphics.TextureQuality));
+            textureQuality => QualitySettings.globalTextureMipmapLimit = TextureQuality2MasterTextureLimit(settings.Graphics.TextureQuality));
         UpdateWhenChanged(settings, s => s.Graphics.VoloShadowQuality, quality => QualitySettings.shadowCascades = ShadowQuality2Cascades(quality));
         UpdateWhenChanged(settings, s => s.Graphics.ShadowDistance, shadowDistance => QualitySettings.shadowDistance = shadowDistance);
 

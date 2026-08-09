@@ -1,21 +1,40 @@
 using RamjetAnvil.Unity.Utility;
+using RamjetAnvil.Volo;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace RamjetAnvil.Volo.Input {
 
-    // Todo: field shape is a first guess pending real parachute-control retuning.
     [System.Serializable]
     public struct ParachuteInput {
-        public float WeightShiftHorizontal;
-        public float WeightShiftVertical;
-        public float BrakeLeft;
-        public float BrakeRight;
+        public Vector2 Brakes;
+        public Vector2 FrontRisers;
+        public Vector2 RearRisers;
+        public Vector2 WeightShift;
+        public bool IsMouseInput;
+        public ParachuteLine? SelectedLine;
+        public Vector2 SelectedLinePull;
 
         public static readonly ParachuteInput Zero = new ParachuteInput();
+
+        public static ParachuteInput SmoothInput(ParachuteInputConfig config, ParachuteInput prev, ParachuteInput input, float deltaTime) {
+            return new ParachuteInput {
+                Brakes = Vector2.Lerp(prev.Brakes, input.Brakes, config.BrakeSmoothingSpeed * deltaTime),
+                FrontRisers = Vector2.Lerp(prev.FrontRisers, input.FrontRisers, config.FrontRisersSmoothingSpeed * deltaTime),
+                RearRisers = Vector2.Lerp(prev.RearRisers, input.RearRisers, config.RearRisersSmoothingSpeed * deltaTime),
+                WeightShift = Vector2.Lerp(prev.WeightShift, input.WeightShift, config.WeightShiftSmoothingSpeed * deltaTime),
+                IsMouseInput = input.IsMouseInput,
+                SelectedLine = input.SelectedLine,
+                SelectedLinePull = Vector2.Lerp(prev.SelectedLinePull, input.SelectedLinePull, config.BrakeSmoothingSpeed * deltaTime)
+            };
+        }
     }
 
-    public class ParachuteActionMap : ActionMap<ParachuteAction> {
+    // Todo: placeholder bindings, needs real tuning once parachute flight is retuned.
+    // Hold-line mode (select a line pair with PullLeftLines/PullRightLines/PullBothLines,
+    // then pull it) is not wired up yet - only direct-line mode (Front/Rear/Brake pairs
+    // bound straight to gamepad triggers) is implemented.
+    public class ParachuteActionMap : ActionMap<ParachuteAction>, IParachuteActionMap {
         public ParachuteActionMap() : base(new InputActionMap("Parachute")) {
             SetupBindings();
         }
@@ -37,24 +56,42 @@ namespace RamjetAnvil.Volo.Input {
             shiftBack.AddBinding("<Gamepad>/leftStick/down");
             shiftBack.AddBinding("<Keyboard>/s");
 
-            var pullLeft = AddAxis(ParachuteAction.PullLeftLines, "PullLeftLines");
-            pullLeft.AddBinding("<Gamepad>/leftTrigger");
-            pullLeft.AddBinding("<Keyboard>/q");
+            var brakeLeft = AddAxis(ParachuteAction.PullBrakeLineLeft, "PullBrakeLineLeft");
+            brakeLeft.AddBinding("<Gamepad>/leftTrigger");
+            brakeLeft.AddBinding("<Keyboard>/q");
 
-            var pullRight = AddAxis(ParachuteAction.PullRightLines, "PullRightLines");
-            pullRight.AddBinding("<Gamepad>/rightTrigger");
-            pullRight.AddBinding("<Keyboard>/e");
+            var brakeRight = AddAxis(ParachuteAction.PullBrakeLineRight, "PullBrakeLineRight");
+            brakeRight.AddBinding("<Gamepad>/rightTrigger");
+            brakeRight.AddBinding("<Keyboard>/e");
+
+            var frontLeft = AddAxis(ParachuteAction.PullFrontLineLeft, "PullFrontLineLeft");
+            var frontRight = AddAxis(ParachuteAction.PullFrontLineRight, "PullFrontLineRight");
+            var rearLeft = AddAxis(ParachuteAction.PullRearLineLeft, "PullRearLineLeft");
+            var rearRight = AddAxis(ParachuteAction.PullRearLineRight, "PullRearLineRight");
+
+            var configToggle = AddButton(ParachuteAction.ParachuteConfigToggle, "ParachuteConfigToggle");
+            configToggle.AddBinding("<Keyboard>/tab");
+            configToggle.AddBinding("<Gamepad>/select");
         }
 
         public ParachuteInput Input {
             get {
                 return new ParachuteInput {
-                    WeightShiftHorizontal = PollAxis(ParachuteAction.WeightShiftRight) - PollAxis(ParachuteAction.WeightShiftLeft),
-                    WeightShiftVertical = PollAxis(ParachuteAction.WeightShiftFront) - PollAxis(ParachuteAction.WeightShiftBack),
-                    BrakeLeft = PollAxis(ParachuteAction.PullLeftLines),
-                    BrakeRight = PollAxis(ParachuteAction.PullRightLines)
+                    Brakes = new Vector2(PollAxis(ParachuteAction.PullBrakeLineLeft), PollAxis(ParachuteAction.PullBrakeLineRight)),
+                    FrontRisers = new Vector2(PollAxis(ParachuteAction.PullFrontLineLeft), PollAxis(ParachuteAction.PullFrontLineRight)),
+                    RearRisers = new Vector2(PollAxis(ParachuteAction.PullRearLineLeft), PollAxis(ParachuteAction.PullRearLineRight)),
+                    WeightShift = new Vector2(
+                        PollAxis(ParachuteAction.WeightShiftRight) - PollAxis(ParachuteAction.WeightShiftLeft),
+                        PollAxis(ParachuteAction.WeightShiftFront) - PollAxis(ParachuteAction.WeightShiftBack)),
+                    IsMouseInput = false,
+                    SelectedLine = null,
+                    SelectedLinePull = Vector2.zero
                 };
             }
+        }
+
+        public ButtonEvent ParachuteConfigToggle {
+            get { return PollButtonEvent(ParachuteAction.ParachuteConfigToggle); }
         }
     }
 
@@ -67,6 +104,10 @@ namespace RamjetAnvil.Volo.Input {
 
         public ParachuteActionMap V {
             get { return _actionMap; }
+        }
+
+        // Todo: not wired up yet - see PilotActionMapProvider.SetInputMappingSource.
+        public void SetInputMappingSource(System.IObservable<ActionMapConfig<ParachuteAction>> mappingChanges) {
         }
 
         private void OnDestroy() {

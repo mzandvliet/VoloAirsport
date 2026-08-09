@@ -68,6 +68,10 @@ namespace RamjetAnvil.Volo.Input {
             get { return _actionMapRef; }
         }
 
+        // Todo: not wired up yet - see PilotActionMapProvider.SetInputMappingSource.
+        public void SetInputMappingSource(System.IObservable<ActionMapConfig<MenuAction>> mappingChanges) {
+        }
+
         private void OnDestroy() {
             if (_actionMap != null) {
                 _actionMap.Dispose();

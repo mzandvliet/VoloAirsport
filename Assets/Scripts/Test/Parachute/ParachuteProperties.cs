@@ -73,7 +73,7 @@ namespace RamjetAnvil.Volo {
 
         public static ParachuteProperties<MeasureSystem.Metric> FromConfig(ParachuteConfig config, Parachute parachute) {
             var props = FromConfig(config);
-            props.Velocity = new Measure<Vector3>(parachute.Pilot.Torso.velocity * 3.6f, "km/h");
+            props.Velocity = new Measure<Vector3>(parachute.Pilot.Torso.linearVelocity * 3.6f, "km/h");
             return props;
         }
 

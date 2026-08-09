@@ -95,7 +95,7 @@ namespace RamjetAnvil.Volo {
         }
 
         public void ResetVelocity() {
-            _body.velocity = Vector3.zero;
+            _body.linearVelocity = Vector3.zero;
             _body.angularVelocity = Vector3.zero;
         }
 

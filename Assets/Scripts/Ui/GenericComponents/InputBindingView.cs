@@ -28,7 +28,7 @@ namespace RamjetAnvil.Volo.Ui {
 
         public void SetState(InputBindingViewModel inputBinding, bool isRebinding, string rebindingText) {
             _bindingTitle.Clear()
-                .Append(inputBinding.Group)
+                .Append(inputBinding.Group.ToString())
                 .Append(" - ")
                 .Append(inputBinding.Name)
                 .Append(" <i>(")

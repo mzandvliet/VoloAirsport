@@ -455,13 +455,17 @@ namespace RamjetAnvil.Volo {
 
         public CharacterInput Merge(CharacterInput c) {
             return new CharacterInput {
-                Pitch = Adapters.MergeAxes(Pitch, c.Pitch),
-                Roll = Adapters.MergeAxes(Roll, c.Roll),
-                Yaw = Adapters.MergeAxes(Yaw, c.Yaw),
-                Cannonball = Adapters.MergeAxes(Cannonball, c.Cannonball),
-                CloseLeftArm = Adapters.MergeAxes(CloseLeftArm, c.CloseLeftArm),
-                CloseRightArm = Adapters.MergeAxes(CloseRightArm, c.CloseRightArm),
+                Pitch = MergeAxes(Pitch, c.Pitch),
+                Roll = MergeAxes(Roll, c.Roll),
+                Yaw = MergeAxes(Yaw, c.Yaw),
+                Cannonball = MergeAxes(Cannonball, c.Cannonball),
+                CloseLeftArm = MergeAxes(CloseLeftArm, c.CloseLeftArm),
+                CloseRightArm = MergeAxes(CloseRightArm, c.CloseRightArm),
             };
+        }
+
+        private static float MergeAxes(float a, float b) {
+            return Mathf.Clamp(a + b, -1f, 1f);
         }
 
         public static readonly CharacterInput Zero = new CharacterInput();

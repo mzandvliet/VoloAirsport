@@ -24,7 +24,7 @@ namespace Assets.Scripts.Ui.GenericComponents {
                 var steps = Mathf.CeilToInt((2f * Mathf.PI) / StepSize);
                 steps += 1; // One extra step to make the last point wrap around to the first one
                 _circlePoints = new Vector3[steps];
-                _lineRenderer.numPositions = _circlePoints.Length;
+                _lineRenderer.positionCount = _circlePoints.Length;
 
                 Radius = radius;
             }

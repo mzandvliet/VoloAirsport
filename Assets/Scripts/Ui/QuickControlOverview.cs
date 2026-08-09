@@ -49,7 +49,7 @@ namespace RamjetAnvil.Volo.UI {
                 foreach (var binding in bindings) {
                     _overviewStr
                         .Append("<i>")
-                        .Append(binding.Group)
+                        .Append(binding.Group.ToString())
                         .Append("</i>")
                         .Append(" - ")
                         .Append(binding.Name)

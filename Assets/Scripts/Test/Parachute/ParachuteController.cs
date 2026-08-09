@@ -21,7 +21,8 @@ namespace RamjetAnvil.Volo {
         [SerializeField] private ParachuteInputConfig _inputConfig;
 
         private int _renderFrame;
-        // private ParachuteInput _input;
+        private ParachuteInput _input;
+        private IReadonlyRef<IParachuteActionMap> _actionMap;
 
         public Parachute Parachute {
             get { return _parachute; }
