@@ -24,6 +24,10 @@ public class UnityMasterServerClient : MonoBehaviour {
             .Select(gameSettings => gameSettings.Other.MasterServerUrl)
             .DistinctUntilChanged()
             .Subscribe(url => {
+                if (string.IsNullOrEmpty(url)) {
+                    return;
+                }
+
                 Debug.Log("masterserver url " + url);
 
                 // Bug: The below fails if the GameSettings.json in MyDocs is invalid. Catch that.

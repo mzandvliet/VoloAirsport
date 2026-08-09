@@ -75,7 +75,7 @@ public class CylindricalBody : MonoBehaviour, IAerodynamicSurface {
         Vector3 windVelocity = _wind.GetWindVelocity(centerPosition);
         float airDensity = _wind.GetAirDensity(centerPosition);
 
-        RelativeVelocity = _body.velocity - windVelocity;
+        RelativeVelocity = _body.linearVelocity - windVelocity;
         AirSpeed = RelativeVelocity.magnitude;
 
         Vector3 worldLongitudinalAxis = transform.TransformDirection(_longitudinalAxis);

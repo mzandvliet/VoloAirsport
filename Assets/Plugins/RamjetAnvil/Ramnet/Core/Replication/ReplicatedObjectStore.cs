@@ -59,9 +59,9 @@ namespace RamjetAnvil.RamNet {
                 _spawnedOwnerObjects = new GameObject("Owner").SetParent(spawnedReplicatedObjects);
                 _spawnedOtherObjects = new GameObject("Others").SetParent(spawnedReplicatedObjects);
             } else {
-                _spawnedAuthorityObjects = spawnedReplicatedObjects.transform.FindChild("Authority").gameObject;
-                _spawnedOwnerObjects = spawnedReplicatedObjects.transform.FindChild("Owner").gameObject;
-                _spawnedOtherObjects = spawnedReplicatedObjects.transform.FindChild("Others").gameObject;
+                _spawnedAuthorityObjects = spawnedReplicatedObjects.transform.Find("Authority").gameObject;
+                _spawnedOwnerObjects = spawnedReplicatedObjects.transform.Find("Owner").gameObject;
+                _spawnedOtherObjects = spawnedReplicatedObjects.transform.Find("Others").gameObject;
             }   
 
             _objectPools = new ImmutableArrayDictionary<ObjectType, IObjectPool<ReplicatedObject>>(size: objectFactories.Count)

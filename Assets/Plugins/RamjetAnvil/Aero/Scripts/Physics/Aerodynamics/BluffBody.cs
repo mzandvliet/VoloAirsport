@@ -53,7 +53,7 @@ public class BluffBody : MonoBehaviour, IAerodynamicSurface {
         Vector3 windVelocity = _wind.GetWindVelocity(centerPosition);
         float airDensity = _wind.GetAirDensity(centerPosition);
 
-        RelativeVelocity = _body.velocity - windVelocity;
+        RelativeVelocity = _body.linearVelocity - windVelocity;
         AirSpeed = RelativeVelocity.magnitude;
 
         Vector3 force = -RelativeVelocity.normalized * (0.5f * airDensity * _referenceArea * AirSpeed * AirSpeed * _cDrag); // Todo: optimize by not normalizing relative velocity

@@ -175,7 +175,7 @@ public class LandmasImporter {
             return;
         }
 
-        var heightData = new float[terrainData.heightmapWidth, terrainData.heightmapWidth];
+        var heightData = new float[terrainData.heightmapResolution, terrainData.heightmapResolution];
         LoadRawFileAsFloats(path, ref heightData, format, flipX, flipY);
 
         if (heightData != null) {

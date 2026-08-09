@@ -308,7 +308,7 @@ namespace UnityStandardAssets.CinematicEffects
 
             const int maxMip = 5;
 
-            RenderTextureFormat intermediateFormat = camera_.hdr ? RenderTextureFormat.ARGBHalf : RenderTextureFormat.ARGB32;
+            RenderTextureFormat intermediateFormat = camera_.allowHDR ? RenderTextureFormat.ARGBHalf : RenderTextureFormat.ARGB32;
 
             material.SetInt("_RayStepSize", settings.reflectionSettings.stepSize);
             material.SetInt("_AdditiveReflection", settings.reflectionSettings.blendType == SSRReflectionBlendType.Additive ? 1 : 0);

@@ -6,7 +6,7 @@ namespace RamjetAnvil.Unity.Utility {
         [SerializeField] private Rigidbody _rigidbody;
 
         public override Vector3 Velocity {
-            get { return _rigidbody.velocity; }
+            get { return _rigidbody.linearVelocity; }
         }
 
         public override Vector3 Position {
