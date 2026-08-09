@@ -17,7 +17,7 @@ public class VersionChecker : MonoBehaviour
     }
 
     IEnumerator CheckVersionInternal() {
-        var versionRequest = new WWW("http://volo-airsport.com/version-info.json");
+        var versionRequest = new WWW("https://volo-airsport.com/version-info.json");
         yield return versionRequest;
 
         if (!string.IsNullOrEmpty(versionRequest.error)) {
