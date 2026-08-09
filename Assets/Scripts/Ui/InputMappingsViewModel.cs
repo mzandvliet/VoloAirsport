@@ -25,7 +25,26 @@ namespace RamjetAnvil.Volo.UI {
         private bool _isInitialized;
 
         void OnEnable() {
-            if (!_isInitialized) {
+            EnsureInitialized();
+        }
+
+        // Todo: real dependency wiring for this view model doesn't exist yet (see
+        // Documentation/input-system-complexity-assessment.md) - falls back to an empty
+        // binding list rather than crashing callers like OptionsMenu.Initialize().
+        private void EnsureInitialized() {
+            if (_isInitialized) {
+                return;
+            }
+
+            if (_pilotInputBindings == null || _menuInputBindings == null ||
+                _spectatorInputBindings == null || _parachuteInputBindings == null ||
+                _activeLanguage == null || _joystickActivator == null) {
+                _inputMappings = Observable.Return(new InputBindingViewModel[0]);
+                _isInitialized = true;
+                return;
+            }
+
+            {
                 var inputMappings = _pilotInputBindings.InputMappingChanges
                     .CombineLatest(
                         _menuInputBindings.InputMappingChanges,
@@ -60,7 +79,10 @@ namespace RamjetAnvil.Volo.UI {
         }
 
         public IObservable<InputBindingViewModel[]> InputMappings {
-            get { return _inputMappings; }
+            get {
+                EnsureInitialized();
+                return _inputMappings;
+            }
         }
     }
 }

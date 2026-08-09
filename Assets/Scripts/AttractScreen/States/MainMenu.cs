@@ -36,15 +36,28 @@ namespace RamjetAnvil.Volo.States {
 
         public MainMenu(IStateMachine machine, Data data) : base(machine) {
             _data = data;
-            _data.MasterServerClient.Client.Me((statusCode, playerInfo) => {
-                if (statusCode == HttpStatusCode.OK) {
-                    _data.MainMenuView.UpdateLoginStatus(Maybe.Just(playerInfo));
-                    Debug.Log("Logged in as: " + playerInfo.Name + ", avatar url: " + playerInfo.AvatarUrl);
-                } else {
-                    _data.MainMenuView.UpdateLoginStatus(Maybe.Nothing<PlayerInfo>());
-                    Debug.LogError("Failed to fetch player details from Master server, error: " + statusCode);
+
+            // Todo: the master server is unused/unreachable and PadroneClient (a precompiled
+            // plugin, no source to patch) relies on the legacy UnityEngine.WWW class, whose
+            // native binding was removed in modern Unity - it throws MissingMethodException at
+            // runtime even though the type still compiles. Guarded so a failed/impossible login
+            // check doesn't abort the whole state machine boot.
+            try {
+                if (_data.MasterServerClient.Client != null) {
+                    _data.MasterServerClient.Client.Me((statusCode, playerInfo) => {
+                        if (statusCode == HttpStatusCode.OK) {
+                            _data.MainMenuView.UpdateLoginStatus(Maybe.Just(playerInfo));
+                            Debug.Log("Logged in as: " + playerInfo.Name + ", avatar url: " + playerInfo.AvatarUrl);
+                        } else {
+                            _data.MainMenuView.UpdateLoginStatus(Maybe.Nothing<PlayerInfo>());
+                            Debug.LogError("Failed to fetch player details from Master server, error: " + statusCode);
+                        }
+                    });
                 }
-            });
+            } catch (Exception e) {
+                _data.MainMenuView.UpdateLoginStatus(Maybe.Nothing<PlayerInfo>());
+                Debug.LogWarning("Master server unavailable, skipping login check: " + e.Message);
+            }
         }
 
         IEnumerator<WaitCommand> OnEnter() {

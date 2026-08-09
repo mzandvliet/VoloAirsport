@@ -119,13 +119,17 @@ public class OptionsMenu : MonoBehaviour {
             _model.InputBindings = inputBindings;
         });
 
-        _joystickActivator.ActiveController.Subscribe(controller => {
-            if (controller.HasValue) {
-                _connectedController.text = "Active device: <i>" + controller.Value.Name + "</i>";
-            } else {
-                _connectedController.text = "Active device: <i>keyboard and mouse</i>";
-            }
-        });
+        if (_joystickActivator != null) {
+            _joystickActivator.ActiveController.Subscribe(controller => {
+                if (controller.HasValue) {
+                    _connectedController.text = "Active device: <i>" + controller.Value.Name + "</i>";
+                } else {
+                    _connectedController.text = "Active device: <i>keyboard and mouse</i>";
+                }
+            });
+        } else {
+            _connectedController.text = "Active device: <i>keyboard and mouse</i>";
+        }
     }
 
     public void Open(MenuId id) {

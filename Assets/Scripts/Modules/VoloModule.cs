@@ -176,7 +176,8 @@ public class VoloModule : IModule {
         dependencyResolver.NonSerializableRefs.Add(new DependencyReference("cursor", cursor));
         var inputModule = GameObject.FindObjectOfType<CursorInputModule>();
         inputModule.Cursor = cursor;
-        // inputModule.NavigationDevice = new MenuActionMapCursor(menuActionMapProvider);
+        var menuActionMapProvider = Object.FindObjectOfType<MenuActionMapProvider>();
+        inputModule.NavigationDevice = new MenuActionMapCursor(menuActionMapProvider);
         var raycasters = GameObject.FindObjectsOfType<PhysicsRayBasedRaycaster>();
         foreach (var raycaster in raycasters) {
             raycaster.SetCamera(cameraManager.Rig.GetMainCamera());
