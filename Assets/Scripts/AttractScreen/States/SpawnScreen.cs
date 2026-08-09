@@ -150,12 +150,14 @@ namespace RamjetAnvil.Volo.States {
         }
 
         void Update() {
-            Debug.LogWarning("I want to handle input");
-            
-            // _uiList.Update(new UISketch.NavigableUIList.Input {
-            //     Confirm = _data.MenuActionMap.V.PollButtonEvent(MenuAction.Confirm) == ButtonEvent.Down,
-            //     Cursor = _data.MenuActionMap.V.PollDiscreteCursor()
-            // });
+            if (_data.MenuActionMap == null) {
+                return;
+            }
+
+            _uiList.Update(new UISketch.NavigableUIList.Input {
+                Confirm = _data.MenuActionMap.V.PollButtonEvent(MenuAction.Confirm) == ButtonEvent.Down,
+                Cursor = _data.MenuActionMap.V.PollDiscreteCursor()
+            });
         }
 
         void SpawnpointSelected(Events.SpawnpointSelected @event) {

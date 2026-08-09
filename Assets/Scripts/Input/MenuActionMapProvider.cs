@@ -54,6 +54,16 @@ namespace RamjetAnvil.Volo.Input {
             var screenshot = AddButton(MenuAction.TakeScreenshot, "TakeScreenshot");
             screenshot.AddBinding("<Keyboard>/f12");
         }
+
+        // Discrete (button-based, not analog) directional nudge for list/grid UI navigation -
+        // e.g. SpawnScreen's spawnpoint list.
+        public Vector2 PollDiscreteCursor() {
+            float x = (PollButton(MenuAction.Right) == ButtonState.Pressed ? 1f : 0f)
+                      - (PollButton(MenuAction.Left) == ButtonState.Pressed ? 1f : 0f);
+            float y = (PollButton(MenuAction.Up) == ButtonState.Pressed ? 1f : 0f)
+                      - (PollButton(MenuAction.Down) == ButtonState.Pressed ? 1f : 0f);
+            return new Vector2(x, y);
+        }
     }
 
     public class MenuActionMapProvider : MonoBehaviour {
