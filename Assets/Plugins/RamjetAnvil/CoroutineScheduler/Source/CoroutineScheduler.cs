@@ -478,7 +478,12 @@ namespace RamjetAnvil.Coroutine {
                 } catch (Exception e) {
                     UnityEngine.Debug.LogError("[CoroutineScheduler] Exception while advancing fibre '" +
                         (_fibre != null ? _fibre.GetType().FullName : "<null fibre>") + "': " + e);
-                    throw;
+                    // Mark this routine done so it gets recycled normally instead of being
+                    // retried (and re-erroring) every frame - rethrowing here would abort the
+                    // scheduler's per-frame update pass mid-loop, which can leave sibling/parent
+                    // routines stuck without ever being cleaned up.
+                    _isDone = true;
+                    return;
                 }
                 if (hasNext) {
                     var newInstruction = _fibre.Current;

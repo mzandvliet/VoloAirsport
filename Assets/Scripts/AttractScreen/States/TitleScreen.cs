@@ -43,9 +43,6 @@ namespace RamjetAnvil.Volo.States {
         public TitleScreen(IStateMachine machine, Data data) : base(machine) {
             _data = data;
             _data.TitleScreenLogo.SetActive(false); // Note: due to obscure crashbug, this has to be active in the serialized scene
-
-            _startListener = new CompositeDisposable(
-                _data.EventSystem.Listen<Events.OnConfirmPressed>(OnAnyButtonPressed));
         }
 
         private void OnAnyButtonPressed() {
@@ -62,6 +59,9 @@ namespace RamjetAnvil.Volo.States {
             _isRunning = true;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            _startListener = new CompositeDisposable(
+                _data.EventSystem.Listen<Events.OnConfirmPressed>(OnAnyButtonPressed));
 
             FixedClock.ResumePhysics();
 
@@ -89,6 +89,7 @@ namespace RamjetAnvil.Volo.States {
         private void OnExit() {
             _isRunning = false;
             _logoFadeIn.Dispose();
+            _startListener.Dispose();
             _data.NotificationRenderer.gameObject.SetActive(true);
             _data.Animator.enabled = false;
 
