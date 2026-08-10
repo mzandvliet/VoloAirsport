@@ -162,8 +162,14 @@ namespace RamjetAnvil.StateMachine {
                 throw new InvalidOperationException("Cannot transition to parent state, currently at top-level state");
             }
 
-            var childState = _stack.Pop();
-            var parentState = _stack.Peek();
+            // Peek only - the private TransitionToParent coroutine below does the actual
+            // _stack.Pop(). Popping here too was a double-pop: it silently emptied the
+            // stack one transition early, so the *next* child transition (e.g. re-opening
+            // the pause menu) took the wrong code path (fresh top-level entry instead of
+            // suspend-parent-then-enter-child), skipping the parent's OnSuspend/unsubscribe
+            // and leaving both states subscribed at once.
+            var childState = _stack.Peek();
+            var parentState = _stack[_stack.Count - 2];
             return _scheduler.Run(TransitionToParent(childState, parentState, args));
         }
 
