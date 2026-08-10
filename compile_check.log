@@ -1,0 +1,986 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.3/staging' branch; Version is '6000.3.18f1 (5ebeb53e4c07) revision 6209205'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-zandv" at "2026-08-10T10:14:07.9560772Z"
+OS: 'Windows 11  (10.0.26200) Professional' Language: 'en' Physical Memory: 32678 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-08-10T10:14:07Z
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.3.18f1\Editor\Unity.exe
+-batchmode
+-nographics
+-quit
+-logFile
+E:/code/unity/volo_airsport_open/compile_check.log
+-projectPath
+E:/code/unity/volo_airsport_open
+Successfully changed project path to: E:/code/unity/volo_airsport_open
+E:/code/unity/volo_airsport_open
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+Player connection [29980]  Target information:
+
+Player connection [29980]  * "[IP] 192.168.1.189 [Port] 55504 [Flags] 2 [Guid] 114882652 [EditorId] 114882652 [Version] 1048832 [Id] WindowsEditor(7,MarDesktop) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [29980]  * "[IP] 10.2.0.2 [Port] 55504 [Flags] 2 [Guid] 114882652 [EditorId] 114882652 [Version] 1048832 [Id] WindowsEditor(7,MarDesktop) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [29980] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [29980] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-49488" after 0.3 seconds.
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.18.1'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-zandv"
+[Licensing::IpcConnector] LicenseClient-zandv channel disconnected successfully.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-zandv-6000.3.18" at "2026-08-10T10:14:09.3601138Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 44816, path: "C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              18e762e03f5545e2988084d41b9f818e
+  Correlation Id:          76ea4bc52cb31090ce4f86475ceced68
+  External correlation Id: 8897307141264835912
+  Machine Id:              DNVK3YgitprYwPIKC8X8pwJiges=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-zandv-6000.3.18" (connect: 0.00s, validation: 0.00s, handshake: 0.01s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-zandv-6000.3.18-notifications" at "2026-08-10T10:14:09.3689023Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-W73U-AT3H-SUN7-PGNN-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: Unlimited
+[Licensing::Module] License group:
+  Id: 10118-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-W73U-AT3H-SUN7-PGNN-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: Unlimited
+[Licensing::Module] License group:
+  Id: 10118-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Module] Licensing Background thread has ended after 1.42s
+[Licensing::Module] Licensing is initialized (took 0.88s).
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-W73U-AT3H-SUN7-PGNN-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: Unlimited
+[Licensing::Module] License group:
+  Id: 10118-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Refreshing native plugins compatible for Editor in 0.38 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.3.18f1 (5ebeb53e4c07)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/code/unity/volo_airsport_open/Assets
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Shader 'Nature/Terrain/StandardCustom': dependency 'AddPassShader' shader 'TerrainEngine/Splatmap/Standard-AddPass-Custom' not found
+Shader 'Nature/Terrain/StandardCustom': dependency 'BaseMapShader' shader 'TerrainEngine/Splatmap/Standard-Base-Custom' not found
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56488
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-W73U-AT3H-SUN7-PGNN-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: Unlimited
+[Licensing::Module] License group:
+  Id: 10118-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.18f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Registered in 0.008117 seconds.
+- Loaded All Assemblies, in  0.500 seconds
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.473 seconds
+Domain Reload Profiling: 970ms
+	BeginReloadAssembly (144ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (47ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (64ms)
+	LoadAllAssembliesAndSetupDomain (224ms)
+		LoadAssemblies (140ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (219ms)
+			TypeCache.Refresh (217ms)
+				TypeCache.ScanAssembly (202ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (474ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (428ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (77ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (95ms)
+			ProcessInitializeOnLoadAttributes (157ms)
+			ProcessInitializeOnLoadMethodAttributes (95ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: F4-W73U-AT3H-SUN7-PGNN-XXXX
+  Product: Unity Personal
+  Type: ULF
+  Expiration: Unlimited
+[Licensing::Module] License group:
+  Id: 10118-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 40 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.inputsystem@1.11.2 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.inputsystem@3c4a97c3950f)
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0)
+  Built-in packages:
+    com.unity.multiplayer.center@1.0.1 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.multiplayer.center@f01f4ba8d00a)
+    com.unity.ugui@2.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.ugui@2e4da8434a5c)
+    com.unity.modules.accessibility@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: E:\code\unity\volo_airsport_open\Library\PackageCache\com.unity.modules.hierarchycore)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.02 seconds
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:80
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: E:\code\unity\volo_airsport_open\
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 42.3138ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.3.18f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/500b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/code/unity/volo_airsport_open
+DisplayProgressbar: Compiling Scripts
+ExitCode: 0 Duration: 2s348ms
+[253/265    0s] Csc Library/Bee/artifacts/500b0aE.dag/Assembly-CSharp-firstpass.dll (+2 others)
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(475,69): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(529,54): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(26,36): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(27,36): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(29,42): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(42,20): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(61,32): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\Aero\Scripts\Physics\Aerodynamics\AeroManager.cs(32,22): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\RamjetAnvil\Utils\Source\Utils\Clocks\NetworkStopwatchClock.cs(36,9): warning CS0618: 'EditorApplication.playmodeStateChanged' is obsolete: 'Use EditorApplication.playModeStateChanged and/or EditorApplication.pauseStateChanged'
+
+Assets\Plugins\RamjetAnvil\Utils\Source\Utils\Clocks\StopwatchClock.cs(35,9): warning CS0618: 'EditorApplication.playmodeStateChanged' is obsolete: 'Use EditorApplication.playModeStateChanged and/or EditorApplication.pauseStateChanged'
+
+Assets\Plugins\RamjetAnvil\DependencyInjection\Unity\UnityDependencyResolver.cs(56,16): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\RamjetAnvil\World\System\WorldSystem.cs(11,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Singleton\MonoSingletonBase.cs(50,50): warning CS0618: 'Object.FindObjectsOfType(Type)' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID, but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\RamjetAnvil\Utils\Source\Patterns\SingletonComponent.cs(59,9): warning CS0618: 'EditorApplication.playmodeStateChanged' is obsolete: 'Use EditorApplication.playModeStateChanged and/or EditorApplication.pauseStateChanged'
+
+Assets\Plugins\RamjetAnvil\Utils\Source\Patterns\SingletonComponent.cs(67,26): warning CS0618: 'Object.FindObjectOfType(Type)' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Plugins\RamjetAnvil\DependencyInjection\Injectors\GameObjectInjector.cs(20,28): warning CS0618: 'PrefabUtility.GetPrefabParent(Object)' is obsolete: 'Use GetCorrespondingObjectFromSource.'
+
+Assets\Plugins\RamjetAnvil\DependencyInjection\Injectors\GameObjectInjector.cs(21,28): warning CS0618: 'PrefabUtility.GetPrefabObject(Object)' is obsolete: 'Use GetPrefabInstanceHandle for Prefab instances. Handles for Prefab Assets has been discontinued.'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(32,45): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(33,46): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(34,52): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(37,49): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(38,50): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Blur.cs(51,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(43,17): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Tonemapping.cs(237,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\ContrastStretch.cs(94,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+
+Assets\Plugins\RamjetAnvil\Utils\Source\Utils\MonoBehaviourExtensions.cs(136,34): warning CS0618: 'Object.FindObjectsOfType(Type)' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID, but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs(136,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs(142,5): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(352,29): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(182,25): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(316,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(396,25): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(397,29): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(402,9): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(326,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(484,18): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(489,9): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs(64,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\ImageEffectBase.cs(20,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(347,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(534,18): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndScratches.cs(54,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\MotionBlur.cs(49,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\MotionBlur.cs(64,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsBase.cs(115,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Client.cs(69,27): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Client.cs(83,37): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Client.cs(84,34): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Plugins\RamjetAnvil\Ramnet\Core\Replication\PreExistingObjects.cs(13,20): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(22,13): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(22,37): warning CS0618: 'PrefabUtility.GetPrefabType(Object)' is obsolete: 'Use GetPrefabAssetType and GetPrefabInstanceStatus to get the full picture about Prefab types.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(27,34): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(27,67): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(28,34): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(28,34): warning CS0618: 'PrefabType.DisconnectedPrefabInstance' is obsolete: 'PrefabType.DisconnectedPrefabInstance has been deprecated and is not used. Prefabs can not be in a disconnected state.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(28,89): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(717,9): warning CS0618: 'Terrain.castShadows' is obsolete: 'castShadows is deprecated, please use shadowCastingMode instead.'
+
+Assets\Standard Assets\Effects\Common\ImageEffectHelper.cs(24,22): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+
+Assets\Standard Assets\Effects\Common\ImageEffectHelper.cs(24,58): warning CS0618: 'SystemInfo.supportsRenderTextures' is obsolete: 'supportsRenderTextures always returns true, no need to call it'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Object Colliders\ObjectColliderAttachment.cs(32,41): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(752,31): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(115,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(116,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(117,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(118,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(119,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(120,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(121,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(123,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Scene Management\Bounding Volume Hierarchies\Sphere Tree\Game Object Tree\GameObjectSphereTree.cs(250,41): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Standard Assets\Effects\TonemappingColorGrading\TonemappingColorGrading.cs(885,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+
+Assets\Standard Assets\Effects\TonemappingColorGrading\TonemappingColorGrading.cs(981,21): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+[254/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-firstpass.pdb
+[255/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll
+[256/265    0s] Csc Library/Bee/artifacts/500b0aE.dag/Assembly-CSharp-Editor-firstpass.dll (+2 others)
+Assets\Plugins\RamjetAnvil\Ramnet\Editor\GameObjectNetworkIdInspector.cs(14,38): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(250,13): warning CS0618: 'TextureImporter.linearTexture' is obsolete: 'linearTexture Property deprecated. Use sRGBTexture instead.'
+
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(251,13): warning CS0618: 'TextureImporter.textureFormat' is obsolete: 'textureFormat is no longer accessible at the TextureImporter level. For old 'simple' formats use the textureCompression property for the equivalent automatic choice (Uncompressed for TrueColor, Compressed and HQCommpressed for 16 bits). For platform specific formats use the [[PlatformTextureSettings]] API. Using this setter will setup various parameters to match the new automatic system as well as possible. Getter will return the last value set.'
+
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(369,28): warning CS0618: 'TextureImporter.linearTexture' is obsolete: 'linearTexture Property deprecated. Use sRGBTexture instead.'
+
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(370,28): warning CS0618: 'TextureImporter.textureFormat' is obsolete: 'textureFormat is no longer accessible at the TextureImporter level. For old 'simple' formats use the textureCompression property for the equivalent automatic choice (Uncompressed for TrueColor, Compressed and HQCommpressed for 16 bits). For platform specific formats use the [[PlatformTextureSettings]] API. Using this setter will setup various parameters to match the new automatic system as well as possible. Getter will return the last value set.'
+[257/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.pdb
+[258/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll
+[259/265    0s] Csc Library/Bee/artifacts/500b0aE.dag/Assembly-CSharp.dll (+2 others)
+Assets\Scripts\Effects\GroundSpray.cs(27,9): warning CS0618: 'ParticleSystem.startSpeed' is obsolete: 'startSpeed property is deprecated. Use main.startSpeed or main.startSpeedMultiplier instead.'
+
+Assets\Scripts\Effects\WindParticleEffect.cs(18,21): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Effects\GroundSpray.cs(39,13): warning CS0618: 'ParticleSystem.startSpeed' is obsolete: 'startSpeed property is deprecated. Use main.startSpeed or main.startSpeedMultiplier instead.'
+
+Assets\Scripts\Effects\GroundSpray.cs(45,13): warning CS0618: 'ParticleSystem.startSpeed' is obsolete: 'startSpeed property is deprecated. Use main.startSpeed or main.startSpeedMultiplier instead.'
+
+Assets\Scripts\Physics\WindVisualizer.cs(16,17): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Test\Turrets\Turret.cs(36,26): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Kino\Motion\Script\FrameBlendingFilter.cs(192,54): warning CS0618: 'GraphicsDeviceType.OpenGLES2' is obsolete: 'OpenGL ES 2.0 is no longer supported in Unity 2023.1'
+
+Assets\Scripts\Ui\Notifications\VersionChecker.cs(20,34): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Scripts\Util\ParticleSystemExtensions.cs(14,16): warning CS0618: 'ParticleSystem.EmissionModule.rate' is obsolete: 'rate property is deprecated. Use rateOverTime or rateOverDistance instead.'
+
+Assets\Scripts\Util\ParticleSystemExtensions.cs(19,20): warning CS0618: 'ParticleSystem.EmissionModule.rate' is obsolete: 'rate property is deprecated. Use rateOverTime or rateOverDistance instead.'
+
+Assets\Scripts\Util\ParticleSystemExtensions.cs(21,9): warning CS0618: 'ParticleSystem.EmissionModule.rate' is obsolete: 'rate property is deprecated. Use rateOverTime or rateOverDistance instead.'
+
+Assets\Build\BuildConfig.cs(36,40): warning CS0618: 'BuildTarget.StandaloneOSXIntel' is obsolete: 'StandaloneOSXIntel has been removed in 2017.3'
+
+Assets\Build\BuildConfig.cs(38,40): warning CS0618: 'BuildTarget.StandaloneOSXIntel64' is obsolete: 'StandaloneOSXIntel64 has been removed in 2017.3'
+
+Assets\Build\BuildConfig.cs(47,40): warning CS0618: 'BuildTarget.StandaloneLinux' is obsolete: 'StandaloneLinux has been removed in 2019.2'
+
+Assets\Build\BuildConfig.cs(51,40): warning CS0618: 'BuildTarget.StandaloneLinuxUniversal' is obsolete: 'StandaloneLinuxUniversal has been removed in 2019.2'
+
+Assets\Scripts\Challenges\ChallengeManager.cs(22,27): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Scripts\Modules\VoloModule.cs(43,36): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(45,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(59,48): warning CS0618: 'Scheduler.ThreadPool' is obsolete: 'This property is no longer supported due to refactoring of the API surface and elimination of platform-specific dependencies. Consider using Scheduler.Default to obtain the platform's most appropriate pool-based scheduler. In order to access a specific pool-based scheduler, please add a reference to the System.Reactive.PlatformServices assembly for your target platform and use the appropriate scheduler in the System.Reactive.Concurrency namespace. See http://go.microsoft.com/fwlink/?LinkID=260866 for more information.'
+
+Assets\Scripts\Modules\VoloModule.cs(171,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(174,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(176,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(192,27): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(197,26): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Scripts\Modules\VoloModule.cs(203,27): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Scripts\Modules\VoloModule.cs(221,27): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(222,29): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Scripts\Modules\VoloModule.cs(227,20): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(228,23): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Scripts\Modules\VoloModule.cs(237,27): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(240,32): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(260,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Modules\VoloModule.cs(261,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Ui\OptionsMenu\OptionsMenuInitializer.cs(44,48): warning CS0618: 'Scheduler.ThreadPool' is obsolete: 'This property is no longer supported due to refactoring of the API surface and elimination of platform-specific dependencies. Consider using Scheduler.Default to obtain the platform's most appropriate pool-based scheduler. In order to access a specific pool-based scheduler, please add a reference to the System.Reactive.PlatformServices assembly for your target platform and use the appropriate scheduler in the System.Reactive.Concurrency namespace. See http://go.microsoft.com/fwlink/?LinkID=260866 for more information.'
+
+Assets\Scripts\AttractScreen\States\ParachuteStates.cs(259,56): warning CS0618: 'Scheduler.ThreadPool' is obsolete: 'This property is no longer supported due to refactoring of the API surface and elimination of platform-specific dependencies. Consider using Scheduler.Default to obtain the platform's most appropriate pool-based scheduler. In order to access a specific pool-based scheduler, please add a reference to the System.Reactive.PlatformServices assembly for your target platform and use the appropriate scheduler in the System.Reactive.Concurrency namespace. See http://go.microsoft.com/fwlink/?LinkID=260866 for more information.'
+
+Assets\Scripts\AttractScreen\States\SpawnScreen.cs(54,28): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+
+Assets\Scripts\Ui\MainMenu\PlayerLoginStatusView.cs(69,35): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Scripts\Ui\NewsFeedModel.cs(29,31): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+
+Assets\Scripts\Ui\GenericComponents\ImprovedSlider.cs(125,30): warning CS0618: 'PrefabUtility.GetPrefabType(Object)' is obsolete: 'Use GetPrefabAssetType and GetPrefabInstanceStatus to get the full picture about Prefab types.'
+
+Assets\Scripts\Ui\GenericComponents\ImprovedSlider.cs(126,31): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+
+Assets\Scripts\Test\Parachute\ParachuteThumbnail.cs(22,37): warning CS0067: The event 'ParachuteThumbnail.OnHighlight' is never used
+
+Assets\Scripts\Ui\MainMenu\MainMenuView.cs(17,29): warning CS0067: The event 'MainMenuView.OpenOptionsMenu' is never used
+
+Assets\Scripts\Test\PilotTestSpawner.cs(9,34): warning CS0414: The field 'PilotTestSpawner._controllerId' is assigned but its value is never used
+
+Assets\Scripts\Test\Parachute\ParachuteController.cs(20,40): warning CS0414: The field 'ParachuteController._mouseInputSensitivityMultiplier' is assigned but its value is never used
+
+Assets\Scripts\Ecology\Ecology.cs(18,36): warning CS0414: The field 'Ecology._nightLightIntensityThreshold' is assigned but its value is never used
+
+Assets\Scripts\Util\TrajectoryVisualizer.cs(23,19): warning CS0414: The field 'TrajectoryVisualizer._lineWidth' is assigned but its value is never used
+[260/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[261/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+[262/265    0s] Csc Library/Bee/artifacts/500b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+Assets\Editor\Build\BuildConfig.cs(12,33): warning CS0436: The type 'PlatformBuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'PlatformBuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+
+Assets\Editor\Build\BuildWindow.cs(149,31): warning CS0436: The type 'PlatformBuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'PlatformBuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(524,61): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(532,23): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\Build\BuildWindow.cs(224,48): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+
+Assets\Editor\Build\BuildWindow.cs(24,20): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(42,22): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(710,29): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(151,24): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\Build\BuildConfig.cs(39,40): warning CS0618: 'BuildTarget.StandaloneLinux' is obsolete: 'StandaloneLinux has been removed in 2019.2'
+
+Assets\Editor\Build\BuildConfig.cs(43,40): warning CS0618: 'BuildTarget.StandaloneLinuxUniversal' is obsolete: 'StandaloneLinuxUniversal has been removed in 2019.2'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(51,40): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\Build\BuildWindow.cs(48,58): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+
+Assets\Editor\Build\BuildWindow.cs(51,86): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+
+Assets\Editor\Build\BuildWindow.cs(51,33): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(533,24): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(619,31): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(636,17): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+
+Assets\Editor\Character\RagdollEditor.cs(67,9): warning CS0618: 'SceneView.onSceneGUIDelegate' is obsolete: 'onSceneGUIDelegate has been deprecated. Use duringSceneGui instead.'
+
+Assets\Editor\Character\RagdollEditor.cs(72,9): warning CS0618: 'SceneView.onSceneGUIDelegate' is obsolete: 'onSceneGUIDelegate has been deprecated. Use duringSceneGui instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(155,37): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(165,21): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+
+Assets\Editor\Build\BuildWindow.cs(263,13): warning CS0436: The type 'ZipUtility' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/ZipUtility.cs' conflicts with the imported type 'ZipUtility' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/ZipUtility.cs'.
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(399,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(463,65): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(481,30): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(481,69): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(483,34): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(492,34): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(764,22): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(757,21): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(757,74): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(895,50): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(895,22): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+[263/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[264/265    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (2.31 seconds), 12 items updated, 265 evaluated
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(475,69): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(529,54): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(26,36): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(27,36): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(29,42): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(42,20): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(61,32): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\Aero\Scripts\Physics\Aerodynamics\AeroManager.cs(32,22): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\RamjetAnvil\Utils\Source\Utils\Clocks\NetworkStopwatchClock.cs(36,9): warning CS0618: 'EditorApplication.playmodeStateChanged' is obsolete: 'Use EditorApplication.playModeStateChanged and/or EditorApplication.pauseStateChanged'
+Assets\Plugins\RamjetAnvil\Utils\Source\Utils\Clocks\StopwatchClock.cs(35,9): warning CS0618: 'EditorApplication.playmodeStateChanged' is obsolete: 'Use EditorApplication.playModeStateChanged and/or EditorApplication.pauseStateChanged'
+Assets\Plugins\RamjetAnvil\DependencyInjection\Unity\UnityDependencyResolver.cs(56,16): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\RamjetAnvil\World\System\WorldSystem.cs(11,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Singleton\MonoSingletonBase.cs(50,50): warning CS0618: 'Object.FindObjectsOfType(Type)' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID, but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\RamjetAnvil\Utils\Source\Patterns\SingletonComponent.cs(59,9): warning CS0618: 'EditorApplication.playmodeStateChanged' is obsolete: 'Use EditorApplication.playModeStateChanged and/or EditorApplication.pauseStateChanged'
+Assets\Plugins\RamjetAnvil\Utils\Source\Patterns\SingletonComponent.cs(67,26): warning CS0618: 'Object.FindObjectOfType(Type)' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Plugins\RamjetAnvil\DependencyInjection\Injectors\GameObjectInjector.cs(20,28): warning CS0618: 'PrefabUtility.GetPrefabParent(Object)' is obsolete: 'Use GetCorrespondingObjectFromSource.'
+Assets\Plugins\RamjetAnvil\DependencyInjection\Injectors\GameObjectInjector.cs(21,28): warning CS0618: 'PrefabUtility.GetPrefabObject(Object)' is obsolete: 'Use GetPrefabInstanceHandle for Prefab instances. Handles for Prefab Assets has been discontinued.'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(32,45): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(33,46): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(34,52): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(37,49): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(38,50): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Blur.cs(51,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Util.cs(43,17): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Tonemapping.cs(237,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\ContrastStretch.cs(94,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+Assets\Plugins\RamjetAnvil\Utils\Source\Utils\MonoBehaviourExtensions.cs(136,34): warning CS0618: 'Object.FindObjectsOfType(Type)' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID, but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs(136,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\DepthOfField.cs(142,5): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(352,29): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(182,25): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(316,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(396,25): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(397,29): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(402,9): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(326,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(484,18): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(489,9): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\ScreenSpaceAmbientOcclusion.cs(64,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\ImageEffectBase.cs(20,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs(347,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(534,18): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\NoiseAndScratches.cs(54,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\MotionBlur.cs(49,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\MotionBlur.cs(64,13): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsBase.cs(115,18): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Client.cs(69,27): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Client.cs(83,37): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\PadroneClient\Source\Client.cs(84,34): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Plugins\RamjetAnvil\Ramnet\Core\Replication\PreExistingObjects.cs(13,20): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(22,13): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(22,37): warning CS0618: 'PrefabUtility.GetPrefabType(Object)' is obsolete: 'Use GetPrefabAssetType and GetPrefabInstanceStatus to get the full picture about Prefab types.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(27,34): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(27,67): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(28,34): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(28,34): warning CS0618: 'PrefabType.DisconnectedPrefabInstance' is obsolete: 'PrefabType.DisconnectedPrefabInstance has been deprecated and is not used. Prefabs can not be in a disconnected state.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Extensions\GameObjectExtensions.cs(28,89): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(717,9): warning CS0618: 'Terrain.castShadows' is obsolete: 'castShadows is deprecated, please use shadowCastingMode instead.'
+Assets\Standard Assets\Effects\Common\ImageEffectHelper.cs(24,22): warning CS0618: 'SystemInfo.supportsImageEffects' is obsolete: 'supportsImageEffects always returns true, no need to call it'
+Assets\Standard Assets\Effects\Common\ImageEffectHelper.cs(24,58): warning CS0618: 'SystemInfo.supportsRenderTextures' is obsolete: 'supportsRenderTextures always returns true, no need to call it'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Object Colliders\ObjectColliderAttachment.cs(32,41): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\RamjetAnvil\Landmass\Source\Importing\LandmasImporter.cs(752,31): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(115,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(116,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(117,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(118,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(119,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(120,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(121,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Runtime Editor\RuntimeEditorApplication.cs(123,32): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Plugins\Runtime Transform Gizmos\Scripts\Scene Management\Bounding Volume Hierarchies\Sphere Tree\Game Object Tree\GameObjectSphereTree.cs(250,41): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Standard Assets\Effects\TonemappingColorGrading\TonemappingColorGrading.cs(885,17): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Standard Assets\Effects\TonemappingColorGrading\TonemappingColorGrading.cs(981,21): warning CS0618: 'RenderTexture.MarkRestoreExpected()' is obsolete: 'This function has no effect.'
+Assets\Plugins\RamjetAnvil\Ramnet\Editor\GameObjectNetworkIdInspector.cs(14,38): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(250,13): warning CS0618: 'TextureImporter.linearTexture' is obsolete: 'linearTexture Property deprecated. Use sRGBTexture instead.'
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(251,13): warning CS0618: 'TextureImporter.textureFormat' is obsolete: 'textureFormat is no longer accessible at the TextureImporter level. For old 'simple' formats use the textureCompression property for the equivalent automatic choice (Uncompressed for TrueColor, Compressed and HQCommpressed for 16 bits). For platform specific formats use the [[PlatformTextureSettings]] API. Using this setter will setup various parameters to match the new automatic system as well as possible. Getter will return the last value set.'
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(369,28): warning CS0618: 'TextureImporter.linearTexture' is obsolete: 'linearTexture Property deprecated. Use sRGBTexture instead.'
+Assets\Standard Assets\Effects\TonemappingColorGrading\Editor\TonemappingColorGradingEditor.cs(370,28): warning CS0618: 'TextureImporter.textureFormat' is obsolete: 'textureFormat is no longer accessible at the TextureImporter level. For old 'simple' formats use the textureCompression property for the equivalent automatic choice (Uncompressed for TrueColor, Compressed and HQCommpressed for 16 bits). For platform specific formats use the [[PlatformTextureSettings]] API. Using this setter will setup various parameters to match the new automatic system as well as possible. Getter will return the last value set.'
+Assets\Scripts\Effects\GroundSpray.cs(27,9): warning CS0618: 'ParticleSystem.startSpeed' is obsolete: 'startSpeed property is deprecated. Use main.startSpeed or main.startSpeedMultiplier instead.'
+Assets\Scripts\Effects\WindParticleEffect.cs(18,21): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Effects\GroundSpray.cs(39,13): warning CS0618: 'ParticleSystem.startSpeed' is obsolete: 'startSpeed property is deprecated. Use main.startSpeed or main.startSpeedMultiplier instead.'
+Assets\Scripts\Effects\GroundSpray.cs(45,13): warning CS0618: 'ParticleSystem.startSpeed' is obsolete: 'startSpeed property is deprecated. Use main.startSpeed or main.startSpeedMultiplier instead.'
+Assets\Scripts\Physics\WindVisualizer.cs(16,17): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Test\Turrets\Turret.cs(36,26): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Kino\Motion\Script\FrameBlendingFilter.cs(192,54): warning CS0618: 'GraphicsDeviceType.OpenGLES2' is obsolete: 'OpenGL ES 2.0 is no longer supported in Unity 2023.1'
+Assets\Scripts\Ui\Notifications\VersionChecker.cs(20,34): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Scripts\Util\ParticleSystemExtensions.cs(14,16): warning CS0618: 'ParticleSystem.EmissionModule.rate' is obsolete: 'rate property is deprecated. Use rateOverTime or rateOverDistance instead.'
+Assets\Scripts\Util\ParticleSystemExtensions.cs(19,20): warning CS0618: 'ParticleSystem.EmissionModule.rate' is obsolete: 'rate property is deprecated. Use rateOverTime or rateOverDistance instead.'
+Assets\Scripts\Util\ParticleSystemExtensions.cs(21,9): warning CS0618: 'ParticleSystem.EmissionModule.rate' is obsolete: 'rate property is deprecated. Use rateOverTime or rateOverDistance instead.'
+Assets\Build\BuildConfig.cs(36,40): warning CS0618: 'BuildTarget.StandaloneOSXIntel' is obsolete: 'StandaloneOSXIntel has been removed in 2017.3'
+Assets\Build\BuildConfig.cs(38,40): warning CS0618: 'BuildTarget.StandaloneOSXIntel64' is obsolete: 'StandaloneOSXIntel64 has been removed in 2017.3'
+Assets\Build\BuildConfig.cs(47,40): warning CS0618: 'BuildTarget.StandaloneLinux' is obsolete: 'StandaloneLinux has been removed in 2019.2'
+Assets\Build\BuildConfig.cs(51,40): warning CS0618: 'BuildTarget.StandaloneLinuxUniversal' is obsolete: 'StandaloneLinuxUniversal has been removed in 2019.2'
+Assets\Scripts\Challenges\ChallengeManager.cs(22,27): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Scripts\Modules\VoloModule.cs(43,36): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(45,39): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(59,48): warning CS0618: 'Scheduler.ThreadPool' is obsolete: 'This property is no longer supported due to refactoring of the API surface and elimination of platform-specific dependencies. Consider using Scheduler.Default to obtain the platform's most appropriate pool-based scheduler. In order to access a specific pool-based scheduler, please add a reference to the System.Reactive.PlatformServices assembly for your target platform and use the appropriate scheduler in the System.Reactive.Concurrency namespace. See http://go.microsoft.com/fwlink/?LinkID=260866 for more information.'
+Assets\Scripts\Modules\VoloModule.cs(171,37): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(174,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(176,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(192,27): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(197,26): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Scripts\Modules\VoloModule.cs(203,27): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Scripts\Modules\VoloModule.cs(221,27): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(222,29): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Scripts\Modules\VoloModule.cs(227,20): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(228,23): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Scripts\Modules\VoloModule.cs(237,27): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(240,32): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(260,34): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Modules\VoloModule.cs(261,29): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Ui\OptionsMenu\OptionsMenuInitializer.cs(44,48): warning CS0618: 'Scheduler.ThreadPool' is obsolete: 'This property is no longer supported due to refactoring of the API surface and elimination of platform-specific dependencies. Consider using Scheduler.Default to obtain the platform's most appropriate pool-based scheduler. In order to access a specific pool-based scheduler, please add a reference to the System.Reactive.PlatformServices assembly for your target platform and use the appropriate scheduler in the System.Reactive.Concurrency namespace. See http://go.microsoft.com/fwlink/?LinkID=260866 for more information.'
+Assets\Scripts\AttractScreen\States\ParachuteStates.cs(259,56): warning CS0618: 'Scheduler.ThreadPool' is obsolete: 'This property is no longer supported due to refactoring of the API surface and elimination of platform-specific dependencies. Consider using Scheduler.Default to obtain the platform's most appropriate pool-based scheduler. In order to access a specific pool-based scheduler, please add a reference to the System.Reactive.PlatformServices assembly for your target platform and use the appropriate scheduler in the System.Reactive.Concurrency namespace. See http://go.microsoft.com/fwlink/?LinkID=260866 for more information.'
+Assets\Scripts\AttractScreen\States\SpawnScreen.cs(54,28): warning CS0618: 'Object.FindObjectOfType<T>()' is obsolete: 'Object.FindObjectOfType has been deprecated. Use Object.FindFirstObjectByType instead or if finding any instance is acceptable the faster Object.FindAnyObjectByType'
+Assets\Scripts\Ui\MainMenu\PlayerLoginStatusView.cs(69,35): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Scripts\Ui\NewsFeedModel.cs(29,31): warning CS0618: 'WWW' is obsolete: 'Use UnityWebRequest, a fully featured replacement which is more efficient and has additional features'
+Assets\Scripts\Ui\GenericComponents\ImprovedSlider.cs(125,30): warning CS0618: 'PrefabUtility.GetPrefabType(Object)' is obsolete: 'Use GetPrefabAssetType and GetPrefabInstanceStatus to get the full picture about Prefab types.'
+Assets\Scripts\Ui\GenericComponents\ImprovedSlider.cs(126,31): warning CS0618: 'PrefabType' is obsolete: 'PrefabType no longer tells everything about Prefab instance.'
+Assets\Scripts\Test\Parachute\ParachuteThumbnail.cs(22,37): warning CS0067: The event 'ParachuteThumbnail.OnHighlight' is never used
+Assets\Scripts\Ui\MainMenu\MainMenuView.cs(17,29): warning CS0067: The event 'MainMenuView.OpenOptionsMenu' is never used
+Assets\Scripts\Test\PilotTestSpawner.cs(9,34): warning CS0414: The field 'PilotTestSpawner._controllerId' is assigned but its value is never used
+Assets\Scripts\Test\Parachute\ParachuteController.cs(20,40): warning CS0414: The field 'ParachuteController._mouseInputSensitivityMultiplier' is assigned but its value is never used
+Assets\Scripts\Ecology\Ecology.cs(18,36): warning CS0414: The field 'Ecology._nightLightIntensityThreshold' is assigned but its value is never used
+Assets\Scripts\Util\TrajectoryVisualizer.cs(23,19): warning CS0414: The field 'TrajectoryVisualizer._lineWidth' is assigned but its value is never used
+Assets\Editor\Build\BuildConfig.cs(12,33): warning CS0436: The type 'PlatformBuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'PlatformBuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+Assets\Editor\Build\BuildWindow.cs(149,31): warning CS0436: The type 'PlatformBuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'PlatformBuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(524,61): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(532,23): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\Build\BuildWindow.cs(224,48): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+Assets\Editor\Build\BuildWindow.cs(24,20): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(42,22): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(710,29): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(151,24): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\Build\BuildConfig.cs(39,40): warning CS0618: 'BuildTarget.StandaloneLinux' is obsolete: 'StandaloneLinux has been removed in 2019.2'
+Assets\Editor\Build\BuildConfig.cs(43,40): warning CS0618: 'BuildTarget.StandaloneLinuxUniversal' is obsolete: 'StandaloneLinuxUniversal has been removed in 2019.2'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(51,40): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\Build\BuildWindow.cs(48,58): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+Assets\Editor\Build\BuildWindow.cs(51,86): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+Assets\Editor\Build\BuildWindow.cs(51,33): warning CS0436: The type 'BuildConfig' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs' conflicts with the imported type 'BuildConfig' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/BuildConfig.cs'.
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(533,24): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(619,31): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+Assets\Editor\RamjetAnvil\Landmass\Source\Serialization\Configuration.cs(636,17): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+Assets\Editor\Character\RagdollEditor.cs(67,9): warning CS0618: 'SceneView.onSceneGUIDelegate' is obsolete: 'onSceneGUIDelegate has been deprecated. Use duringSceneGui instead.'
+Assets\Editor\Character\RagdollEditor.cs(72,9): warning CS0618: 'SceneView.onSceneGUIDelegate' is obsolete: 'onSceneGUIDelegate has been deprecated. Use duringSceneGui instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(155,37): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(165,21): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+Assets\Editor\Build\BuildWindow.cs(263,13): warning CS0436: The type 'ZipUtility' in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/ZipUtility.cs' conflicts with the imported type 'ZipUtility' in 'Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'. Using the type defined in 'E:\code\unity\volo_airsport_open\Assets/Editor/Build/ZipUtility.cs'.
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(399,36): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(463,65): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(481,30): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(481,69): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(483,34): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(492,34): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassEditorUtilities.cs(764,22): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(757,21): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(757,74): warning CS0618: 'DetailPrototype.bendFactor' is obsolete: 'bendFactor has no effect and is deprecated.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(895,50): warning CS0618: 'TerrainData.splatPrototypes' is obsolete: 'TerrainData.splatPrototypes is obsolete. Use TerrainData.terrainLayers instead.'
+Assets\Editor\RamjetAnvil\Landmass\Source\LandmassImporterEditorWindow.cs(895,22): warning CS0618: 'SplatPrototype' is obsolete: 'SplatPrototype is obsolete. Use TerrainLayer instead.'
+AssetDatabase: script compilation time: 2.792442s
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  2.876 seconds
+Refreshing native plugins compatible for Editor in 0.33 ms, found 0 plugins.
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+UnityExecutionOrder - Setting script execution order: WhispAuthority -> Ring -> RamjetAnvil.Volo.Spawnpoint -> RamjetAnvil.Volo.ParachuteController -> FlightStatistics -> Contrail -> Airfoil1D -> ParachuteWingSound -> WingSound -> AdaptiveTrailRenderer -> EarDistortionSound -> ProximitySound -> TrajectoryVisualizer -> GroundSpray -> ThirdPersonCameraController -> RamjetAnvil.Volo.Parachute -> RamjetAnvil.Volo.RingChallenge -> RamjetAnvil.Volo.SpawnpointDiscoverer -> WhispClient
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityExecutionOrder.ExecutionOrderInjector:.cctor () (at Assets/Plugins/RamjetAnvil/UnityExecutionOrder/Editor/ExecutionOrderInjector.cs:24)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Plugins/RamjetAnvil/UnityExecutionOrder/Editor/ExecutionOrderInjector.cs Line: 24)
+
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.773 seconds
+Domain Reload Profiling: 3645ms
+	BeginReloadAssembly (361ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (49ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (145ms)
+	RebuildCommonClasses (48ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (36ms)
+	LoadAllAssembliesAndSetupDomain (2409ms)
+		LoadAssemblies (2418ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (106ms)
+			TypeCache.Refresh (84ms)
+				TypeCache.ScanAssembly (72ms)
+			BuildScriptInfoCaches (11ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (773ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (616ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (44ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (137ms)
+			ProcessInitializeOnLoadAttributes (383ms)
+			ProcessInitializeOnLoadMethodAttributes (39ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (24ms)
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+AssetDatabase: script compilation time: 0.001048s
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 1.5032ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.3.18f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/500b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/code/unity/volo_airsport_open
+ExitCode: 0 Duration: 0s109ms
+*** Tundra build success (0.07 seconds), 0 items updated, 265 evaluated
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.544 seconds
+Refreshing native plugins compatible for Editor in 0.29 ms, found 0 plugins.
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.817 seconds
+Domain Reload Profiling: 1358ms
+	BeginReloadAssembly (357ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (79ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (141ms)
+	RebuildCommonClasses (45ms)
+	RebuildNativeTypeToScriptingClass (16ms)
+	initialDomainReloadingComplete (31ms)
+	LoadAllAssembliesAndSetupDomain (92ms)
+		LoadAssemblies (124ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (76ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (58ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (818ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (586ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (44ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (140ms)
+			ProcessInitializeOnLoadAttributes (351ms)
+			ProcessInitializeOnLoadMethodAttributes (37ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (26ms)
+Refreshing native plugins compatible for Editor in 0.33 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=671915b8d85fd3a43b287117bd57b8b4): Total: 8.582 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1889 ms
+		Asset DB Callback time: managed=118 ms, native=24 ms
+		Scripting: domain reloads=2, domain reload time=3434 ms, compile time=3095 ms, other=19 ms
+		Project Asset Count: scripts=641, non-scripts=1277
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.003ms
+	InvokePackagesCallback: 24.542ms
+	ApplyChangesToAssetFolders: 0.911ms
+	Scan: 107.196ms
+	OnSourceAssetsModified: 1.646ms
+	CategorizeAssetsWithTransientArtifact: 15.130ms
+	ProcessAssetsWithTransientArtifactChanges: 37.625ms
+	CategorizeAssets: 22.727ms
+	ImportOutOfDateAssets: 1596.082ms (-1500.095ms without children)
+		CompileScripts: 3095.067ms
+		CollectScriptTypesHashes: 0.007ms
+		ReloadNativeAssets: 0.008ms
+		UnloadImportedAssets: 0.381ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.361ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.350ms
+	PostProcessAllAssets: 119.126ms
+	Hotreload: 1.169ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.003ms
+	UnloadStreamsBegin: 3.563ms
+	PersistCurrentRevisions: 0.052ms
+	UnloadStreamsEnd: 0.002ms
+	GenerateScriptTypeHashes: 4.740ms
+	Untracked: 6652.524ms
+
+Application.AssetDatabase Initial Refresh End
+Shader 'Nature/Terrain/StandardCustom': dependency 'AddPassShader' shader 'TerrainEngine/Splatmap/Standard-AddPass-Custom' not found
+Shader 'Nature/Terrain/StandardCustom': dependency 'BaseMapShader' shader 'TerrainEngine/Splatmap/Standard-Base-Custom' not found
+Scanning for USB devices : 10.182ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Volo Airsport
+Cannot add menu item 'Build/Build &b' for method 'BuildWindow.Build' because a menu item with the same name already exists.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogWarning (object)
+UnityEditor.MenuItemScriptCommand:Update (UnityEditor.MenuItem,System.Reflection.MethodInfo)
+UnityEditor.MenuService:ExtractMenuItemsFromAttributes ()
+UnityEditor.MenuService:GetMenuItemsFromAttributesById (string)
+UnityEditor.MenuService:GetMenuItemsFromAttributes ()
+
+Cannot add menu item 'Build/Build Settings... &%b' for method 'BuildWindow.Initialize' because a menu item with the same name already exists.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogWarning (object)
+UnityEditor.MenuItemScriptCommand:Update (UnityEditor.MenuItem,System.Reflection.MethodInfo)
+UnityEditor.MenuService:ExtractMenuItemsFromAttributes ()
+UnityEditor.MenuService:GetMenuItemsFromAttributesById (string)
+UnityEditor.MenuService:GetMenuItemsFromAttributes ()
+
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1831 unused Assets / (2.1 MB). Loaded Objects now: 2580.
+Memory consumption went from 146.0 MB to 143.8 MB.
+Total: 7.929000 ms (FindLiveObjects: 0.319200 ms CreateObjectMapping: 0.079200 ms MarkObjects: 6.368800 ms  DeleteObjects: 1.160700 ms)
+
+Batchmode quit successfully invoked - shutting down!
+Curl error 42: Callback aborted
+Killing ADB server in 2,0941133 seconds.
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-zandv-6000.3.18-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-zandv-6000.3.18 channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+abort_threads: Failed aborting id: 0000000000006AA0, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 000000000000A144, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000006AA0, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 000000000000A144, mono_thread_manage will ignore it
+
+debugger-agent: Unable to listen on 3304
+Exiting batchmode successfully now!
+Exiting without the bug reporter. Application will terminate with return code 0

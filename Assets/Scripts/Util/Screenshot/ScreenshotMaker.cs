@@ -45,6 +45,7 @@ public class ScreenshotMaker : MonoBehaviour {
                     width: Mathf.FloorToInt(Screen.width * settings.Graphics.ScreenshotMagnificationFactor),
                     height: Mathf.FloorToInt(Screen.height * settings.Graphics.ScreenshotMagnificationFactor));
             })
+            .Where(resolution => resolution.Width > 0 && resolution.Height > 0)
             .DistinctUntilChanged()
             .Subscribe(resolution => {
                 //Debug.Log("setting resolution to " + resolution.Width + "x" + resolution.Height);
