@@ -1,9 +1,13 @@
 # Unity 6 Port Roadmap
 
-Status: mid-port, compiles clean, boots and runs - gamepad now reaches the
-title screen's Play/Title-screen selection. Not yet fully playable.
+Status: mid-port, compiles clean, boots and runs - the player now spawns,
+flies the wingsuit, and reaches the Playing state end to end. Flight controls
+(pitch/roll/yaw, respawn, parachute deploy, camera switch, spectator) are
+wired. Three previously-precompiled RamjetAnvil dependencies (CoroutineScheduler,
+StateMachine, PadroneClient) are now embedded as in-project source. Not yet
+fully playtested - flight model retuning against Unity 6 PhysX is still ahead.
 Branch: `unity6-port` (branched from `butcher`)
-Last updated: 2026-08-08 (runtime debugging session)
+Last updated: 2026-08-10 (runtime debugging session, part 2)
 
 ## Why
 
@@ -458,18 +462,205 @@ or a dangling reference to something that was deleted and replaced. This resolve
 separate bugs this session (the DI duplicate-key crash, and ruling out a stale/mismatched
 `EventSystem` reference) faster and more reliably than reasoning about it blind.
 
-**Next session should pick up with:** getting further past the title screen into actual
-gameplay (spawn, flight), then the rebinding UI / `JoystickActivator` / `InputBindings<T>`
-real implementation, then flight-model retuning against Unity 6's PhysX.
+**(Superseded — see the two "runtime debugging, part 2" entries below.)** The project
+got well past the title screen this session: spawn, flight, parachute, spectator, and
+the pause menu are all now reachable and responsive. The `HeadCameraController.cs`/
+`OpenVrCameraRig.cs` dead-stubs are the only ones from the original list of 7 still
+unfixed — both VR-only, still low priority. See the bottom of this doc for current
+status and what's next.
 
-**Known landmine directly in that path:** the "`Debug.LogWarning("I want to handle
-input")`, real logic commented out beneath it" dead-stub pattern (same shape as the
-`GlobalMenuInputEventEmitter`/`TitleScreen` bugs just fixed) still exists in **5 more
-files** — `grep -rl "I want to handle" Assets/Scripts` finds `FlyWingsuit.cs`,
-`ParachuteStates.cs`, `Playing.cs`, `SpawnScreen.cs`, `SpectatorMode.cs`, plus
-`HeadCameraController.cs` and `OpenVrCameraRig.cs` (lower priority — VR/head-look).
-`Playing.cs` and `SpawnScreen.cs` are almost certainly the very next ones to bite,
-since they're on the direct path from title screen into spawn/flight. Expect the same
-"nothing responds to input in this state" symptom, same fix shape (reconnect to the
-already-working `MenuActionMapProvider`/`PilotActionMapProvider`/`Events.*` rather than
-trying to resurrect the commented-out Impero code).
+### 2026-08-09/10, runtime debugging, part 2 — spawn, flight, and the remaining dead stubs
+
+Picking up from "reaches the Play/Title-screen selection": Mar drove the Editor through
+spawn point selection and into actual flight, reporting console output for each new
+state reached, same loop as the previous session.
+
+- **RamNet networking turned out not to be fully unused** — singleplayer routes through
+  it via `HostAsSingleplayer`, which is how spawn points and pre-existing networked
+  objects (turbines, balloons) get replicated in via `GameObjectNetworkId`/
+  `PreExistingObjects.FindAll()`. `ArgumentException: One or more components found in
+  passed GameObject are null` on Start Game traced (via `GetComponentsInChildren`
+  silently returning `null` entries for missing-script slots) to several missing-script
+  GameObjects across `LoadingScreen`/`Core`/`SwissAlps` — wrote
+  `Assets/Editor/MissingScriptFinder.cs` (`Volo > Diagnostics > Find Missing Scripts In
+  Loaded Scenes`) since static grep couldn't find instance-level breaks the way it could
+  for typed reference bugs. Most of the ~40 hits traced via `git log --all -p -S<guid>
+  -- '*.meta'` to a single common cause: the deleted `Assets/Plugins/FMOD/
+  StudioEventEmitter.cs` (stripped on `butcher`), safe to remove — no lost gameplay
+  logic, same category as the already-stubbed FMOD calls elsewhere.
+- **`SpawnScreen.cs`** — another "I want to handle input" dead stub, fixed the same way
+  as `TitleScreen`/`GlobalMenuInputEventEmitter`: reconnected to
+  `MenuActionMapProvider`. Needed a new `PollDiscreteCursor()` method on
+  `MenuActionMap` (button-based Left/Right/Up/Down composed into a `Vector2`, for
+  `NavigableUIList`'s discrete cursor input shape — the existing analog `PollAxis`
+  wasn't the right fit for a list/grid UI).
+- **`FlyWingsuit.cs`, `ParachuteStates.cs` (`Flying.Update()`), `SpectatorMode.cs`,
+  `Playing.cs`** — the remaining four "I want to handle input" dead stubs from the
+  known-landmine list, all fixed the same way (reconnect to the already-working action
+  map providers/event system rather than resurrecting commented Impero code). This
+  surfaced a real gap: `PilotActionMap` had bindings for flight-surface controls
+  (pitch/roll/yaw/arms) but **no bindings at all** for `Respawn`/`UnfoldParachute`/
+  `ChangeCamera`/`ToggleSpectatorView` — those actions existed in the enum and were
+  polled by the restored code, but silently never fired since nothing was bound to
+  them. Added bindings: keyboard keys match the original Impero defaults (traced via
+  `git show` on the pre-strip commit — `R`=Respawn, `T`=UnfoldParachute, middle-mouse=
+  ChangeCamera, `F3`=ToggleSpectatorView); gamepad bindings are new picks against the
+  generic `<Gamepad>` template (Select/North/West buttons) rather than reviving the old
+  Xbox-360-specific raw button indices, consistent with the "go broad on gamepad
+  support" decision from the input-system pass.
+- **`JoystickActivator` NRE on spawn** (`Playing.cs:83`) — `Playing.Data.JoystickActivator`
+  is a plain `[SerializeField]` (no `[Dependency]`), and `VoloStateMachine`'s
+  `_playingData.JoystickActivator` slot in `Core.unity` was genuinely empty
+  (`{fileID: 0}`), unlike sibling fields in the same block. Started building a general
+  `SerializedObject`-based Editor auto-wiring tool for this whole class of bug
+  (`Assets/Editor/NullReferenceAutoWirer.cs` — walks `VoloStateMachine`'s state-data
+  blocks, auto-assigns any null object-reference field when exactly one candidate of
+  the matching type exists in-scene, skips/logs ambiguous cases) before Mar found and
+  fixed the actual cause directly: he'd swapped the `JoystickActivator` *component* in
+  the scene earlier but `VoloStateMachine`'s direct reference to it hadn't been
+  updated — a stale reference, not a truly-never-assigned one. The auto-wiring tool is
+  still in the project (harmless, diagnostic-only) in case a genuinely-empty case like
+  this shows up again on `_flyParachuteData`/`_spectatorModeData` etc.
+
+**Result:** player spawns and flies the wingsuit; pitch/roll/yaw, respawn,
+unfold-parachute, camera-switch, spectator-toggle, and the pause menu all respond.
+
+### 2026-08-10, runtime debugging, part 2 continued — three precompiled dependencies become source
+
+While chasing the parachute-deploy path (`T` key), hit a `NullReferenceException` deep
+inside the closed-source `RamjetAnvil.Coroutine`/`RamjetAnvil.StateMachine` DLLs, with
+no application-code frames in the stack trace — nothing to grep, nowhere to add a
+breakpoint. **Mar had the actual source for both on GitHub and dropped copies into
+`Dependencies/CoroutineScheduler` and `Dependencies/StateMachine`** (outside the Unity
+project, not previously referenced from it). This turned an unfalsifiable guessing
+exercise into a normal debugging session, and became the session's main event:
+
+- **Embedded both as in-project source** at `Assets/Plugins/RamjetAnvil/
+  CoroutineScheduler/Source/` and `.../StateMachine/Source/`, disabled the old
+  `CoroutineScheduler.dll`/`StateMachine.dll` (+`.pdb`/`.mdb`) by renaming to `.bak` —
+  same reversible-disable pattern used earlier for `Newtonsoft.Json.dll`. Being plain
+  project source now, Unity recompiles them on its own; no external `.csproj`/`msbuild`
+  step needed (the standalone `.csproj`s reference a Unity 5.3.5 install path that no
+  longer exists on this machine anyway).
+- **Added targeted diagnostics while embedding**: `Routine.FetchNextInstruction()` now
+  logs the fibre's type name before rethrowing on exception, and `StateMachine<T>
+  .InvokeStateLifeCycleMethod()` catches `TargetInvocationException` specifically
+  (previously only `TargetParameterCountException` was caught) and logs which
+  state/method threw. This is *how* the actual bug (see below) got found instead of
+  staying a mystery.
+- **Fallout, round 1 — compile errors**: `RamjetAnvil.Coroutine.ObjectPool<T>` (internal,
+  previously invisible outside its own assembly) collided with
+  `RamjetAnvil.Unity.Utility.ObjectPool<T>` once both compiled into the same
+  Assembly-CSharp — renamed to `RoutinePool<T>` (used only internally by
+  `CoroutineScheduler`, safe rename). `IStateMachine.Transition`/`TransitionToParent`
+  were `void` in the checked-out source but `Playing.cs` called `.WaitUntilDone()` on
+  their return value and read an `IsTransitioning` property neither existed on — the
+  Dependencies/ checkout was evidently a slightly different snapshot than what was
+  actually compiled into the shipped DLL (a second, independent instance of this same
+  drift showed up in `Routines.cs`, see below). Widened both methods to return
+  `IAwaitable` (the scheduler already had the value, just wasn't returning it) and
+  added `IsTransitioning`.
+- **Fallout, round 2 — `Assembly.GetTypes()` poisoning**: with the scheduler embedded,
+  `RamjetAnvil.RamNet.MessageTypes`'s static constructor (which reflects over every
+  loaded assembly to find networked message types) started throwing
+  `ReflectionTypeLoadException` the instant it touched `Padrone.dll` — that DLL's own
+  `PadroneClient._coroutineScheduler` field was still typed against the now-missing
+  external `CoroutineScheduler` assembly identity. Unity's plugin importer additionally
+  refused to load `Padrone.dll` *at all* once its declared reference target was gone
+  (cascading into `Assembly-CSharp`/`Assembly-CSharp-Editor` failing to load), worked
+  around temporarily via `validateReferences: 0` in `Padrone.dll.meta`, then properly
+  fixed by asking Mar for Padrone's source too (also on GitHub, dropped into
+  `Dependencies/padrone-main`) and embedding it the same way at
+  `Assets/Plugins/RamjetAnvil/PadroneClient/Source/`, disabling the old `Padrone.dll`.
+  Confirms the master-server client can be fully removed from the closed-source
+  porting surface, not just individual call sites.
+- **`WWW.InitWWW` doesn't just have its native binding removed (as found earlier this
+  session with the same class) — the method itself no longer exists on modern Unity's
+  `WWW` type at all**, a genuine `CS1061` compile error, not a runtime
+  `MissingMethodException`. `PadroneClient`'s pooled-WWW-object transport used it to
+  reinitialize reused requests; since the master server is already confirmed
+  unreachable, replaced `ExecuteWebRequest` with a stub that reports
+  `HttpStatusCode.ServiceUnavailable` without ever constructing a `WWW`, dropped the
+  now-unused `Util.WWWPool`.
+- **Screen fader intermittently going black — a real, pre-existing bug, not something
+  the embedding introduced.** `Routines.Animate`'s loop correctly calls
+  `animator(animation(lerp))` every frame, but its *terminal* call after the loop was
+  unconditionally `animator(1f)` — bypassing the animation curve entirely. Invisible for
+  `FadeOut` (`animation(1f) == 1f` for a normal curve anyway) but `CameraTransitions
+  .FadeIn` uses `EaseInOutAnimation.Reverse()`, whose `animation(1f) == 0` — so every
+  fade-in ended by snapping straight back to opaque/black regardless of the curve.
+  Fixed to `animator(animation(1f))`. (The 4-arg `Animate` overload's parameter order
+  also didn't match any real call site in `CameraAnimator.cs`/`CameraTransitions.cs`,
+  and `Animation.Reverse()` didn't exist at all in the Dependencies/ checkout — both
+  fixed by matching the actual call sites, the same "checked-out source is a slightly
+  different snapshot than the shipped DLL" pattern as the `IStateMachine` fallout above.)
+- **Coroutine scheduler resilience**: the diagnostic rethrow added above turned out to
+  cause its own problem — an exception mid-`CoroutineScheduler.Update()` unwinds the
+  *entire* per-frame update pass, which can leave a routine partially torn down (e.g. a
+  subroutine disposed/pooled but never removed from its parent's active-subroutine
+  list), causing the exact same `<null fibre>` NRE to repeat every frame forever.
+  Changed the catch in `FetchNextInstruction()` to mark the routine `_isDone = true`
+  and return instead of rethrowing — self-heals (routine gets recycled normally next
+  pass) instead of looping. The underlying one-time trigger (something returning a
+  pooled `Routine` object while another part of the code still held a reference to it)
+  is still unconfirmed — noted as a known minor issue, not currently blocking.
+
+**Two more scene/component bugs found via the same debugging pass:**
+- **`ActiveJoystickNotifier` NRE at `OnEnable()`** — not a wiring bug (the
+  `[Dependency]` fields were correctly resolvable once the `JoystickActivator`
+  `IsDependency` marker's `_reference` was fixed — it had been pointing at the sibling
+  `ActiveJoystickNotifier` component instead of the actual `JoystickActivator`
+  component on the same GameObject, presumably a mis-drag during an earlier component
+  swap). The remaining crash was a **startup-order** bug:
+  `[Dependency]`-consuming components in this codebase are authored **disabled**
+  (`m_Enabled: 0`) in the Inspector and get enabled by `MonoBehaviourInjector` only
+  *after* successful injection (confirmed against `ScreenshotMaker`'s scene data,
+  which does start disabled) — both `ActiveJoystickNotifier` instances in `Core.unity`
+  had `m_Enabled: 1`, so `OnEnable()` fired at scene load, before the dependency
+  resolver ever ran. Fixed by disabling both in the Inspector.
+- **`TitleScreen`'s Confirm-button listener leaked past state exit** — a bug introduced
+  when this file's dead stub was fixed in the previous session: the subscription lived
+  in the constructor (runs once, ever) with no matching `Dispose()`, so it kept firing
+  in later states, eventually throwing `Cannot transition while another transition is
+  already active` when a later Confirm press tried to re-trigger the same
+  `Machine.Transition(...MainMenu)` call mid-transition. Fixed by moving the subscribe
+  into `OnEnter()` and the dispose into `OnExit()`, so re-entering the title screen
+  (e.g. backing out from the main menu) still works.
+
+**Also fixed, both pre-existing and unrelated to the above:**
+- `ScreenshotMaker`'s `Texture2D` construction crashed with "Texture must have width
+  greater than 0" — `ScreenResolutionNotifier` seeds its resolution stream from
+  `Screen.width/height` at `Awake()`, which can legitimately be `0` before the window
+  is realized. Added a `.Where(width > 0 && height > 0)` filter upstream of the
+  `Texture2D` construction.
+- `VersionChecker`'s `JsonReaderException` (flagged as pending in the previous session)
+  — the version-check endpoint returns a 200 OK with parked-domain HTML instead of
+  JSON, same category as the already-dead master server and news feed. The existing
+  code only guarded against network-level failures (`versionRequest.error`), not a
+  successful-but-unparseable response. Wrapped the deserialize in try/catch, logs a
+  warning and skips the update notification instead of crashing the coroutine.
+
+**Result:** player spawns, flies, can respawn/deploy parachute/switch camera/spectate/
+pause, and the title screen ↔ main menu ↔ spawn screen ↔ playing flow no longer throws.
+Three previously-opaque precompiled dependencies (CoroutineScheduler, StateMachine,
+Padrone) are now fully in-project source, closing off a whole class of "can't fix,
+no source" bugs for good.
+
+**Next session should pick up with:** continued playtesting to surface anything left
+(the null-fibre reentrancy edge case if it recurs with more detail, general flight
+feel), then flight-model retuning against Unity 6's PhysX, then the rebinding UI /
+`JoystickActivator` / `InputBindings<T>` real implementation. `HeadCameraController.cs`/
+`OpenVrCameraRig.cs` dead-stubs remain, VR-only, still low priority.
+
+**Debugging technique worth reusing:** when a bug traces into a precompiled RamjetAnvil
+plugin with no source in the repo, ask whether Mar has it on GitHub/backup before
+guessing at binary internals — worked for CoroutineScheduler, StateMachine, and Padrone
+all in the same session. Once embedded as source, treat the checked-out version as
+*probably* but not *definitely* identical to what was actually compiled into the
+shipped DLL — this session hit two independent cases (`IStateMachine`'s
+`Transition`/`TransitionToParent` return type + `IsTransitioning`, and `Routines
+.Animate`'s parameter order + missing `Reverse()`) where the real call sites in
+`Assets/Scripts/` expected a slightly different API than the Dependencies/ checkout
+had. When that happens, trust the call sites (real, exercised game code) over the
+checkout, and grep for every usage project-wide before changing a shared method's
+signature.

@@ -27,9 +27,17 @@ public class VersionChecker : MonoBehaviour
             yield break;
         }
         
-        var serverVersion = JsonConvert.DeserializeObject<Dictionary<string, string>>(Encoding.Default.GetString(versionRequest.bytes));
-        var latestVersion = serverVersion["version"];
-        //var downloadUrl = serverVersion["downloadUrl"];
+        // The version endpoint is unreachable/decommissioned - a 200 OK with a parked-domain
+        // HTML body (not JSON) is expected here, same category as the master server and news
+        // feed. Fail quietly rather than crash the calling coroutine.
+        string latestVersion;
+        try {
+            var serverVersion = JsonConvert.DeserializeObject<Dictionary<string, string>>(Encoding.Default.GetString(versionRequest.bytes));
+            latestVersion = serverVersion["version"];
+        } catch (Exception e) {
+            Debug.LogWarning("Version check response wasn't valid JSON, skipping: " + e.Message);
+            yield break;
+        }
 
         VersionInfo localVersion = Resources.Load<VersionInfo>("versionInfo");
 

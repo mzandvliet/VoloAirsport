@@ -450,8 +450,8 @@ namespace RamjetAnvil.Coroutine {
                         var subroutine = _activeSubroutines[i];
                         var subroutineTimeLeft = subroutine.Update(timePassed);
                         if (subroutine.IsDone) {
-                            subroutine.Dispose();
                             _activeSubroutines.RemoveAt(i);
+                            subroutine.RecycleTree();
                         }
                         leftOverTime = Duration.Min(leftOverTime, subroutineTimeLeft);
                     }
@@ -512,20 +512,40 @@ namespace RamjetAnvil.Coroutine {
 
         public void Reset() {
             _fibre = null;
+            _isDone = false;
             for (int i = 0; i < _activeSubroutines.Count; i++) {
-                var activeRoutine = _activeSubroutines[i];
-                activeRoutine.Dispose();
+                _activeSubroutines[i].RecycleTree();
             }
             _activeSubroutines.Clear();
             _activeWaitCommand = WaitCommand.DontWait;
         }
 
-        public void Dispose() {
+        // Recursively tears this routine and all its descendants down and returns them to
+        // the pool. Only safe to call once nothing outside this subtree references the
+        // routine being recycled any more - i.e. from whichever container (a parent's
+        // _activeSubroutines list, or the scheduler's own top-level pass via Reset()) just
+        // removed its own reference to it.
+        private void RecycleTree() {
             for (int i = 0; i < _activeSubroutines.Count; i++) {
-                var activeRoutine = _activeSubroutines[i];
-                activeRoutine.Dispose();
+                _activeSubroutines[i].RecycleTree();
             }
+            _activeSubroutines.Clear();
+            _fibre = null;
             _disposeRoutine(this);
+        }
+
+        // IDisposable - the public cancellation contract, safe to call from anywhere,
+        // including external game code holding an IAwaitable handle from
+        // CoroutineScheduler.Run(), at any time (even after the routine has already
+        // finished and its handle is stale). Only marks the routine finished; does NOT
+        // touch the pool. Whatever container is tracking this instance (top-level
+        // _routines, or a parent's _activeSubroutines) will notice IsDone on its next
+        // Update() pass and actually recycle it via RecycleTree()/Reset() - actually
+        // freeing it here instead would let the pool hand the same instance out again
+        // while that container still held a reference to it, silently corrupting
+        // whatever new coroutine ends up reusing it.
+        public void Dispose() {
+            _isDone = true;
         }
     }
 

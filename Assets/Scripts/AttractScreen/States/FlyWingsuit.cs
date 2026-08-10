@@ -116,12 +116,15 @@ namespace RamjetAnvil.Volo.States {
 
         IEnumerator<WaitCommand> NotifyAboutParachute() {
             yield return WaitCommand.Wait(30.Seconds());
-            
+
             if (_unfoldParachuteMappingStr != null) {
                 _data.NotificationList.AddTimedNotification("Did you know you can press <i>" + _unfoldParachuteMappingStr + "</i> to open your parachute?", 10.Seconds());
-                _openParachuteNotification = Disposables.Empty;    
             }
-
+            // Always clear, whether or not we had a binding string to show - this coroutine
+            // has finished either way, and its scheduler handle must not be held onto past
+            // completion (OnSuspend() disposes it, which would otherwise hit an already
+            // recycled - and possibly reused for something unrelated - Routine instance).
+            _openParachuteNotification = Disposables.Empty;
         }
 
         IEnumerator<WaitCommand> OnSuspend() {
