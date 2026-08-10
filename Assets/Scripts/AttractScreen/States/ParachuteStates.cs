@@ -145,33 +145,31 @@ namespace RamjetAnvil.Volo.States {
             }
 
             private void Update() {
-                Debug.LogWarning("I want to handle input");
-                
-                // var parachuteActionMap = _data.ParachuteActionMap.V;
-                // var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
-                // var shouldRespawn = pilotActionMap.PollButtonEvent(WingsuitAction.Respawn) == ButtonEvent.Down;
-                // var shouldSwitchVehicleType = pilotActionMap.PollButtonEvent(WingsuitAction.UnfoldParachute) == ButtonEvent.Down;
+                var parachuteActionMap = _data.ParachuteActionMap.V;
+                var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
+                var shouldRespawn = pilotActionMap.PollButtonEvent(WingsuitAction.Respawn) == ButtonEvent.Down;
+                var shouldSwitchVehicleType = pilotActionMap.PollButtonEvent(WingsuitAction.UnfoldParachute) == ButtonEvent.Down;
 
-                // _data.GameHud.SetParachuteInput(_data.ParachuteController.Input);
+                _data.GameHud.SetParachuteInput(_data.ParachuteController.Input);
 
-                // if (shouldRespawn || _isRespawnRequested) {
-                //     _isRespawnRequested = false;
-                //     Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Just(new RespawnRequest()));
-                // } else {
-                //     if (_transitToEditor) {
-                //         _transitToEditor = false;
-                //         Machine.Transition(Playing.PlayingStates.EditingParachute, _environment);
-                //     } else if (parachuteActionMap.ParachuteConfigToggle == ButtonEvent.Down) {
-                //         TransitToEditingState();
-                //     } else if (shouldSwitchVehicleType) {
-                //         Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Nothing<RespawnRequest>());
-                //     } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ChangeCamera) == ButtonEvent.Down) {
-                //         _environment = _environment.NextMount();
-                //         SwitchToMount(_environment.SelectedCameraMount);
-                //     } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down) {
-                //         Machine.Transition(Playing.PlayingStates.Spectating);
-                //     }
-                // }
+                if (shouldRespawn || _isRespawnRequested) {
+                    _isRespawnRequested = false;
+                    Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Just(new RespawnRequest()));
+                } else {
+                    if (_transitToEditor) {
+                        _transitToEditor = false;
+                        Machine.Transition(Playing.PlayingStates.EditingParachute, _environment);
+                    } else if (parachuteActionMap.ParachuteConfigToggle == ButtonEvent.Down) {
+                        TransitToEditingState();
+                    } else if (shouldSwitchVehicleType) {
+                        Machine.Transition(Playing.PlayingStates.FlyingWingsuit, _environment, Maybe.Nothing<RespawnRequest>());
+                    } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ChangeCamera) == ButtonEvent.Down) {
+                        _environment = _environment.NextMount();
+                        SwitchToMount(_environment.SelectedCameraMount);
+                    } else if (pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down) {
+                        Machine.Transition(Playing.PlayingStates.Spectating);
+                    }
+                }
             }
 
             private void SwitchToMount(PilotCameraMountId cameraMountId) {

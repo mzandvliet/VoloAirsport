@@ -57,17 +57,15 @@ namespace RamjetAnvil.Volo.States {
         }
 
         void Update() {
-            Debug.LogWarning("I want to handle input");
+            var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
+            var shouldQuitSpectator =
+                pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down ||
+                _respawnRequest.IsJust ||
+                _transitToParachuteEditor;
 
-            // var pilotActionMap = _data.PilotActionMapProvider.ActionMap;
-            // var shouldQuitSpectator = 
-            //     pilotActionMap.PollButtonEvent(WingsuitAction.ToggleSpectatorView) == ButtonEvent.Down ||
-            //     _respawnRequest.IsJust ||
-            //     _transitToParachuteEditor;
-
-            // if (shouldQuitSpectator) {
-            //     Machine.TransitionToParent(_respawnRequest, _transitToParachuteEditor);
-            // }
+            if (shouldQuitSpectator) {
+                Machine.TransitionToParent(_respawnRequest, _transitToParachuteEditor);
+            }
         }
 
     }

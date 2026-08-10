@@ -103,21 +103,19 @@ namespace RamjetAnvil.Volo.States {
         }
 
         void Update() {
-            Debug.LogWarning("I want to handle input");
-            
-            // var menuActionMap = _data.MenuActionMapProvider.ActionMap.V;
+            var menuActionMap = _data.MenuActionMapProvider.ActionMap.V;
 
-            // // TODO Only update the flying state if we're actually flying
+            // TODO Only update the flying state if we're actually flying
 
-            // if (!_playingStateMachine.IsTransitioning && !_isTransitioning) {
-            //     if (menuActionMap.PollButtonEvent(MenuAction.Pause) == ButtonEvent.Down) {
-            //         _data.CoroutineScheduler.Run(ToOptionsMenu());
-            //     }
-            // }
+            if (!_playingStateMachine.IsTransitioning && !_isTransitioning) {
+                if (menuActionMap.PollButtonEvent(MenuAction.Pause) == ButtonEvent.Down) {
+                    _data.CoroutineScheduler.Run(ToOptionsMenu());
+                }
+            }
 
-            // if (InternalStateMachineTick != null) {
-            //     InternalStateMachineTick();
-            // }
+            if (InternalStateMachineTick != null) {
+                InternalStateMachineTick();
+            }
         }
 
         IEnumerator<WaitCommand> ToOptionsMenu() {

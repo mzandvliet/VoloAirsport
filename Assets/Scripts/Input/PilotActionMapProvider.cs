@@ -54,6 +54,21 @@ namespace RamjetAnvil.Volo.Input {
 
             var mouseRoll = AddMouseAxis(WingsuitAction.Roll, "MouseRoll");
             mouseRoll.AddBinding("<Mouse>/delta/x");
+
+            var respawn = AddButton(WingsuitAction.Respawn, "Respawn");
+            respawn.AddBinding("<Keyboard>/r");
+            respawn.AddBinding("<Gamepad>/select");
+
+            var unfoldParachute = AddButton(WingsuitAction.UnfoldParachute, "UnfoldParachute");
+            unfoldParachute.AddBinding("<Keyboard>/t");
+            unfoldParachute.AddBinding("<Gamepad>/buttonNorth");
+
+            var changeCamera = AddButton(WingsuitAction.ChangeCamera, "ChangeCamera");
+            changeCamera.AddBinding("<Mouse>/middleButton");
+            changeCamera.AddBinding("<Gamepad>/buttonWest");
+
+            var toggleSpectatorView = AddButton(WingsuitAction.ToggleSpectatorView, "ToggleSpectatorView");
+            toggleSpectatorView.AddBinding("<Keyboard>/f3");
         }
     }
 
