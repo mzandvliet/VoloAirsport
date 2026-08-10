@@ -10,7 +10,10 @@ public class FixedUnityCoroutineScheduler : MonoBehaviour, ICoroutineScheduler {
     private long _lastRunFrame;
     private CoroutineScheduler _scheduler;
 
-    public IAwaitable Run(IEnumerator<WaitCommand> fibre) {
+    public IAwaitable Run(IEnumerator<WaitCommand> fibre,
+        [System.Runtime.CompilerServices.CallerMemberName] string callerMember = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string callerFile = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int callerLine = 0) {
         if (_scheduler == null) {
             _scheduler = new CoroutineScheduler();
         }
@@ -19,7 +22,7 @@ public class FixedUnityCoroutineScheduler : MonoBehaviour, ICoroutineScheduler {
         // being updated immediately
         FixedUpdate();
 
-        return _scheduler.Run(fibre);
+        return _scheduler.Run(fibre, callerMember, callerFile, callerLine);
     }
 
     void Awake() {

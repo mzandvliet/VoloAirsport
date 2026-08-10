@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace RamjetAnvil.Coroutine {
     public interface ICoroutineScheduler {
-        IAwaitable Run(IEnumerator<WaitCommand> fibre);
+        IAwaitable Run(IEnumerator<WaitCommand> fibre,
+            [CallerMemberName] string callerMember = "",
+            [CallerFilePath] string callerFile = "",
+            [CallerLineNumber] int callerLine = 0);
     }
 
     public class CoroutineScheduler : ICoroutineScheduler {
@@ -21,23 +25,33 @@ namespace RamjetAnvil.Coroutine {
             _prevTime = 0f;
         }
 
-        public IAwaitable Run(IEnumerator<WaitCommand> fibre) {
-            return RunInternal(fibre);
+        public IAwaitable Run(IEnumerator<WaitCommand> fibre,
+            [CallerMemberName] string callerMember = "",
+            [CallerFilePath] string callerFile = "",
+            [CallerLineNumber] int callerLine = 0) {
+            return RunInternal(fibre, callerMember, callerFile, callerLine);
         }
 
-        private Routine RunInternal(IEnumerator<WaitCommand> fibre) {
-            var coroutine = CreateRoutine(fibre);
+        private Routine RunInternal(IEnumerator<WaitCommand> fibre, string callerMember, string callerFile, int callerLine) {
+            var coroutine = CreateRoutine(fibre, callerMember, callerFile, callerLine);
             _routines.Add(coroutine);
             return coroutine;
         }
 
+        // Used as the subroutine factory (see the RoutinePool factory above) - a routine
+        // spawned from within another coroutine's yield has no meaningful "caller site" of
+        // its own, so it falls back to identifying itself by the fibre's own type name.
         private Routine CreateRoutine(IEnumerator<WaitCommand> fibre) {
+            return CreateRoutine(fibre, callerMember: null, callerFile: null, callerLine: 0);
+        }
+
+        private Routine CreateRoutine(IEnumerator<WaitCommand> fibre, string callerMember, string callerFile, int callerLine) {
             if (fibre == null) {
                 throw new Exception("Routine cannot be null");
             }
 
             var coroutine = _routinePool.Take();
-            coroutine.Initialize(fibre);
+            coroutine.Initialize(fibre, callerMember, callerFile, callerLine);
             return coroutine;
         }
 
@@ -421,6 +435,11 @@ namespace RamjetAnvil.Coroutine {
         private WaitCommand _activeWaitCommand;
         private bool _isDone;
 
+        // Debugging aid only - identifies what this routine was running, for error logging.
+        // Deliberately NOT cleared by Reset(): if something goes wrong with a routine that's
+        // already been recycled (the null-fibre/stale-handle class of bug), the name of
+        // whatever it was running *last* is still far more useful than nothing.
+        private string _debugName;
 
         public Routine(Func<IEnumerator<WaitCommand>, Routine> createSubroutine, Action<Routine> disposeRoutine) {
             _createSubroutine = createSubroutine;
@@ -428,12 +447,24 @@ namespace RamjetAnvil.Coroutine {
             _activeSubroutines = new List<Routine>();
         }
 
-        public void Initialize(IEnumerator<WaitCommand> fibre) {
+        public void Initialize(IEnumerator<WaitCommand> fibre, string callerMember = null, string callerFile = null, int callerLine = 0) {
             _fibre = fibre;
             _activeSubroutines.Clear();
             _activeWaitCommand = WaitCommand.DontWait;
             _isDone = false;
+            _debugName = FormatDebugName(fibre, callerMember, callerFile, callerLine);
             Update(new Duration(seconds: 0f, frameCount: 0));
+        }
+
+        private static string FormatDebugName(IEnumerator<WaitCommand> fibre, string callerMember, string callerFile, int callerLine) {
+            var fibreName = fibre.GetType().FullName;
+            if (string.IsNullOrEmpty(callerFile)) {
+                // Spawned as a subroutine of another coroutine's yield, not a direct Run()
+                // call - no meaningful call site of its own.
+                return fibreName;
+            }
+            var shortFile = System.IO.Path.GetFileName(callerFile);
+            return fibreName + " (Run() called from " + shortFile + ":" + callerLine + " in " + callerMember + ")";
         }
 
         public Duration Update(Duration timePassed) {
@@ -476,8 +507,8 @@ namespace RamjetAnvil.Coroutine {
                 try {
                     hasNext = _fibre.MoveNext();
                 } catch (Exception e) {
-                    UnityEngine.Debug.LogError("[CoroutineScheduler] Exception while advancing fibre '" +
-                        (_fibre != null ? _fibre.GetType().FullName : "<null fibre>") + "': " + e);
+                    UnityEngine.Debug.LogError("[CoroutineScheduler] Exception while advancing routine '" +
+                        _debugName + "' (fibre " + (_fibre != null ? "present" : "null") + "): " + e);
                     // Mark this routine done so it gets recycled normally instead of being
                     // retried (and re-erroring) every frame - rethrowing here would abort the
                     // scheduler's per-frame update pass mid-loop, which can leave sibling/parent
