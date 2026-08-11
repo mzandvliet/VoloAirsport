@@ -14,8 +14,8 @@ https://ramjetanvil.itch.io/volo-airsport
 
 ## Support this work:
 
-Buy me a [Ko-fi](https://ko-fi.com/marblackstar) 
-Buy Volo Airsport on [itch.io](https://ramjetanvil.itch.io/volo-airsport)
+- Buy me a [Ko-fi](https://ko-fi.com/marblackstar)
+- Buy Volo Airsport on [itch.io](https://ramjetanvil.itch.io/volo-airsport)
 
 ## Instructions:
 
@@ -49,7 +49,7 @@ Broad direction for the Unity 6 port, roughly in order:
 ## Credits:
 
 Lead Designer, Programmer
-- Martijn Zandvliet
+- Mar Zandvliet
 
 Designer, Programmer
 - Frank Versnel
