@@ -5,11 +5,15 @@ fly -> pause menu -> respawn / change spawnpoint all work end to end, repeatably
 Flight controls (pitch/roll/yaw, respawn, parachute deploy, camera switch,
 spectator, pause) are wired. Three previously-precompiled RamjetAnvil
 dependencies (CoroutineScheduler, StateMachine, PadroneClient) are now embedded
-as in-project source. Remaining known gaps: the rebinding UI is still an inert
-stub (input config/rebinding doesn't work yet), FMOD is not reintegrated (silent),
-and the flight model has not been retuned against Unity 6's PhysX.
+as in-project source. **Correction (2026-08-11, Mar, after flying both builds
+side by side): the wingsuit/parachute flight model was assumed to need
+retuning against Unity 6's PhysX, but actually feels intact — comparable to
+5.5.** Remaining known gaps: the rebinding UI is still an inert stub (input
+config/rebinding doesn't work yet), FMOD is not reintegrated (silent), and the
+parachute can go unstable via impulse cascades and "explode" (flight feels
+normal right up until it happens — see Known Issues).
 Branch: `unity6-port` (branched from `butcher`)
-Last updated: 2026-08-10 (runtime debugging session, part 3 - playable milestone)
+Last updated: 2026-08-11 (flight model status correction)
 
 ## Why
 
@@ -36,6 +40,13 @@ nothing tied to a specific engine version. `Assets/Scripts/Character` and
 
 Aerodynamics/physics tuning will still drift and need re-tweaking regardless of code
 changes — PhysX has moved multiple major versions since Unity 5.5.
+
+**Update (2026-08-11): this was a reasonable expectation going in, but it turned out
+not to hold.** Once actually flyable, the wingsuit/parachute flight model feels
+intact and comparable to the original 5.5 build side by side — no retuning pass has
+been needed. The remaining physics problem is narrower and different in kind: the
+parachute can go unstable via impulse cascades and "explode" under conditions not
+yet characterized (see Known Issues) — a stability/robustness bug, not a tuning gap.
 
 Total project: ~23,000 lines of C#, no assembly definitions (monolithic compile —
 simpler to reason about, if slower to iterate on). API compatibility level is
@@ -282,16 +293,18 @@ Unity 6 (`6000.3.18f1`) is already installed via Unity Hub on this machine, alon
 
 ## Known issues (not yet investigated)
 
-- **Parachute physics can blow up.** Under conditions not yet characterized, the
-  parachute simulation goes unstable and "explodes" (presumably a PhysX
-  force/velocity spike). This currently trips some failsafe that quits the game
-  outright rather than recovering or visibly erroring, which also means there's no
-  console output yet pointing at a cause. Likely related to the general
-  "flight model has not been retuned against Unity 6's PhysX" gap, but the
-  quit-on-failsafe behavior is itself worth understanding — a debug build should
-  probably not hard-exit on this. Needs repro steps and a look at whatever's calling
-  `Application.Quit`/aborting on the failsafe path before the physics bug itself can
-  be chased.
+- **Parachute physics can blow up via impulse cascades.** Under conditions not yet
+  characterized, the parachute simulation goes unstable — an impulse cascade rather
+  than a general tuning problem — and "explodes." **Not a symptom of the flight
+  model needing retuning**: per Mar (2026-08-11, having flown both builds side by
+  side), the flight model otherwise feels intact and comparable to 5.5, and this
+  happens abruptly rather than the parachute gradually feeling wrong beforehand.
+  This currently trips some failsafe that quits the game outright rather than
+  recovering or visibly erroring, which also means there's no console output yet
+  pointing at a cause. The quit-on-failsafe behavior is itself worth understanding —
+  a debug build should probably not hard-exit on this. Needs repro steps and a look
+  at whatever's calling `Application.Quit`/aborting on the failsafe path before the
+  physics bug itself can be chased.
 
 ## Progress log
 
@@ -900,6 +913,16 @@ hazy. Performance not yet profiled (24 samples/pixel on the fullscreen fog pass;
 unstable and "explode," currently hard-quitting the game via some failsafe rather
 than erroring visibly — see Known Issues section above. Not yet investigated; no
 repro steps yet.
+
+**Correction, 2026-08-11 (Mar):** the "flight model has not been retuned against
+Unity 6's PhysX" gap called out at the top of this doc and repeated in several
+earlier entries turned out not to hold — Mar flew both the 5.5 and Unity 6 builds
+and the wingsuit/parachute flight model feels intact, comparable to the original.
+The parachute-explosion bug above is narrower than that: an impulse-cascade
+instability, not a general tuning problem, and flight feels normal right up until
+it happens. Struck the retuning task from the roadmap accordingly (see top of doc
+and Findings). The dev vlog covering the port so far is up:
+https://www.youtube.com/watch?v=UM4mRHCXfYM — old fans found it within two hours.
 
 **Next session should pick up with:** either the parachute-physics-explosion repro,
 or continue toward the rebinding UI (still the largest functional gap) — Mar's call.
