@@ -66,6 +66,11 @@ commercial asset.
   already stripped as commercial assets prior to this investigation — reimplementing
   or replacing them is a pre-existing gap, not new work created by the port.
 
+**Superseded (2026-08-10): Time of Day replaced.** A custom single-scattering
+Rayleigh/Mie model now drives both the skybox and distance fog from one shared
+integrator — see the progress log entry below. Vectrocity (aero visualizer) is
+still unreplaced; still a pre-existing gap, not blocking.
+
 ### Terrain and grass
 
 Custom system, not Unity's terrain detail-mesh renderer: `GrassManager.cs`
@@ -274,6 +279,19 @@ Unity 6 (`6000.3.18f1`) is already installed via Unity Hub on this machine, alon
   revenue, <$500k dev budget) before relying on the free tier for a Steam re-release.
 - Decide open-source-release vs. Steam-release-first once a playable Unity 6 build
   exists — not a week-one decision.
+
+## Known issues (not yet investigated)
+
+- **Parachute physics can blow up.** Under conditions not yet characterized, the
+  parachute simulation goes unstable and "explodes" (presumably a PhysX
+  force/velocity spike). This currently trips some failsafe that quits the game
+  outright rather than recovering or visibly erroring, which also means there's no
+  console output yet pointing at a cause. Likely related to the general
+  "flight model has not been retuned against Unity 6's PhysX" gap, but the
+  quit-on-failsafe behavior is itself worth understanding — a debug build should
+  probably not hard-exit on this. Needs repro steps and a look at whatever's calling
+  `Application.Quit`/aborting on the failsafe path before the physics bug itself can
+  be chased.
 
 ## Progress log
 
@@ -781,11 +799,108 @@ pause menu -> respawn / change spawnpoint, repeatably, with no errors in the nor
 Input *configuration* remains the known-broken area (the rebinding UI is still an inert
 stub), which is expected.
 
-**Next session should pick up with:** the rebinding UI / `JoystickActivator` /
-`InputBindings<T>` real implementation (now the largest remaining functional gap — see
+**(Superseded — see the atmospheric scattering entry below for what came next.)**
+Original next-steps pointer, still mostly accurate for what's left after atmosphere work:
+the rebinding UI / `JoystickActivator` / `InputBindings<T>` real implementation (largest
+remaining functional gap — see
 [input-system-complexity-assessment.md](input-system-complexity-assessment.md)), then
 flight-model retuning against Unity 6's PhysX, then FMOD reintegration.
 `HeadCameraController.cs`/`OpenVrCameraRig.cs` dead-stubs remain, VR-only, still low
 priority. The `VoloModule.Run()` `FindObjectOfType<UnityCoroutineScheduler>()` ambiguity
 (see clocks section) is a known latent bug worth closing off with an explicit serialized
 reference.
+
+### 2026-08-10/11 — atmospheric scattering (Time of Day replacement)
+
+First functionality work since reaching barebones-playable, rather than bug fixing.
+Mar asked for the pre-port distance fog / sky look back: smooth fog-to-sky blending,
+sun-angle response, no clouds needed, staying on the Built-in Render Pipeline. Read
+the actual TOD docs (andererandre.github.io/TOD) for the real feature list rather than
+working from memory of what it "probably" did.
+
+**Design decision, and a correction to it mid-session:** first pass baked the real
+skybox to a small cubemap and sampled it for fog colour, to guarantee the horizon
+seam-matched whatever was drawing the sky. Mar pointed out the better approach: since
+we're writing our own scattering model anyway, there's no separate "sky" to match —
+the sky *is* the same integral as the fog, just carried to infinity instead of stopped
+at geometry. Rewrote around one shared integrator
+(`Assets/Shaders/Atmosphere/AtmosphericScattering.cginc`) used by both
+`Skybox/AtmosphericScattering` (`AtmosphericSky.shader`) and the fullscreen fog pass
+(`AtmosphericFog.shader`/`.cs`, rewritten off the legacy `PostEffectsBase` chain onto a
+plain `Graphics.Blit`). This is strictly better than the cubemap approach: seamless at
+full per-pixel resolution rather than a blurred mip, no bake/staleness cost (relevant
+given the default day length is 2 minutes — the sun moves ~3°/second), and aerial
+perspective + sky colour are physically the same computation rather than two models
+that happen to agree.
+
+Model: single-scattering Rayleigh + Mie, spherical planet, short raymarch (8 view
+steps × 3 sun steps, both tunable via `#define` before including the `.cginc`).
+Sunlight is attenuated along its own path to each sample point before scattering
+toward the camera — this alone produces sunset reddening (low sun = long path =
+blue stripped out first) without any authored gradient. `AtmosphereController.cs`
+pushes sun direction/color and all tuning parameters as global shader properties, and
+drives haze density from `Ecology.Weather.FogIntensity` (squared, matching the
+shaping `CameraEcologyEffects` already applied for the fog particle systems).
+
+**Below-horizon void, found by Mar after first playtest:** view rays that passed
+under the terrain horizon (no geometry to stop them) integrated almost no scattering
+and read as black void — the atmosphere alone doesn't cast much light back without
+something to reflect it. Fixed by intersecting a stand-in planet sphere in
+`AtmosSkyColor`: rays that would go below the horizon terminate on the sphere instead
+of running to infinity, with a simple Lambertian ground shaded by sunlight attenuated
+along *its own* path down through the atmosphere (so the far synthetic ground warms
+at sunset too, consistent with everything else). Chose a sphere over a disc
+deliberately — a disc never curves away, so the horizon would never close, and would
+be visibly wrong at exactly the distances where it's most noticeable. Since real
+terrain covers everything nearby, the synthetic ground is only ever seen where aerial
+perspective has already saturated, so its exact shading barely matters — what matters
+is that the integral stops.
+
+**Found and fixed the same category of numerical bug twice in one file:** the
+ray-sphere intersection's quadratic constant term was written as `dot(o,o) - r²`,
+which at planet scale (~4×10¹³) subtracts two huge floats to get a ~10¹⁰ difference —
+float32 can't represent that; it catastrophically cancels. Harmless for the outer
+atmosphere-shell intersection (thick, forgiving), but the *new* ground intersection
+sits right at the horizon where a few meters of error is a visibly jittering horizon
+line. Rewrote as `(|o|-r)(|o|+r)`, which keeps the small quantity (altitude) small
+throughout, and reused it for both intersection functions.
+
+**Mar's own fix, not mine — flagged as a real bug found via a real Editor workflow
+problem:** the `EcologyEffects` prefab (camera rig, formerly full of TOD components)
+had missing-script references blocking Editor saves. Before deleting them, Mar asked
+whether the `sky`-named `IsDependency` on it could be load-bearing for boot. Checked
+concretely rather than guessing: nothing consumes it (`Dependency("sky")` matches
+zero files, both real consumers are commented out) and `UnityDependencyResolver`
+already drops null-referenced entries before this, so removing it changes nothing —
+confirmed safe. But the same prefab's `Light` GameObject (three components: Transform,
+the game's *only* directional light, and an `IsDependency` named `sunLight`) is
+genuinely load-bearing and sits in the same list of TOD-looking scenery objects
+(`Sky Dome`, `Stars`, `Moon`, `Sun`, `Space`, `Clouds`) — easy to delete by mistake.
+Both scene files have zero `Light` components and `RenderSettings.sun` is unset in
+both, so this is the *only* source of sun direction in the whole game; losing it
+would disable `StaticTiledTerrain` outright via the injector (unresolved
+`[Dependency]`), silently killing `_SunDir`/`_SunIntensity`/`_Fogginess` and reading
+as "broken terrain shading," not "broken light." Fixed `AtmosphereController` to
+take the sun via the same `[Dependency("sunLight")]` StaticTiledTerrain uses instead
+of its previous fallback-only resolution (RenderSettings.sun → brightest directional
+light found by scene scan) — guarantees the sky and the terrain can't disagree about
+where the sun is, and removes a scan that was fragile/instantiation-order-dependent
+since it was the *only* thing that could ever fire (no scene lights, no
+RenderSettings.sun).
+
+**Result:** distance fog is back, blends into the sky by construction (same
+integrator), responds to sun angle without any authored day/night gradient, and no
+more black void below the horizon. Mar: "this can ship." Not yet retuned to match the
+original TOD look exactly — `_exposure`/`_sunIntensityScale`/`_mieCoefficient` on
+`AtmosphereController` are the first knobs to reach for if it reads too dark/bright/
+hazy. Performance not yet profiled (24 samples/pixel on the fullscreen fog pass;
+`ATMOS_VIEW_STEPS`/`ATMOS_SUN_STEPS` are the lever if it's too expensive).
+
+**New known issue, unrelated, reported in passing:** parachute physics can go
+unstable and "explode," currently hard-quitting the game via some failsafe rather
+than erroring visibly — see Known Issues section above. Not yet investigated; no
+repro steps yet.
+
+**Next session should pick up with:** either the parachute-physics-explosion repro,
+or continue toward the rebinding UI (still the largest functional gap) — Mar's call.
+Vectrocity (aero visualizer) remains unreplaced, low priority, same as before.
