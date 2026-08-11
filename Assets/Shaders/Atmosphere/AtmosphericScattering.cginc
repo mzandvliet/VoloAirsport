@@ -43,6 +43,14 @@ float _AtmosMieG;                 // forward-scattering anisotropy
 float _AtmosDensityMultiplier;    // weather-driven haze
 float _AtmosExposure;
 
+// Stand-in planet surface, so view rays that pass below the horizon without hitting real
+// terrain terminate on something instead of integrating out into empty space. Only ever
+// visible beyond the terrain tiles, where aerial perspective has completely saturated - so
+// these mostly set the tint of the far haze rather than shading anything legible.
+float4 _AtmosGroundAlbedo;
+float _AtmosGroundBrightness;
+float _AtmosGroundAmbient;
+
 // Lifts world space into planet space, where the origin is the planet centre. Horizontal
 // distance is included, so curvature drops the far horizon away correctly over long views.
 float3 AtmosWorldToPlanet(float3 worldPos) {
@@ -51,15 +59,42 @@ float3 AtmosWorldToPlanet(float3 worldPos) {
                   worldPos.z);
 }
 
+// The quadratic's constant term, written as (|o|-r)(|o|+r) rather than dot(o,o) - r*r.
+// Algebraically identical, but at planet scale the latter subtracts two ~4e13 values whose
+// difference is ~1e10, which float32 cannot represent - it catastrophically cancels and the
+// horizon jitters. This form keeps the small quantity (altitude) small throughout.
+float AtmosSphereQuadraticC(float3 origin, float radius) {
+    float len = length(origin);
+    return (len - radius) * (len + radius);
+}
+
 // Distance from a point inside a sphere to its surface along dir.
 float AtmosRaySphereExit(float3 origin, float3 dir, float radius) {
     float b = dot(origin, dir);
-    float c = dot(origin, origin) - radius * radius;
+    float c = AtmosSphereQuadraticC(origin, radius);
     float d = b * b - c;
     if (d < 0.0) {
         return 0.0;
     }
     return max(-b + sqrt(d), 0.0);
+}
+
+// Distance to the nearest intersection with a sphere, or -1 if the ray misses it.
+// Used to stop view rays at the planet surface instead of letting them run to infinity.
+float AtmosRaySphereNear(float3 origin, float3 dir, float radius) {
+    float b = dot(origin, dir);
+    float c = AtmosSphereQuadraticC(origin, radius);
+    float d = b * b - c;
+    if (d < 0.0) {
+        return -1.0;
+    }
+    float sqrtD = sqrt(d);
+    float t0 = -b - sqrtD;
+    if (t0 >= 0.0) {
+        return t0;
+    }
+    float t1 = -b + sqrtD;
+    return t1 >= 0.0 ? t1 : -1.0;
 }
 
 // (Rayleigh, Mie) relative density at a planet-space point.
@@ -142,11 +177,38 @@ void AtmosIntegrate(float3 planetOrigin, float3 rayDir, float rayLength,
     inscatter += _AtmosNightColor.rgb * (1.0 - transmittance);
 }
 
-/// Sky: integrate until the ray leaves the atmosphere.
+/// Lambertian shading for the stand-in planet surface, lit by sunlight that has been
+/// reddened by its own path down through the atmosphere - so the far ground warms at sunset
+/// along with everything else.
+float3 AtmosGroundColor(float3 planetPos) {
+    float3 normal = normalize(planetPos);
+    float ndotl = saturate(dot(normal, _AtmosSunDir));
+
+    float2 odSun = AtmosSunOpticalDepth(planetPos) * _AtmosDensityMultiplier;
+    float3 sunTransmittance = exp(-(_AtmosRayleighCoeff * odSun.x
+                                  + _AtmosMieCoeff * 1.1 * odSun.y));
+
+    return _AtmosGroundAlbedo.rgb * _AtmosGroundBrightness
+         * (sunTransmittance * ndotl + _AtmosGroundAmbient);
+}
+
+/// Sky: integrate along the view ray until it either leaves the atmosphere or meets the
+/// planet. Rays that pass below the horizon terminate on the stand-in ground rather than
+/// running out into space - without that they accumulate almost no scattering and read as a
+/// black void wherever real terrain doesn't cover them.
 float3 AtmosSkyColor(float3 worldCamPos, float3 rayDir) {
+    float3 origin = AtmosWorldToPlanet(worldCamPos);
+
+    float groundDist = AtmosRaySphereNear(origin, rayDir, _AtmosPlanetRadius);
+    bool hitsGround = groundDist > 0.0;
+
     float3 inscatter, transmittance;
-    AtmosIntegrate(AtmosWorldToPlanet(worldCamPos), rayDir, 1e9, inscatter, transmittance);
-    return inscatter;
+    AtmosIntegrate(origin, rayDir, hitsGround ? groundDist : 1e9, inscatter, transmittance);
+
+    // Nothing behind a ray that escapes, so the background is simply black space.
+    float3 background = hitsGround ? AtmosGroundColor(origin + rayDir * groundDist) : 0.0;
+
+    return background * transmittance + inscatter;
 }
 
 /// Aerial perspective: attenuate what the camera can see of worldPos, and add what the air

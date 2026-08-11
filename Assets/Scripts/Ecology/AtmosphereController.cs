@@ -40,6 +40,16 @@ public class AtmosphereController : MonoBehaviour {
     [Tooltip("Mie forward-scattering anisotropy - controls the glow around the sun.")]
     [SerializeField] private float _mieAnisotropy = 0.76f;
 
+    [Header("Ground")]
+    [Tooltip("Stand-in planet surface, so view rays below the horizon that miss real terrain " +
+             "terminate on something instead of integrating out into space. Only visible " +
+             "beyond the terrain tiles, where haze has fully saturated - so in practice this " +
+             "tints the far ground haze rather than shading anything legible.")]
+    [SerializeField] private Color _groundAlbedo = new Color(0.29f, 0.28f, 0.26f);
+    [SerializeField] private float _groundBrightness = 1f;
+    [Range(0f, 1f)]
+    [SerializeField] private float _groundAmbient = 0.1f;
+
     [Header("Exposure")]
     [SerializeField] private float _exposure = 1.0f;
     [Tooltip("Colour floor so the sky doesn't go pure black at night.")]
@@ -113,6 +123,10 @@ public class AtmosphereController : MonoBehaviour {
         }
 
         Shader.SetGlobalColor("_AtmosNightColor", _nightColor);
+
+        Shader.SetGlobalColor("_AtmosGroundAlbedo", _groundAlbedo);
+        Shader.SetGlobalFloat("_AtmosGroundBrightness", _groundBrightness);
+        Shader.SetGlobalFloat("_AtmosGroundAmbient", _groundAmbient);
 
         Shader.SetGlobalFloat("_AtmosPlanetRadius", _planetRadius);
         Shader.SetGlobalFloat("_AtmosAtmosphereHeight", _atmosphereHeight);
