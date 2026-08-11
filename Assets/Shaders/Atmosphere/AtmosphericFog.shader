@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 Shader "Custom/AtmosphericFog" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "black" {}
@@ -8,31 +6,34 @@ Properties {
 CGINCLUDE
 
 	#include "UnityCG.cginc"
-	#include "../../Time of Day/Assets/Shaders/TOD_Base.cginc"
-	#include "../../Time of Day/Assets/Shaders/TOD_Scattering.cginc"
+	#include "AtmosphericScattering.cginc"
 
 	#pragma target 3.0
 
 	uniform sampler2D _MainTex;
-	uniform sampler2D _CameraDepthTexture;
+	uniform sampler2D_float _CameraDepthTexture;
 
 	uniform float4 _MainTex_TexelSize;
 
-	// for fast world space reconstruction
+	// For world space reconstruction from depth. Rows are the four frustum corner rays,
+	// set by AtmosphericFog.cs each frame.
 	uniform float4x4 _FrustumCornersWS;
 	uniform float4 _CameraWS;
 
+	struct appdata_fog {
+		float4 vertex : POSITION;
+		half2 texcoord : TEXCOORD0;
+	};
+
 	struct v2f {
-		float4 pos : POSITION;
+		float4 pos : SV_POSITION;
 		float2 uv : TEXCOORD0;
 		float2 uv_depth : TEXCOORD1;
 		float4 interpolatedRay : TEXCOORD2;
 	};
 
-	v2f vert( appdata_img v )
-	{
+	v2f vert (appdata_fog v) {
 		v2f o;
-		float index = v.vertex.z;
 		v.vertex.z = 0.1;
 		o.pos = UnityObjectToClipPos(v.vertex);
 		o.uv = v.texcoord.xy;
@@ -40,56 +41,46 @@ CGINCLUDE
 
 		#if UNITY_UV_STARTS_AT_TOP
 		if (_MainTex_TexelSize.y < 0)
-			o.uv.y = 1-o.uv.y;
+			o.uv.y = 1 - o.uv.y;
 		#endif
 
-		o.interpolatedRay = _FrustumCornersWS[(int)index];
-		o.interpolatedRay.w = index;
+		// Same corner-indexing trick as Unity's own GlobalFog - lets this work with a
+		// plain Graphics.Blit instead of a hand-rolled immediate-mode quad.
+		int frustumIndex = v.texcoord.x + (2 * o.uv.y);
+		o.interpolatedRay = _FrustumCornersWS[frustumIndex];
+		o.interpolatedRay.w = frustumIndex;
 
 		return o;
 	}
 
-	half4 frag (v2f i) : COLOR
-	{
-		float depth = Linear01Depth(UNITY_SAMPLE_DEPTH(tex2D(_CameraDepthTexture, i.uv_depth)));
-		depth = pow(depth, 0.33);
+	half4 frag (v2f i) : SV_Target {
+		half4 sceneColor = tex2D(_MainTex, UnityStereoTransformScreenSpaceTex(i.uv));
 
-		float4 raw = tex2D(_MainTex, i.uv);
+		float rawDepth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, UnityStereoTransformScreenSpaceTex(i.uv_depth));
+		float linearDepth = Linear01Depth(rawDepth);
 
-		if (depth == 1.0) {
-			return raw;
+		// Skybox pixels already went through the same integrator in AtmosphericSky.shader,
+		// with the ray escaping to infinity. Re-integrating them here would double-apply the
+		// atmosphere; skipping is both correct and cheaper.
+		if (linearDepth > 0.9999) {
+			return sceneColor;
 		}
 
-		float3 worldPos = (_CameraWS + depth * i.interpolatedRay);
-		float3 ray = worldPos - _CameraWS;
-		float3 rayDir = normalize(ray);
+		float3 wsDir = linearDepth * i.interpolatedRay.xyz;
+		float3 wsPos = _CameraWS.xyz + wsDir;
 
-		float3 inscatter;
-		float3 outscatter;
-
-		ScatteringCoefficients(rayDir, depth, inscatter, outscatter);
-		float4 c = ScatteringColor(normalize(rayDir), inscatter, outscatter);
-
-		// Fade out as cam points down, as scatter is not accurate there
-		//c *= 1.0 - pow(dot(rayDir, float3(0,1,0)), 2.0) * 0.5;
-		//return raw + c;
-		return lerp(raw, c, depth);
+		return half4(AtmosApplyFog(sceneColor.rgb, _CameraWS.xyz, wsPos), sceneColor.a);
 	}
 
 ENDCG
 
 SubShader {
+	ZTest Always Cull Off ZWrite Off
+
 	Pass {
-		ZTest Always Cull Off ZWrite Off
-		Fog { Mode off }
-
 		CGPROGRAM
-
 		#pragma vertex vert
 		#pragma fragment frag
-		#pragma fragmentoption ARB_precision_hint_fastest
-		#pragma exclude_renderers flash
-
 		ENDCG
 	}
 }

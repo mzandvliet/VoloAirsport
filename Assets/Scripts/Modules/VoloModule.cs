@@ -257,6 +257,14 @@ public class VoloModule : IModule {
     public IEnumerator<WaitCommand> Run() {
         yield return WaitCommand.DontWait;
 
+        // Note: deliberately its own UnityCoroutineScheduler instance, distinct from
+        // Playing.Data.CoroutineScheduler - UnityCoroutineScheduler.Run() pumps Update() as
+        // its first step, so Playing.OnEnter() calling _playingStateMachine.Transition(...)
+        // (which calls Run() on whatever scheduler it's given) from inside a coroutine this
+        // outer machine's own Update() loop is already driving would otherwise reenter
+        // Update() on the same scheduler mid-iteration over its own _routines list -
+        // confirmed to actually corrupt/drop routines (silent black-screen hang on the
+        // camera fade) when both were pointed at the same instance.
         var coroutineScheduler = GameObject.FindObjectOfType<UnityCoroutineScheduler>();
         var startupScreen = GameObject.FindObjectOfType<VoloStateMachine>();
 

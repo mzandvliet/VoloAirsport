@@ -32,10 +32,17 @@ namespace RamjetAnvil.Coroutine {
             return RunInternal(fibre, callerMember, callerFile, callerLine);
         }
 
-        private Routine RunInternal(IEnumerator<WaitCommand> fibre, string callerMember, string callerFile, int callerLine) {
+        private IAwaitable RunInternal(IEnumerator<WaitCommand> fibre, string callerMember, string callerFile, int callerLine) {
             var coroutine = CreateRoutine(fibre, callerMember, callerFile, callerLine);
             _routines.Add(coroutine);
-            return coroutine;
+            // Hand out a generation-stamped handle, not the pooled Routine directly - once
+            // this coroutine finishes, the scheduler recycles and reuses the same object for
+            // something else (routinely, within a frame or two - CoroutineScheduler.Run()
+            // even pumps Update() as its first step). Anything holding an IAwaitable across
+            // more than one frame (e.g. WaitUntilDone()) needs IsDone to reliably mean "the
+            // thing I was told to wait for is done", not "whatever this object currently
+            // represents is done".
+            return new RoutineHandle(coroutine, coroutine.Generation);
         }
 
         // Used as the subroutine factory (see the RoutinePool factory above) - a routine
@@ -441,10 +448,19 @@ namespace RamjetAnvil.Coroutine {
         // whatever it was running *last* is still far more useful than nothing.
         private string _debugName;
 
+        // Bumped every Initialize() - lets a RoutineHandle (see below) tell whether the
+        // pooled instance it was handed out for is still the same logical coroutine, or has
+        // since been recycled and reused for something else entirely.
+        private int _generation;
+
         public Routine(Func<IEnumerator<WaitCommand>, Routine> createSubroutine, Action<Routine> disposeRoutine) {
             _createSubroutine = createSubroutine;
             _disposeRoutine = disposeRoutine;
             _activeSubroutines = new List<Routine>();
+        }
+
+        public int Generation {
+            get { return _generation; }
         }
 
         public void Initialize(IEnumerator<WaitCommand> fibre, string callerMember = null, string callerFile = null, int callerLine = 0) {
@@ -452,6 +468,7 @@ namespace RamjetAnvil.Coroutine {
             _activeSubroutines.Clear();
             _activeWaitCommand = WaitCommand.DontWait;
             _isDone = false;
+            _generation++;
             _debugName = FormatDebugName(fibre, callerMember, callerFile, callerLine);
             Update(new Duration(seconds: 0f, frameCount: 0));
         }
@@ -543,6 +560,14 @@ namespace RamjetAnvil.Coroutine {
 
         public void Reset() {
             _fibre = null;
+            // Bump here, not just in Initialize(): Reset() clears _isDone back to false, which
+            // would otherwise *un-signal* completion for anyone still holding a handle to the
+            // finished coroutine. The scheduler recycles a routine one Update() pass after it
+            // finishes, so a waiter polling on a *different* scheduler instance can easily
+            // miss the brief window where _isDone was true and then wait forever. Bumping the
+            // generation at recycle time makes "already recycled" permanently indistinguishable
+            // from "done" to any older handle, which is exactly what a waiter needs.
+            _generation++;
             _isDone = false;
             for (int i = 0; i < _activeSubroutines.Count; i++) {
                 _activeSubroutines[i].RecycleTree();
@@ -582,5 +607,33 @@ namespace RamjetAnvil.Coroutine {
 
     public interface IAwaitable : IDisposable {
         bool IsDone { get; }
+    }
+
+    // Generation-stamped wrapper handed out by CoroutineScheduler.Run() instead of the
+    // pooled Routine directly - see the comment in RunInternal(). Once the Routine's
+    // generation has moved past the one this handle was created for, the original coroutine
+    // is unambiguously finished (Initialize() only bumps the generation once a routine has
+    // already been fully recycled), so IsDone reports true rather than reflecting whatever
+    // unrelated coroutine now occupies the same pooled instance.
+    internal class RoutineHandle : IAwaitable {
+        private readonly Routine _routine;
+        private readonly int _generation;
+
+        public RoutineHandle(Routine routine, int generation) {
+            _routine = routine;
+            _generation = generation;
+        }
+
+        public bool IsDone {
+            get { return _routine.Generation != _generation || _routine.IsDone; }
+        }
+
+        public void Dispose() {
+            if (_routine.Generation == _generation) {
+                _routine.Dispose();
+            }
+            // Else: already recycled and reused for something else - disposing would cancel
+            // the new occupant's coroutine, not the one this handle was originally for.
+        }
     }
 }

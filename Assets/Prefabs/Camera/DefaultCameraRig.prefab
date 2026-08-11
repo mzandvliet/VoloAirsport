@@ -279,6 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 480234}
   - component: {fileID: 2029950}
+  - component: {fileID: 6762310150025396169}
   - component: {fileID: 114081310705095358}
   - component: {fileID: 11423112}
   - component: {fileID: 114501789531673080}
@@ -359,6 +360,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &6762310150025396169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff67faf51e46c242841b57ba7b61ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AtmosphericFog
+  _fogShader: {fileID: 4800000, guid: 157754595364b1f4bb45fb19f82d1d39, type: 3}
 --- !u!114 &114081310705095358
 MonoBehaviour:
   m_ObjectHideFlags: 0

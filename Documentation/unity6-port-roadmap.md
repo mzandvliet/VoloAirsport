@@ -1,13 +1,15 @@
 # Unity 6 Port Roadmap
 
-Status: mid-port, compiles clean, boots and runs - the player now spawns,
-flies the wingsuit, and reaches the Playing state end to end. Flight controls
-(pitch/roll/yaw, respawn, parachute deploy, camera switch, spectator) are
-wired. Three previously-precompiled RamjetAnvil dependencies (CoroutineScheduler,
-StateMachine, PadroneClient) are now embedded as in-project source. Not yet
-fully playtested - flight model retuning against Unity 6 PhysX is still ahead.
+Status: **barebones playable.** Boot -> title -> main menu -> spawn select ->
+fly -> pause menu -> respawn / change spawnpoint all work end to end, repeatably.
+Flight controls (pitch/roll/yaw, respawn, parachute deploy, camera switch,
+spectator, pause) are wired. Three previously-precompiled RamjetAnvil
+dependencies (CoroutineScheduler, StateMachine, PadroneClient) are now embedded
+as in-project source. Remaining known gaps: the rebinding UI is still an inert
+stub (input config/rebinding doesn't work yet), FMOD is not reintegrated (silent),
+and the flight model has not been retuned against Unity 6's PhysX.
 Branch: `unity6-port` (branched from `butcher`)
-Last updated: 2026-08-10 (runtime debugging session, part 2)
+Last updated: 2026-08-10 (runtime debugging session, part 3 - playable milestone)
 
 ## Why
 
@@ -99,14 +101,60 @@ preemptively. The same reasoning applies to the other bespoke plugins under
 `Assets/Plugins/RamjetAnvil/` (Reactive, StateMachine, CoroutineScheduler, etc.) —
 default to keeping unless one is specifically blocking something.
 
+### Clocks and coroutine schedulers — deliberate, do not "tidy away"
+
+There are multiple `AbstractUnityClock` instances (MenuClock, GameClock, FixedClock,
+an environment clock) and a matching `UnityCoroutineScheduler` per clock — three
+schedulers live in the scene at runtime. **This is deliberate architecture, not
+accumulated duplication.**
+
+The reason is the pending multiplayer build (Mar, from memory, 2026-08-10): in
+singleplayer the game should freeze while the pause menu is open, but on a live
+multiplayer server it obviously can't. Separating the time domains is what makes
+that switchable — menu/UI work runs on a clock that never stops, simulation work
+runs on clocks that singleplayer is free to pause.
+
+Concretely: `Pause()` sets `TimeScale = 0`, which disables the clock MonoBehaviour,
+which freezes its `FrameCount`; `UnityCoroutineScheduler.Update()` only advances its
+routines when its clock's `FrameCount` moves. So "which scheduler you run a coroutine
+on" really means "which time domain does this work belong to." `FlyWingsuit.OnSuspend()`
+pausing `GameClock`/`FixedClock` is exactly the singleplayer-only semantics described
+above, and it is load-bearing for the current pause menu.
+
+Practical consequences:
+- Do not consolidate the schedulers. Two attempts to "simplify" this during the port
+  were wrong: one collapsed the outer (menu) and inner (Playing) state machines onto
+  one scheduler and caused a silent black-screen hang, because
+  `UnityCoroutineScheduler.Run()` pumps `Update()` as its first step — so a coroutine
+  calling `Run()` on the same scheduler that is currently mid-`Update()` reenters that
+  `Update()` while it's iterating its own routine list. Verified at runtime: the outer
+  machine uses a different scheduler instance (`_CoroutineScheduler`) than the inner
+  `Playing` machine (`CoroutineScheduler`).
+- `VoloModule.Run()` still picks the outer machine's scheduler via
+  `GameObject.FindObjectOfType<UnityCoroutineScheduler>()`, which with three instances
+  in the scene is effectively picking a time domain by chance. It currently lands on a
+  working one. **Latent bug worth fixing** — but the fix is an explicit serialized
+  reference naming the intended menu-domain scheduler, *not* pointing it at some other
+  existing scheduler reference.
+- If multiplayer is definitively dropped, this separation becomes a standing complexity
+  cost for a feature that will never ship, and *could* be collapsed — but that is a
+  deliberate design decision, not a cleanup. Same category as the RamNet finding below.
+
 ### Networking
 
 `Assets/Plugins/RamjetAnvil/Ramnet` (~6,000 lines, built on Lidgren, not Unity's old
 UNET) plus `PadroneClient` (an opaque prebuilt DLL, backend/auth client) ended up
 unused in the shipped game.
 
-**Decision: strip it entirely.** Removes ~6,000+ lines and a black-box DLL from the
-porting surface for free — no compile risk, nothing to reintegrate.
+**Original decision: strip it entirely.** Removes ~6,000+ lines and a black-box DLL
+from the porting surface for free — no compile risk, nothing to reintegrate.
+
+**Superseded (2026-08-10): RamNet is NOT unused.** Singleplayer routes through the
+full replication layer via `HostAsSingleplayer` — it is what spawns the player and
+replicates pre-existing networked scene objects (spawn points, turbines, balloons)
+via `GameObjectNetworkId` / `PreExistingObjects.FindAll()`. Stripping it would break
+entering the game. `PadroneClient` (master server) genuinely is dead and is now
+embedded as source with its transport stubbed out (see progress log).
 
 ### VR
 
@@ -646,11 +694,7 @@ Three previously-opaque precompiled dependencies (CoroutineScheduler, StateMachi
 Padrone) are now fully in-project source, closing off a whole class of "can't fix,
 no source" bugs for good.
 
-**Next session should pick up with:** continued playtesting to surface anything left
-(the null-fibre reentrancy edge case if it recurs with more detail, general flight
-feel), then flight-model retuning against Unity 6's PhysX, then the rebinding UI /
-`JoystickActivator` / `InputBindings<T>` real implementation. `HeadCameraController.cs`/
-`OpenVrCameraRig.cs` dead-stubs remain, VR-only, still low priority.
+**(Superseded — see part 3 below.)**
 
 **Debugging technique worth reusing:** when a bug traces into a precompiled RamjetAnvil
 plugin with no source in the repo, ask whether Mar has it on GitHub/backup before
@@ -664,3 +708,84 @@ shipped DLL — this session hit two independent cases (`IStateMachine`'s
 had. When that happens, trust the call sites (real, exercised game code) over the
 checkout, and grep for every usage project-wide before changing a shared method's
 signature.
+
+### 2026-08-10, runtime debugging part 3 — state machine correctness, and the playable milestone
+
+Three genuine state-machine/scheduler bugs, each surfacing as "works the first time,
+breaks the second." All three were in the newly-embedded dependency source rather than
+game code, and all three are the kind that only appear once you can actually play far
+enough to repeat a cycle.
+
+- **`StateMachine.TransitionToParent` double-popped the stack.** The public entry method
+  popped, *and* the private coroutine it delegated to popped again. Every parent
+  transition therefore removed two entries. Symptom chain: pause -> resume left the stack
+  empty instead of holding `Playing`; the *second* pause then took `Transition()`'s
+  "stack is empty, enter as fresh top-level state" branch instead of the child-transition
+  branch, so `Playing.OnSuspend()` never ran (sim didn't freeze) and `Playing` stayed
+  subscribed alongside `OptionsMenu` (both responded to input at once); closing the menu
+  then hit the `_stack.Count <= 1` guard and threw. Fixed so the public method only
+  peeks and the coroutine owns the single `Pop()`. Affects every child/parent pair —
+  pause menu, spectator, parachute editor.
+- **"Start Selection" from the in-game pause menu skipped `Playing`'s exit path.** It
+  called `Machine.Transition(SpawnScreen)` directly, which from `OptionsMenu`'s
+  perspective is an ordinary sibling transition and only pops `OptionsMenu` — leaving
+  `Playing` buried in the stack with its inner `_playingStateMachine` never reset to
+  `Initial`. Next spawn, `Playing.OnEnter` tried `Suspended -> FlyingWingsuit`, which
+  isn't a permitted transition, and threw. Fixed by unwinding through `Playing` first
+  (`TransitionToParent`, running its `OnExit`/inner-machine reset) and only then
+  transitioning to `SpawnScreen`.
+- **`IAwaitable` handles could silently never report completion.** `CoroutineScheduler.Run()`
+  returned the pooled `Routine` object itself. When that coroutine finished, the scheduler
+  recycled the object one `Update()` pass later — and `Reset()` sets `_isDone = false`,
+  *erasing* the completion signal. Whether a waiter ever observed the brief `_isDone == true`
+  window depended purely on the relative script-execution order of the two schedulers
+  involved, so it failed deterministically here: the work completed, nothing noticed, and
+  `WaitUntilDone()` waited forever. Fixed by handing out a generation-stamped
+  `RoutineHandle` from `Run()` instead of the raw pooled object, and bumping the generation
+  in **both** `Initialize()` and `Reset()` — so "already recycled" is permanently
+  indistinguishable from "done" to any older handle. (Bumping only in `Initialize()`, the
+  first attempt, left exactly the gap described above and did not fix the hang.)
+
+Also, from the previous entry's open thread: the `<null fibre>` error's actual trigger was
+found. `FlyWingsuit.NotifyAboutParachute()` only cleared its scheduler handle
+(`_openParachuteNotification`) if `_unfoldParachuteMappingStr != null` — but that string
+comes from `InputMappingsViewModel`, which always returns empty while the rebinding UI is
+stubbed, so the handle was never cleared after the coroutine finished. A later `OnSuspend()`
+then disposed a handle to an already-recycled `Routine`. Fixed at the call site (always
+clear) and hardened in the scheduler (`Dispose()` now only marks a routine finished; the
+owning container does the actual pool return on its next pass, since only it can know
+nothing else still references the object).
+
+**Two wrong turns worth recording**, both from reasoning about the code rather than
+measuring it — see the clocks/schedulers section above for the corrected understanding:
+1. Theorised the outer state machine was frozen because its scheduler was tied to a paused
+   clock. Plausible, but contradicted by evidence already in hand (the pause menu keeps
+   responding across frames while paused). Acted on it anyway; pointing the outer machine
+   at `Playing`'s scheduler caused a silent black-screen hang on spawn, via the
+   `Run()`-pumps-`Update()` reentrancy described above. Reverted.
+2. Theorised the recycled-handle problem correctly but implemented the generation bump in
+   only one of the two places it was needed, so the symptom persisted unchanged.
+
+What finally resolved it was instrumenting the actual transition path (four log points in
+`StateMachine.TransitionToParent`, plus logging every scheduler instance and which machine
+got which). That immediately showed the transition running to completion while the waiter
+never noticed — which falsified both theories and pointed straight at the handle. **Lesson:
+once two successive theories have failed, stop reasoning and instrument.** The temporary
+logs have since been removed; the permanent `[CoroutineScheduler] Exception while advancing
+routine '<name>'` instrumentation (added earlier this session) stays, and it earned its
+keep here by naming `Playing+<OnEnter>d__9` in a stack trace that would otherwise have been
+pure scheduler frames.
+
+**Result: barebones playable.** Boot -> title -> main menu -> spawn select -> fly ->
+pause menu -> respawn / change spawnpoint, repeatably, with no errors in the normal flow.
+Input *configuration* remains the known-broken area (the rebinding UI is still an inert
+stub), which is expected.
+
+**Next session should pick up with:** the rebinding UI / `JoystickActivator` /
+`InputBindings<T>` real implementation (now the largest remaining functional gap — see
+[input-system-complexity-assessment.md](input-system-complexity-assessment.md)), then
+flight-model retuning against Unity 6's PhysX, then FMOD reintegration.
+`HeadCameraController.cs`/`OpenVrCameraRig.cs` dead-stubs remain, VR-only, still low
+priority. The `VoloModule.Run()` `FindObjectOfType<UnityCoroutineScheduler>()` ambiguity
+(see clocks section) is a known latent bug worth closing off with an explicit serialized
+reference.

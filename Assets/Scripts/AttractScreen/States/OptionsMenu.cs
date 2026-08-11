@@ -132,7 +132,19 @@ namespace RamjetAnvil.Volo.States {
                 } else if (actionId == MenuActionId.Restart) {
                     Machine.TransitionToParent(Maybe.Just(new RespawnRequest()), transitToParachuteEditor);
                 } else if (actionId == MenuActionId.StartSelection) {
-                    Machine.Transition(VoloStateMachine.States.SpawnScreen);
+                    if (menuId == MenuId.Playing) {
+                        // A plain Machine.Transition(SpawnScreen) here would only pop
+                        // OptionsMenu off the outer stack (it's a normal sibling transition
+                        // from OptionsMenu's perspective) - Playing, sitting underneath as
+                        // the state OptionsMenu was opened as a child of, would never get
+                        // its OnExit() called and be left buried in the stack, including its
+                        // own inner _playingStateMachine never getting reset back to
+                        // Initial. Unwind through Playing properly first (running its
+                        // OnExit()/inner-machine-reset), then continue on to SpawnScreen.
+                        _data.CoroutineScheduler.Run(ReturnToSpawnScreenFromPlaying());
+                    } else {
+                        Machine.Transition(VoloStateMachine.States.SpawnScreen);
+                    }
                 } else if (actionId == MenuActionId.TitleScreen) {
                     Machine.Transition(VoloStateMachine.States.TitleScreen);
                 } else if (actionId == MenuActionId.MainMenu) {
@@ -147,6 +159,11 @@ namespace RamjetAnvil.Volo.States {
                     onComplete();
                 }
             };
+        }
+
+        private IEnumerator<WaitCommand> ReturnToSpawnScreenFromPlaying() {
+            yield return Machine.TransitionToParent(Maybe<RespawnRequest>.Nothing, false).WaitUntilDone();
+            Machine.Transition(VoloStateMachine.States.SpawnScreen);
         }
     }
 }

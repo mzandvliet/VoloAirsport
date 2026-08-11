@@ -1,104 +1,100 @@
 using UnityEngine;
-using UnityStandardAssets.ImageEffects;
 
+/// <summary>
+/// Full-screen aerial perspective / distance fog. Add to a camera; pair with an
+/// AtmosphereController somewhere in the scene, which bakes the sky cubemap and pushes the
+/// global shader parameters this reads.
+///
+/// Standalone on purpose: the previous version derived from UnityStandardAssets'
+/// PostEffectsBase and drew its own immediate-mode GL quad. Both are legacy Standard Assets
+/// machinery that the port is trying to shed, and neither is needed - the frustum corner
+/// indexing in the shader works fine with a plain Graphics.Blit.
+/// </summary>
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
 [AddComponentMenu("Image Effects/Rendering/Atmospheric Fog")]
+public class AtmosphericFog : MonoBehaviour {
 
-public class AtmosphericFog : PostEffectsBase {
-	private float CAMERA_NEAR = 0.5f;
-	private float CAMERA_FAR = 50.0f;
-	private float CAMERA_FOV = 60.0f;	
-	private float CAMERA_ASPECT_RATIO = 1.333333f;
+    [SerializeField] private Shader _fogShader;
 
-	public Shader fogShader;
-	private Material fogMaterial = null;
+    private Material _fogMaterial;
+    private Camera _camera;
 
-	public override bool CheckResources() {
-		CheckSupport (true);
-	    
-		fogMaterial = CheckShaderAndCreateMaterial (fogShader, fogMaterial);
-		
-		if(!isSupported)
-			ReportAutoDisable ();
+    private Camera Cam {
+        get {
+            if (_camera == null) {
+                _camera = GetComponent<Camera>();
+            }
+            return _camera;
+        }
+    }
 
-		return isSupported;				
-	}
+    private void OnEnable() {
+        // The fog needs scene depth to reconstruct world position per pixel.
+        Cam.depthTextureMode |= DepthTextureMode.Depth;
+    }
 
-	private void OnRenderImage (RenderTexture source, RenderTexture destination) {
-        if (CheckResources() == false) {
+    private void OnDisable() {
+        if (_fogMaterial != null) {
+            DestroyImmediate(_fogMaterial);
+            _fogMaterial = null;
+        }
+    }
+
+    private bool EnsureResources() {
+        if (_fogShader == null) {
+            _fogShader = Shader.Find("Custom/AtmosphericFog");
+        }
+        if (_fogShader == null || !_fogShader.isSupported) {
+            return false;
+        }
+        if (_fogMaterial == null || _fogMaterial.shader != _fogShader) {
+            _fogMaterial = new Material(_fogShader) { hideFlags = HideFlags.HideAndDontSave };
+        }
+        return true;
+    }
+
+    private void OnRenderImage(RenderTexture source, RenderTexture destination) {
+        if (!EnsureResources()) {
             Graphics.Blit(source, destination);
             return;
         }
-			
-		CAMERA_NEAR = GetComponent<Camera>().nearClipPlane;
-		CAMERA_FAR = GetComponent<Camera>().farClipPlane;
-		CAMERA_FOV = GetComponent<Camera>().fieldOfView;
-		CAMERA_ASPECT_RATIO = GetComponent<Camera>().aspect;
-	
-		Matrix4x4 frustumCorners = Matrix4x4.identity;		
-	
-		float fovWHalf = CAMERA_FOV * 0.5f;
-		
-		Vector3 toRight = GetComponent<Camera>().transform.right * CAMERA_NEAR * Mathf.Tan (fovWHalf * Mathf.Deg2Rad) * CAMERA_ASPECT_RATIO;
-		Vector3 toTop = GetComponent<Camera>().transform.up * CAMERA_NEAR * Mathf.Tan (fovWHalf * Mathf.Deg2Rad);
-	
-		Vector3 topLeft = (GetComponent<Camera>().transform.forward * CAMERA_NEAR - toRight + toTop);
-		float CAMERA_SCALE = topLeft.magnitude * CAMERA_FAR/CAMERA_NEAR;
 
-		topLeft.Normalize();
-		topLeft *= CAMERA_SCALE;
-	
-		Vector3 topRight = (GetComponent<Camera>().transform.forward * CAMERA_NEAR + toRight + toTop);
-		topRight.Normalize();
-		topRight *= CAMERA_SCALE;
-		
-		Vector3 bottomRight = (GetComponent<Camera>().transform.forward * CAMERA_NEAR + toRight - toTop);
-		bottomRight.Normalize();
-		bottomRight *= CAMERA_SCALE;
-		
-		Vector3 bottomLeft = (GetComponent<Camera>().transform.forward * CAMERA_NEAR - toRight - toTop);
-		bottomLeft.Normalize();
-		bottomLeft *= CAMERA_SCALE;
-				
-		frustumCorners.SetRow (0, topLeft); 
-		frustumCorners.SetRow (1, topRight);		
-		frustumCorners.SetRow (2, bottomRight);
-		frustumCorners.SetRow (3, bottomLeft);
+        _fogMaterial.SetMatrix("_FrustumCornersWS", BuildFrustumCorners(Cam));
+        _fogMaterial.SetVector("_CameraWS", Cam.transform.position);
 
-	    fogMaterial.SetMatrix ("_FrustumCornersWS", frustumCorners);
-		fogMaterial.SetVector ("_CameraWS", GetComponent<Camera>().transform.position);
-		
-        //Graphics.Blit(source, destination, fogMaterial);
-		CustomGraphicsBlit (source, destination, fogMaterial);
-	}
+        Graphics.Blit(source, destination, _fogMaterial);
+    }
 
-    // Todo: What makes this different from Graphics.Blit? The effect breaks when using the latter.
-    private static void CustomGraphicsBlit(RenderTexture source, RenderTexture dest, Material fxMaterial) {
-        RenderTexture.active = dest;
+    /// <summary>
+    /// The four far-plane corner rays in world space, in the row order the shader's
+    /// frustumIndex expects: 0 = bottom left, 1 = bottom right, 2 = top left, 3 = top right.
+    /// Each row is a full camera-to-far-plane vector, so multiplying by Linear01Depth gives
+    /// the world offset of the shaded pixel directly.
+    /// </summary>
+    private static Matrix4x4 BuildFrustumCorners(Camera cam) {
+        var t = cam.transform;
+        float near = cam.nearClipPlane;
+        float far = cam.farClipPlane;
+        float fovHalf = cam.fieldOfView * 0.5f;
 
-        fxMaterial.SetTexture("_MainTex", source);
+        Vector3 toRight = t.right * near * Mathf.Tan(fovHalf * Mathf.Deg2Rad) * cam.aspect;
+        Vector3 toTop = t.up * near * Mathf.Tan(fovHalf * Mathf.Deg2Rad);
 
-        GL.PushMatrix();
-        GL.LoadOrtho();
+        Vector3 topLeft = t.forward * near - toRight + toTop;
+        // Scale so the ray reaches the far plane rather than the near plane.
+        float scale = topLeft.magnitude * far / near;
 
-        fxMaterial.SetPass (0);	
+        Vector3 topRight = (t.forward * near + toRight + toTop).normalized * scale;
+        Vector3 bottomRight = (t.forward * near + toRight - toTop).normalized * scale;
+        Vector3 bottomLeft = (t.forward * near - toRight - toTop).normalized * scale;
+        topLeft = topLeft.normalized * scale;
 
-        GL.Begin(GL.QUADS);
-
-        GL.MultiTexCoord2(0, 0.0f, 0.0f);
-        GL.Vertex3(0.0f, 0.0f, 3.0f); // BL
-
-        GL.MultiTexCoord2(0, 1.0f, 0.0f);
-        GL.Vertex3(1.0f, 0.0f, 2.0f); // BR
-
-        GL.MultiTexCoord2(0, 1.0f, 1.0f);
-        GL.Vertex3(1.0f, 1.0f, 1.0f); // TR
-
-        GL.MultiTexCoord2(0, 0.0f, 1.0f);
-        GL.Vertex3(0.0f, 1.0f, 0.0f); // TL
-
-        GL.End();
-        GL.PopMatrix();
-    }		
+        var corners = Matrix4x4.identity;
+        corners.SetRow(0, bottomLeft);
+        corners.SetRow(1, bottomRight);
+        corners.SetRow(2, topLeft);
+        corners.SetRow(3, topRight);
+        return corners;
+    }
 }
