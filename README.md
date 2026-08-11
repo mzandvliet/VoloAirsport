@@ -12,6 +12,11 @@ https://ramjetanvil.itch.io/volo-airsport
 
 **Update, 2026:** we're porting the project to Unity 6. Follow along on the [dev vlog](https://www.youtube.com/watch?v=UM4mRHCXfYM) — the game is barebones playable again (boot, fly, land, respawn, pause menu), with more work ongoing. See the roadmap and known issues below for where things stand.
 
+## Support this work:
+
+Buy me a [Ko-fi](https://ko-fi.com/marblackstar) 
+Buy Volo Airsport on [itch.io](https://ramjetanvil.itch.io/volo-airsport)
+
 ## Instructions:
 
 - Download **Unity 6 (6000.3.18f1 or later)** via [Unity Hub](https://unity.com/download)
