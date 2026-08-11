@@ -1,3 +1,4 @@
+using RamjetAnvil.DependencyInjection;
 using UnityEngine;
 
 /// <summary>
@@ -9,17 +10,36 @@ using UnityEngine;
 /// fog pass have to agree exactly - if they disagreed about the sun or the haze density, the
 /// horizon would show a seam.
 ///
-/// Deliberately self-sufficient: finds the sun and the Ecology component itself, so it works
-/// by just being dropped on a GameObject. It avoids [Dependency] on purpose - injected
-/// components in this project are authored disabled and enabled by the injector, which is an
-/// easy trap for something that must run every frame.
+/// Takes the sun via the same injected "sunLight" dependency StaticTiledTerrain uses, so the
+/// sky, the aerial perspective and the terrain shaders cannot disagree about where the sun
+/// is. Falls back to RenderSettings.sun and then to a scene scan, but neither is expected to
+/// fire in this project - see the comment on _sunLightTransform.
+///
+/// Note the [Dependency] consequence: MonoBehaviourInjector disables a component until all
+/// its dependencies resolve, so this will sit disabled until the camera rig (which carries
+/// the sun) has been instantiated and Resolve() has run. That is the desired behaviour here -
+/// pushing a bogus sun direction for the first few frames would be worse - but it does mean
+/// this component must be left ENABLED in the inspector for the injector to manage.
 /// </summary>
 [ExecuteInEditMode]
 public class AtmosphereController : MonoBehaviour {
 
     [Header("Sun")]
-    [Tooltip("Leave empty to use RenderSettings.sun, or the brightest directional light.")]
+    [Tooltip("Explicit override. Leave empty to use the injected 'sunLight' dependency, then " +
+             "RenderSettings.sun, then the brightest directional light.")]
     [SerializeField] private Light _sun;
+
+    // Same dependency StaticTiledTerrain uses to drive the _SunDir/_SunIntensity globals that
+    // the terrain and grass shaders read. Sharing it is what keeps the sky, the aerial
+    // perspective and the terrain lighting agreeing about where the sun is.
+    //
+    // This matters more than it looks: the game's only directional light lives on the
+    // 'Light' GameObject inside the EcologyEffects prefab, which is instantiated at runtime
+    // with the camera rig. There are no Lights in the scene files at all and
+    // RenderSettings.sun is unset, so without this the fallback below is scanning for a
+    // runtime-instantiated light and picking whichever happens to be brightest - fragile,
+    // and it re-resolves differently depending on instantiation order.
+    [Dependency("sunLight"), SerializeField] private Transform _sunLightTransform;
     [Tooltip("Scales the sun colour driving the scattering. Raise for a brighter sky.")]
     [SerializeField] private float _sunIntensityScale = 20f;
 
@@ -67,6 +87,7 @@ public class AtmosphereController : MonoBehaviour {
     [SerializeField] private bool _disableBuiltinFog = true;
 
     private Ecology _ecology;
+    private Light _fallbackSun;
 
     private void OnEnable() {
         if (_disableBuiltinFog) {
@@ -83,19 +104,32 @@ public class AtmosphereController : MonoBehaviour {
         if (_sun != null) {
             return _sun;
         }
+        if (_sunLightTransform != null) {
+            var injected = _sunLightTransform.GetComponent<Light>();
+            if (injected != null) {
+                return injected;
+            }
+        }
         if (RenderSettings.sun != null) {
             return RenderSettings.sun;
         }
-        Light brightest = null;
-        float best = float.NegativeInfinity;
-        var lights = FindObjectsOfType<Light>();
-        for (int i = 0; i < lights.Length; i++) {
-            if (lights[i].type == LightType.Directional && lights[i].intensity > best) {
-                best = lights[i].intensity;
-                brightest = lights[i];
+
+        // Last resort. Cached, because this runs every frame and the scene scan is not cheap;
+        // re-scanned only while nothing has been found yet, since the sun arrives partway
+        // through boot along with the camera rig.
+        if (_fallbackSun == null) {
+            Light brightest = null;
+            float best = float.NegativeInfinity;
+            var lights = FindObjectsOfType<Light>();
+            for (int i = 0; i < lights.Length; i++) {
+                if (lights[i].type == LightType.Directional && lights[i].intensity > best) {
+                    best = lights[i].intensity;
+                    brightest = lights[i];
+                }
             }
+            _fallbackSun = brightest;
         }
-        return brightest;
+        return _fallbackSun;
     }
 
     private float WeatherDensityMultiplier() {
