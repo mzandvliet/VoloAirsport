@@ -961,3 +961,81 @@ cutting a GitHub Release. Left as an open thread for Mar, not blocking.
   these, read the source directly — do not assume it's still an opaque DLL.
 - See `Documentation/dont-forget-me.md` for workflow/collaboration constraints that
   matter but don't fit a technical roadmap.
+
+### 2026-08-14 — first real test coverage: CoroutineScheduler and StateMachine
+
+A lot of the hardest bugs this port has hit have lived in these two plugins (double-pop
+stack, the recycled-handle hang, the reentrant-`Update()` black screen — see the
+2026-08-10 progress entries above). Built a real EditMode test suite against both,
+grounded in three sources: CoroutineScheduler's own README/public API, how the game
+actually uses `StateMachine<T>` (`VoloStateMachine`/`Playing.cs`), and the specific bugs
+already found and fixed. 19 tests, all passing on first real run.
+
+**Structural change required first:** the project has no `.asmdef` files anywhere
+(deliberate monolithic compile — see Findings above). Unity's Test Framework assembly
+can't reference the implicit `Assembly-CSharp`, so testing types that live there needs
+an explicit compile boundary around them. Gave just these two plugins their own asmdefs,
+scoped tightly to their `Source/` subfolders only:
+- `Assets/Plugins/RamjetAnvil/CoroutineScheduler/Source/RamjetAnvil.Coroutine.asmdef`
+- `Assets/Plugins/RamjetAnvil/StateMachine/Source/RamjetAnvil.StateMachine.asmdef`
+  (references the one above)
+
+The Unity-facing wrapper MonoBehaviours (`UnityCoroutineScheduler.cs`,
+`FixedUnityCoroutineScheduler.cs`, both one level up from `Source/`) were deliberately
+left **outside** these asmdefs and still compile straight into `Assembly-CSharp` as
+before — they depend on the DI system and `AbstractUnityClock`, neither of which has an
+asmdef, so pulling them in too would have meant either giving DI its own asmdef as well
+(bigger, unrequested change) or leaving them broken. This means the rest of the
+project's monolithic-compile decision is untouched; only these two plugins now have a
+formal boundary. Also added `com.unity.test-framework` to `Packages/manifest.json`
+(pulled in `com.unity.ext.nunit` automatically) and a new
+`Assets/Tests/EditMode/RamjetAnvil.Plugins.EditMode.Tests.asmdef` referencing both
+plugin asmdefs plus `UnityEngine.TestRunner`/`UnityEditor.TestRunner`.
+
+**Test files:**
+- `Assets/Tests/EditMode/CoroutineSchedulerTests.cs` (11 tests) — documented-behaviour
+  coverage (`WaitFrames`/`WaitSeconds` exact-tick completion, `WaitRoutine` subroutine
+  composition, `Interleave` concurrency, `Dispose` cancellation, `WaitUntilDone`,
+  `AndThen`) plus three regression tests: the `RoutineHandle` generation-stamp fix (an
+  old handle must keep reporting done even after its pooled slot is handed to an
+  unrelated new routine — forced deterministic via `growthStep: 1`, so there's only ever
+  one pooled `Routine` instance to reuse), a scheduler-reentrancy safety check, and "a
+  faulting routine gets marked done instead of retried forever" (using
+  `LogAssert.Expect` to catch the expected `[CoroutineScheduler]` error log).
+- `Assets/Tests/EditMode/StateMachineTests.cs` (8 tests) — root entry, sibling
+  transitions, child-transition suspend/enter via `PermitChild`, the unpermitted-
+  transition guard, the top-level `TransitionToParent` guard, the `IsTransitioning`
+  reentrancy guard (using a state whose `OnEnter` actually yields, so the transition
+  spans real scheduler ticks and the guard window is externally observable), and
+  `[StateEvent]` routing an owner event to the active state's private method (mirrors
+  `VoloStateMachine`'s `[StateEvent("Update")]` pattern exactly). Plus the one
+  regression test that matters most here: `TransitionToParent_DoesNotDoublePopStack_
+  AcrossRepeatedSuspendResumeCycles` runs a suspend/resume cycle twice and asserts the
+  *second* cycle still suspends/resumes correctly — this only passes if the stack depth
+  was left correct after the first `TransitionToParent()` call, which is exactly what
+  the historical double-pop bug got wrong (pause → resume → pause used to throw).
+
+**One honest scope gap, noted in a comment rather than glossed over:** the actual
+historical reentrancy crash lived in `UnityCoroutineScheduler.Run()`'s eager
+self-`Update()` call (see the 2026-08-10 entry), which needs a live Update loop and DI
+to exercise — outside what a pure-C# EditMode test against the isolated core can reach.
+`SchedulerRemainsConsistent_WhenARoutineSchedulesAnotherRoutineDuringUpdate` tests the
+same hazard shape (scheduling new work while mid-`Update()`) at the core
+`CoroutineScheduler` level instead, which is a real and useful safety property but not
+a byte-for-byte repro of the original incident.
+
+**How to run:** headless, same pattern as the compile-error loop but with `-runTests`
+instead of `-quit` (combining the two races Unity's own shutdown against the test
+runner and silently skips the tests — hit this on the first attempt, the log showed a
+clean compile but no test results at all):
+```
+Unity.exe -batchmode -nographics -projectPath <path> -runTests -testPlatform EditMode \
+  -testResults <path>\results.xml -logFile <path>\run.log
+```
+Results land in NUnit XML; `<test-run ... result="Passed" total="19" passed="19"
+failed="0">` at the top, one `<test-case ... result="Passed">` per test below that.
+
+**Result:** 19/19 passing. This is the first automated regression coverage anything in
+this codebase has had — previously, "did the fix work" meant Mar reproducing the bug by
+hand in the Editor. Doesn't replace that for anything touching the Unity-side wrappers,
+but the pure-C# core of both plugins now has a real safety net.

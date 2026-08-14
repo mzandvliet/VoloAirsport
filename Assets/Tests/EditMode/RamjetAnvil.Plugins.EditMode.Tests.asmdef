@@ -1,0 +1,25 @@
+{
+    "name": "RamjetAnvil.Plugins.EditMode.Tests",
+    "rootNamespace": "",
+    "references": [
+        "RamjetAnvil.Coroutine",
+        "RamjetAnvil.StateMachine",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
