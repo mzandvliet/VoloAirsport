@@ -71,8 +71,6 @@ namespace RamjetAnvil.Coroutine {
                 frameCount: (int) (currentFrame - _prevFrame),
                 seconds: (float) (currentTime - _prevTime));
 
-            Console.WriteLine("time passed: " + timePassed);
-
             for (int i = _routines.Count - 1; i >= 0; i--) {
                 var routine = _routines[i];
 

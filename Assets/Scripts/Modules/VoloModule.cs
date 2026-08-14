@@ -24,6 +24,23 @@ using Object = UnityEngine.Object;
 
 public class VoloModule : IModule {
 
+    // Runs a named boot/settings-apply step and swallows any exception it throws, logging
+    // instead of propagating. Without this, a single failing step here (e.g. GrassManager
+    // failing to find its terrain data file) silently aborts every step after it - including
+    // completely unrelated ones like OptionsMenu/ChallengeManager initialization - because
+    // CoroutineScheduler marks a faulting routine done rather than rethrowing (see
+    // Documentation/unity6-port-roadmap.md). That turned "the terrain data file is missing"
+    // into "the pause menu is permanently broken", with nothing but a buried log line
+    // connecting the two. Named per call site so the log immediately says which step failed,
+    // instead of requiring another investigation like the one that found this.
+    private static void TryLoadStep(string stepName, Action step) {
+        try {
+            step();
+        } catch (Exception e) {
+            Debug.LogError("[VoloModule] Boot step '" + stepName + "' failed - continuing anyway: " + e);
+        }
+    }
+
     public IEnumerator<WaitCommand> Load() {
         /* ======== Load Core ======= */
 
@@ -45,7 +62,8 @@ public class VoloModule : IModule {
         var userConfigurableSystems = Object.FindObjectOfType<UserConfigurableSystems>();
         var gameSettingsApplier = new GameSettingsApplier(userConfigurableSystems);
         gameSettingsProvider.SettingChanges
-            .Subscribe(settings => gameSettingsApplier.ApplySettings(settings, gameSettingsProvider.ActiveVrMode));
+            .Subscribe(settings => TryLoadStep("ApplySettings",
+                () => gameSettingsApplier.ApplySettings(settings, gameSettingsProvider.ActiveVrMode)));
         gameSettingsProvider.SettingChanges
             .Select(gameSettings => gameSettings.Audio)
             // .CombineLatest(FMODUtil.StudioSystem(), (audioSettings, fmodSystem) => audioSettings)
@@ -232,13 +250,14 @@ public class VoloModule : IModule {
 
         dependencyResolver.Resolve();
 
-        gameSettingsApplier.ApplySettings(gameSettingsProvider.ActiveSettings, gameSettingsProvider.ActiveVrMode);
-        
+        TryLoadStep("ApplySettings",
+            () => gameSettingsApplier.ApplySettings(gameSettingsProvider.ActiveSettings, gameSettingsProvider.ActiveVrMode));
+
         var optionsMenu = Object.FindObjectOfType<OptionsMenu>();
-        optionsMenu.Initialize();
+        TryLoadStep("OptionsMenu.Initialize", optionsMenu.Initialize);
 
         var challengeManager = GameObject.FindObjectOfType<ChallengeManager>();
-        challengeManager.Initialize();
+        TryLoadStep("ChallengeManager.Initialize", challengeManager.Initialize);
 
         //        var networkConfig = GameObject.FindObjectOfType<NetworkConfig>();
         //        if (networkConfig.IsServer) {

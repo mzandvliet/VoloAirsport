@@ -72,7 +72,26 @@ public class OptionsMenu : MonoBehaviour {
     }
 
     public void Initialize() {
-        _model = new OptionsMenuModel(_gameSettingsProvider, 
+        // Diagnostic for the build-only "menu won't open/close, nothing in the log" bug:
+        // MonoBehaviourInjector disables this whole component with zero logging if any single
+        // [Dependency] field fails to resolve, and Update() (the only path that handles Back/
+        // unpause) never runs while disabled. Initialize() itself is a direct method call, not
+        // gated by `enabled`, so it runs either way and can report which field (if any) is null.
+        Debug.Log("[OptionsMenu] Initialize() - enabled=" + enabled +
+            " coroutineScheduler=" + (_coroutineScheduler != null) +
+            " inputRebinder=" + (_inputRebinder != null) +
+            " activeLanguage=" + (_activeLanguage != null) +
+            " menuActionMap=" + (_menuActionMap != null) +
+            " inputModule=" + (_inputModule != null) +
+            " inputMappingsViewModel=" + (_inputMappingsViewModel != null) +
+            " joystickActivator=" + (_joystickActivator != null) +
+            " pilotInputBindings=" + (_pilotInputBindings != null) +
+            " menuInputBindings=" + (_menuInputBindings != null) +
+            " spectatorInputBindings=" + (_spectatorInputBindings != null) +
+            " parachuteInputBindings=" + (_parachuteInputBindings != null) +
+            " gameSettingsProvider=" + (_gameSettingsProvider != null));
+
+        _model = new OptionsMenuModel(_gameSettingsProvider,
             _activeLanguage.Languages, 
             _versionInfo.VersionNumber,
             StartRebind,

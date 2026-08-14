@@ -56,12 +56,14 @@ namespace RamjetAnvil.Volo.Input {
         }
 
         // Discrete (button-based, not analog) directional nudge for list/grid UI navigation -
-        // e.g. SpawnScreen's spawnpoint list.
+        // e.g. SpawnScreen's spawnpoint list. Gated on the rising edge (WasPressedThisFrame),
+        // not raw IsPressed(), so a held key/stick nudges the selection once per press instead
+        // of shooting through the whole list every frame the direction stays held.
         public Vector2 PollDiscreteCursor() {
-            float x = (PollButton(MenuAction.Right) == ButtonState.Pressed ? 1f : 0f)
-                      - (PollButton(MenuAction.Left) == ButtonState.Pressed ? 1f : 0f);
-            float y = (PollButton(MenuAction.Up) == ButtonState.Pressed ? 1f : 0f)
-                      - (PollButton(MenuAction.Down) == ButtonState.Pressed ? 1f : 0f);
+            float x = (PollButtonEvent(MenuAction.Right) == ButtonEvent.Down ? 1f : 0f)
+                      - (PollButtonEvent(MenuAction.Left) == ButtonEvent.Down ? 1f : 0f);
+            float y = (PollButtonEvent(MenuAction.Up) == ButtonEvent.Down ? 1f : 0f)
+                      - (PollButtonEvent(MenuAction.Down) == ButtonEvent.Down ? 1f : 0f);
             return new Vector2(x, y);
         }
     }

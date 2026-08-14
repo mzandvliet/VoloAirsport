@@ -22,6 +22,7 @@ https://ramjetanvil.itch.io/volo-airsport
 - Download **Unity 6 (6000.3.18f1 or later)** via [Unity Hub](https://unity.com/download)
 - Check out the `unity6-port` branch — this is where active work is happening; `main` still reflects the original 2017 Unity 5.5 release
 - Open the project folder in the Editor and let it complete its one-time upgrade
+- To build a standalone player, use **Build > Build Settings...** (Ctrl+Alt+B), not Unity's own default File > Build Settings dialog. The custom build script it opens (`Assets/Editor/Build/BuildWindow.cs`) copies a few files a normal Unity build silently skips — most importantly the terrain streaming data (`swissalps.land`), which has no Unity asset importer and won't be bundled otherwise. A build made without it compiles and runs, but crashes as soon as anything touches terrain/grass streaming.
 
 The original Unity 5.5.0f3 project is still available in git history and on the `main` branch if you want the untouched original.
 
