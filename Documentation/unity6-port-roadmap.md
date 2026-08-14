@@ -12,8 +12,14 @@ retuning against Unity 6's PhysX, but actually feels intact — comparable to
 config/rebinding doesn't work yet), FMOD is not reintegrated (silent), and the
 parachute can go unstable via impulse cascades and "explode" (flight feels
 normal right up until it happens — see Known Issues).
+**Update (2026-08-14): first real win64 build compiled, ran, and — after fixing
+four bugs found in it (cursor overshoot, spawn camera position, a pause-menu
+crash traced to a missing build step, and the boot-sequence fragility that let
+that crash cascade) — confirmed working by Mar.** Must be built via `Build >
+Build Settings...` (Ctrl+Alt+B), not Unity's own default build dialog — see the
+2026-08-14 progress entry and `README.md`.
 Branch: `unity6-port` (branched from `butcher`)
-Last updated: 2026-08-11 (flight model status correction)
+Last updated: 2026-08-14 (first working win64 build)
 
 ## Why
 
@@ -1039,3 +1045,69 @@ failed="0">` at the top, one `<test-case ... result="Passed">` per test below th
 this codebase has had — previously, "did the fix work" meant Mar reproducing the bug by
 hand in the Editor. Doesn't replace that for anything touching the Unity-side wrappers,
 but the pure-C# core of both plugins now has a real safety net.
+
+### 2026-08-14 — first win64 build: four bugs found and fixed
+
+Mar got a real Windows build compiling and running for the first time. Four issues
+surfaced, all now fixed and confirmed by Mar in a follow-up build.
+
+- **Spawn-screen cursor overshoot.** `MenuActionMap.PollDiscreteCursor()`
+  (`Assets/Scripts/Input/MenuActionMapProvider.cs`) was a raw per-frame level-poll
+  (`PollButton(...) == ButtonState.Pressed`) with no edge-detection, so a single
+  key/stick press moved the highlighted list item many times before release. Confirmed
+  against the pre-port Impero input stack (`git show 540fcd3:...StandardInput.cs`),
+  which wrapped the equivalent poll in a stateful hysteresis latch
+  (`Adapters.DiscreteAxisInput`) that never made it into the Input System rewrite.
+  Fixed by switching to `PollButtonEvent(...) == ButtonEvent.Down` per direction —
+  edge-detection already existed in `ActionMap<T>`, just wasn't used here.
+- **Spawn-selection camera in the wrong place.** `SpawnScreenCameraMount` (prefab +
+  its `Core.unity` PrefabInstance override) was baked at `(-3394.7, 6343.1, -2449.9)` —
+  above every other object in either scene and at the extreme corner of the map's X/Z
+  bounds. Not a `[Dependency]` resolution failure (checked concretely: the component's
+  `_clock`/`_gameSettingsProvider` dependencies are pre-wired directly in scene YAML
+  with live targets, not the disabled-until-injected pattern from the `sunLight` bug).
+  Just a bad authored value. Fixed by repositioning to Mar's own found coordinates
+  (position `(2349.49, 2867.35, 2752.76)`, matching rotation) in both the prefab and
+  the scene override.
+- **Pause menu broken in the built player only (empty, can't unpause).** Traced to a
+  missing file, not a code bug: this build's `Volo Airsport.exe`/`Volo Airsport_Data`
+  naming (matching `PlayerSettings.productName`) showed it wasn't produced through the
+  custom build pipeline (`Assets/Editor/Build/BuildWindow.cs`, which hardcodes
+  `volo_airsport.exe`/`volo_airsport_Data` — its own naming is stale relative to the
+  current product name, but self-consistent when actually run). That pipeline is the
+  *only* thing that copies `swissalps.land` into a build (`.land` has no Unity asset
+  importer, so a default build silently drops it). Without it: `GrassManager
+  .OpenTerrainDataFileStream()` throws `FileNotFoundException`, uncaught anywhere in
+  the `GameSettingsApplier.ApplySettings` call chain, and `VoloModule.Load()`'s boot
+  coroutine — per `CoroutineScheduler`'s "mark faulting routine done, don't rethrow"
+  behavior — silently abandons every step after the failure, including
+  `optionsMenu.Initialize()`. `OptionsMenu._model` stays permanently null, so
+  `OpenInternal()` NREs the moment the menu tries to open. The *same* exception recurs
+  every time the pause menu opens afterward too, via `GameSettingsProvider
+  .SettingChanges`'s reactive subscription (`OptionsMenuState.OnEnter()` re-applies
+  settings on every open) — not just once at boot.
+- **Boot-sequence fragility, fixed proactively rather than just patched.** The bug
+  above is a specific instance of a general problem: `VoloModule.Load()` is one long
+  linear coroutine, and *any* uncaught exception partway through silently skips every
+  step after it, with no player-facing signal, only a log line easy to miss. Added
+  `VoloModule.TryLoadStep(name, action)` — catches, logs with a step name, doesn't
+  propagate — and wrapped both `ApplySettings` call sites (the direct boot-time call
+  *and* the reactive subscription, since that one recurs during play, not just boot),
+  `OptionsMenu.Initialize()`, and `ChallengeManager.Initialize()`. Scope note: this
+  guards the specific chain this bug walked through, not every step in `Load()` — the
+  method still has plenty of other `FindObjectOfType`/scene-wiring calls with the same
+  underlying fragility, left as a known standing risk rather than a full rewrite.
+- Also removed a stray `Console.WriteLine("time passed: " + timePassed)` in
+  `CoroutineScheduler.Update()` — unconditional per-frame log spam, presumably a
+  leftover debug line from upstream.
+
+**Also fixed:** `Assets/Editor/Build/BuildWindow.cs`-driven builds (`Build > Build
+Settings...`, Ctrl+Alt+B) are now called out explicitly in `README.md`'s Instructions
+section — building via Unity's own default dialog silently produces a player that
+crashes as soon as anything touches terrain/grass streaming, for the reason above.
+
+**Result, confirmed by Mar:** cursor input, spawn camera, and the pause menu all work
+correctly in a build made through the custom pipeline; a naive build with the terrain
+file still missing now degrades gracefully (menu still opens/works) instead of
+cascading into a broken pause menu, confirming the boot guard holds even under the
+original failure condition.

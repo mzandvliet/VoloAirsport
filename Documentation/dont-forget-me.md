@@ -38,6 +38,25 @@ a summary is not.
   `Assets/Plugins/RamjetAnvil/*/Source/` now. If a bug traces into one of these and the
   instinct is "we can't see in there, need to guess" — that instinct is now wrong for
   these three specifically. Read the source.
+- **A standalone player build MUST go through `Build > Build Settings...`
+  (Ctrl+Alt+B), never Unity's own default File > Build Settings dialog.** The custom
+  script behind that menu (`Assets/Editor/Build/BuildWindow.cs`) copies files a normal
+  Unity build silently skips — most importantly `swissalps.land` (the terrain
+  streaming data, no Unity asset importer, so a default build just drops it). A build
+  made the normal way compiles and boots fine, then crashes the instant anything
+  touches terrain/grass streaming — and because of the boot-sequence fragility noted
+  below, that crash cascades into an apparently-unrelated broken pause menu, which is a
+  very confusing thing to debug if you don't already know this. This is documented in
+  `README.md` now too, but it's exactly the kind of thing to double-check if a build
+  "mysteriously" breaks after working before.
+- **`VoloModule.Load()`'s boot coroutine is now guarded, but only around the specific
+  chain that broke on 2026-08-14** (`ApplySettings` — both its direct call and its
+  reactive `SettingChanges` subscription, `OptionsMenu.Initialize()`,
+  `ChallengeManager.Initialize()` — via a `TryLoadStep(name, action)` helper that logs
+  and continues instead of propagating). The rest of that long linear method still has
+  the same underlying fragility (any uncaught exception in an unguarded step silently
+  skips everything after it, `CoroutineScheduler` marks the routine done rather than
+  rethrowing) — this was fixed where it bit, not audited everywhere it could.
 
 ## Workflow rules that came from real, sometimes expensive mistakes
 
