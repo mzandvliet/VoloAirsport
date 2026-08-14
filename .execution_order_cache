@@ -7,14 +7,14 @@
   <string>FlightStatistics</string>
   <string>Contrail</string>
   <string>Airfoil1D</string>
-  <string>WingSound</string>
   <string>ParachuteWingSound</string>
+  <string>WingSound</string>
   <string>AdaptiveTrailRenderer</string>
   <string>EarDistortionSound</string>
-  <string>GroundSpray</string>
   <string>ProximitySound</string>
-  <string>ThirdPersonCameraController</string>
   <string>TrajectoryVisualizer</string>
+  <string>GroundSpray</string>
+  <string>ThirdPersonCameraController</string>
   <string>RamjetAnvil.Volo.Parachute</string>
   <string>RamjetAnvil.Volo.RingChallenge</string>
   <string>RamjetAnvil.Volo.SpawnpointDiscoverer</string>

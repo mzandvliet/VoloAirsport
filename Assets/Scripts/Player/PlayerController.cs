@@ -68,24 +68,29 @@ namespace RamjetAnvil.Volo {
         }
 
         private static CharacterInput PollWingsuitMouseInput(PilotActionMap actionMap) {
+            // CharacterInput has no standalone "close both arms" field - CloseArms (the North
+            // face button / W key) is composed into both individual arms instead, since closing
+            // both is already exactly what holding both individual closes produces.
+            var closeArms = actionMap.PollMouseAxis(WingsuitAction.CloseArms);
             return new CharacterInput {
                 Pitch = actionMap.PollMouseAxis(WingsuitAction.Pitch),
                 Roll = actionMap.PollMouseAxis(WingsuitAction.Roll),
                 Yaw = actionMap.PollMouseAxis(WingsuitAction.Yaw),
                 Cannonball = actionMap.PollMouseAxis(WingsuitAction.Cannonball),
-                CloseLeftArm = actionMap.PollMouseAxis(WingsuitAction.CloseLeftArm),
-                CloseRightArm = actionMap.PollMouseAxis(WingsuitAction.CloseRightArm)
+                CloseLeftArm = actionMap.PollMouseAxis(WingsuitAction.CloseLeftArm) + closeArms,
+                CloseRightArm = actionMap.PollMouseAxis(WingsuitAction.CloseRightArm) + closeArms
             };
         }
 
         private static CharacterInput PollWingsuitInput(PilotActionMap actionMap) {
+            var closeArms = actionMap.PollAxis(WingsuitAction.CloseArms);
             return new CharacterInput {
                 Pitch = actionMap.PollAxis(WingsuitAction.Pitch),
                 Roll = actionMap.PollAxis(WingsuitAction.Roll),
                 Yaw = actionMap.PollAxis(WingsuitAction.Yaw),
                 Cannonball = actionMap.PollAxis(WingsuitAction.Cannonball),
-                CloseLeftArm = actionMap.PollAxis(WingsuitAction.CloseLeftArm),
-                CloseRightArm = actionMap.PollAxis(WingsuitAction.CloseRightArm)
+                CloseLeftArm = actionMap.PollAxis(WingsuitAction.CloseLeftArm) + closeArms,
+                CloseRightArm = actionMap.PollAxis(WingsuitAction.CloseRightArm) + closeArms
             };
         }
 

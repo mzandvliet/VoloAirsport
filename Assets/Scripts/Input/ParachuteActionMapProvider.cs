@@ -57,18 +57,45 @@ namespace RamjetAnvil.Volo.Input {
             shiftBack.AddBinding("<Gamepad>/leftStick/down");
             shiftBack.AddBinding("<Keyboard>/s");
 
+            // Gamepad only has two continuous inputs (triggers) to spend on six line-pull
+            // channels (front/rear/brake x left/right). Matching the original v3.7 Steam
+            // build exactly: the triggers are reused for whichever line pair is currently
+            // "held" - brakes by default, front risers while West/X is held, rear risers
+            // while South/A is held. A pilot only has two hands; the game never lets you
+            // pull front-left and rear-right simultaneously, same as the reference build.
+            // PullLeftLines/PullRightLines here are only the raw trigger source feeding that
+            // redirect (see the Input getter below) - never read directly by ApplyInput.
+            var rawLeftTrigger = AddAxis(ParachuteAction.PullLeftLines, "RawLeftTrigger");
+            rawLeftTrigger.AddBinding("<Gamepad>/leftTrigger");
+
+            var rawRightTrigger = AddAxis(ParachuteAction.PullRightLines, "RawRightTrigger");
+            rawRightTrigger.AddBinding("<Gamepad>/rightTrigger");
+
+            var holdFrontLines = AddButton(ParachuteAction.HoldFrontLines, "HoldFrontLines");
+            holdFrontLines.AddBinding("<Gamepad>/buttonWest");
+
+            var holdRearLines = AddButton(ParachuteAction.HoldRearLines, "HoldRearLines");
+            holdRearLines.AddBinding("<Gamepad>/buttonSouth");
+
+            // Keyboard has plenty of distinct keys, so each line pair gets its own dedicated
+            // key rather than needing the gamepad's hold-to-redirect trick.
             var brakeLeft = AddAxis(ParachuteAction.PullBrakeLineLeft, "PullBrakeLineLeft");
-            brakeLeft.AddBinding("<Gamepad>/leftTrigger");
-            brakeLeft.AddBinding("<Keyboard>/q");
+            brakeLeft.AddBinding("<Keyboard>/a");
 
             var brakeRight = AddAxis(ParachuteAction.PullBrakeLineRight, "PullBrakeLineRight");
-            brakeRight.AddBinding("<Gamepad>/rightTrigger");
-            brakeRight.AddBinding("<Keyboard>/e");
+            brakeRight.AddBinding("<Keyboard>/d");
 
             var frontLeft = AddAxis(ParachuteAction.PullFrontLineLeft, "PullFrontLineLeft");
+            frontLeft.AddBinding("<Keyboard>/q");
+
             var frontRight = AddAxis(ParachuteAction.PullFrontLineRight, "PullFrontLineRight");
+            frontRight.AddBinding("<Keyboard>/e");
+
             var rearLeft = AddAxis(ParachuteAction.PullRearLineLeft, "PullRearLineLeft");
+            rearLeft.AddBinding("<Keyboard>/z");
+
             var rearRight = AddAxis(ParachuteAction.PullRearLineRight, "PullRearLineRight");
+            rearRight.AddBinding("<Keyboard>/c");
 
             var configToggle = AddButton(ParachuteAction.ParachuteConfigToggle, "ParachuteConfigToggle");
             configToggle.AddBinding("<Keyboard>/tab");
@@ -77,10 +104,26 @@ namespace RamjetAnvil.Volo.Input {
 
         public ParachuteInput Input {
             get {
+                // Gate the raw gamepad trigger value to whichever line pair is currently
+                // "held" (see SetupBindings) - mutually exclusive, matching the reference
+                // build's two-hands-only design. Additively combined with keyboard's own
+                // directly-bound per-line keys, which don't need gating.
+                var rawLeftTrigger = PollAxis(ParachuteAction.PullLeftLines);
+                var rawRightTrigger = PollAxis(ParachuteAction.PullRightLines);
+                var holdFront = PollButton(ParachuteAction.HoldFrontLines) == ButtonState.Pressed;
+                var holdRear = PollButton(ParachuteAction.HoldRearLines) == ButtonState.Pressed;
+                var holdNeither = !holdFront && !holdRear;
+
                 return new ParachuteInput {
-                    Brakes = new Vector2(PollAxis(ParachuteAction.PullBrakeLineLeft), PollAxis(ParachuteAction.PullBrakeLineRight)),
-                    FrontRisers = new Vector2(PollAxis(ParachuteAction.PullFrontLineLeft), PollAxis(ParachuteAction.PullFrontLineRight)),
-                    RearRisers = new Vector2(PollAxis(ParachuteAction.PullRearLineLeft), PollAxis(ParachuteAction.PullRearLineRight)),
+                    Brakes = new Vector2(
+                        PollAxis(ParachuteAction.PullBrakeLineLeft) + (holdNeither ? rawLeftTrigger : 0f),
+                        PollAxis(ParachuteAction.PullBrakeLineRight) + (holdNeither ? rawRightTrigger : 0f)),
+                    FrontRisers = new Vector2(
+                        PollAxis(ParachuteAction.PullFrontLineLeft) + (holdFront ? rawLeftTrigger : 0f),
+                        PollAxis(ParachuteAction.PullFrontLineRight) + (holdFront ? rawRightTrigger : 0f)),
+                    RearRisers = new Vector2(
+                        PollAxis(ParachuteAction.PullRearLineLeft) + (holdRear ? rawLeftTrigger : 0f),
+                        PollAxis(ParachuteAction.PullRearLineRight) + (holdRear ? rawRightTrigger : 0f)),
                     WeightShift = new Vector2(
                         PollAxis(ParachuteAction.WeightShiftRight) - PollAxis(ParachuteAction.WeightShiftLeft),
                         PollAxis(ParachuteAction.WeightShiftFront) - PollAxis(ParachuteAction.WeightShiftBack)),

@@ -1,0 +1,118 @@
+{
+    "name": "VoloActions",
+    "maps": [
+        {
+            "name": "Wingsuit",
+            "id": "494fd7bd-a526-43ae-a305-06b6de83aa9b",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "56738cb5-f832-4d70-a0d8-17311bbf4356",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7af361fb-8d96-48ba-afa6-84e9ff3a300c",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Parachute",
+            "id": "c0057cfe-3628-40e5-96e6-90dd31c0a7fd",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "1c343da5-5941-4ba2-9cbc-a6e6563b2fcf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3151216f-a476-4814-8942-e1acb2821da1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "95fa9eb9-a6a5-42ff-92ee-89f319065706",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "260b02c8-b9b4-422a-9e37-be7c50866f92",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "efb158fb-fe96-47b8-a4d9-44517bf9f5ae",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Spectator",
+            "id": "eb41b035-014f-4bbd-905f-93381540ef4d",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "94efab5b-75e1-4b2a-bfaa-a4141543d53a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9dc12b80-68b8-4b42-8cfd-c2cdba61adc0",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
