@@ -927,3 +927,37 @@ https://www.youtube.com/watch?v=UM4mRHCXfYM — old fans found it within two hou
 **Next session should pick up with:** either the parachute-physics-explosion repro,
 or continue toward the rebinding UI (still the largest functional gap) — Mar's call.
 Vectrocity (aero visualizer) remains unreplaced, low priority, same as before.
+
+### 2026-08-11 — public milestone checkpoint
+
+No code changes this entry — a reflection point, marked explicitly because this is
+a natural place to lose thread across a context compaction.
+
+Mar published a dev vlog covering the port
+(https://www.youtube.com/watch?v=UM4mRHCXfYM); old fans found it within two hours,
+reception positive. `README.md` was rewritten to match current reality: Unity 6 /
+`unity6-port` branch install instructions, a Roadmap section, and a Known Issues
+list corrected for everything above (TOD replaced, flight model NOT in need of
+retuning, parachute impulse-cascade explosion, rebinding stub, silent FMOD, no
+VR/multiplayer UI). Pushed to `origin` (`github.com/mzandvliet/VoloAirsport`).
+Discussed but not yet acted on: the repo has 57 stars / 10 forks but only 8
+watchers and no Discussions/Releases enabled — starring doesn't subscribe anyone
+to notifications, only Watch does, so reaching the wider star/fork audience (vs.
+just the 8 watchers) needs either enabling Discussions (owner-only setting) or
+cutting a GitHub Release. Left as an open thread for Mar, not blocking.
+
+**State to carry forward, for anyone (human or AI) picking this up cold:**
+- The game is genuinely playable end to end (boot → fly → land → respawn → pause →
+  spawn-select), repeatably, no known crashes in that loop.
+- The flight model is NOT a known problem. Do not re-open "retune against PhysX" as
+  a task without new evidence — it was checked directly (5.5 vs. Unity 6, flown
+  side by side) and closed.
+- The one open physics bug is narrow and specific: parachute impulse-cascade
+  explosion, hard-quits rather than erroring, no repro steps yet. Don't conflate it
+  with general flight feel.
+- Three RamjetAnvil dependencies that used to be closed-source DLLs
+  (CoroutineScheduler, StateMachine, PadroneClient) are now plain project source
+  under `Assets/Plugins/RamjetAnvil/*/Source/`. If a future bug traces into one of
+  these, read the source directly — do not assume it's still an opaque DLL.
+- See `Documentation/dont-forget-me.md` for workflow/collaboration constraints that
+  matter but don't fit a technical roadmap.
