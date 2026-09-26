@@ -30,6 +30,11 @@ namespace RamjetAnvil.Volo {
         private float _optimalPressureFactor = 1f;
         private Vector3 _lastPosition;
     
+        // Diagnostics for the parachute impulse-cascade bug, see EvaluateForces
+        private const float ExtremeForce = 1e6f;
+        private int _badStepCount;
+        private bool _isReportingExtremeForce;
+    
         public AbstractUnityClock FixedClock {
             set { _fixedClock = value; }
         }
@@ -148,6 +153,7 @@ namespace RamjetAnvil.Volo {
             var windVelocity = _wind.GetWindVelocity(liftPressurePoint);
             var airDensity = _wind.GetAirDensity(liftPressurePoint);
     
+            var previousPosition = _lastPosition;
             var velocity = (liftPressurePoint - _lastPosition) / _fixedClock.DeltaTime;
             _lastPosition = liftPressurePoint;
             RelativeVelocity = velocity - windVelocity;
@@ -182,20 +188,74 @@ namespace RamjetAnvil.Volo {
             var momentMagnitude = dynamicSurfacePressure*c.Moment;
             MomentForce = worldAxis*momentMagnitude;
     
-            if (float.IsNaN(linearForce.magnitude) || float.IsNaN(linearForce.magnitude)) {
-                Debug.LogError("Airfoil Force is NaN " + RelativeVelocity + ", forcing quit...");
-    #if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-    #else
-                Application.Quit();
-    #endif
+            // This used to hard-quit the game on a NaN force, which left nothing to debug the
+            // parachute "explosion" with. Now: log the full state once, skip applying this step's
+            // force, and keep running. Whether the simulation recovers is itself useful to know.
+            if (!IsFinite(linearForce) || !IsFinite(MomentForce)) {
+                _badStepCount++;
+                if (_badStepCount == 1) {
+                    Debug.LogError("[ParachuteAirfoil] Non-finite force, skipping force application. " +
+                                   DescribeState(previousPosition, liftPressurePoint, windVelocity, airDensity, linearForce));
+                    Debug.Break(); // Pauses play mode in the Editor, no-op in builds
+                }
+                LiftForce = Vector3.zero;
+                DragForce = Vector3.zero;
+                MomentForce = Vector3.zero;
                 return;
             }
+            if (_badStepCount > 0) {
+                Debug.LogWarning(string.Format("[ParachuteAirfoil] '{0}' recovered after {1} non-finite step(s)",
+                    name, _badStepCount));
+                _badStepCount = 0;
+            }
+    
+            // Diagnostic only, does not change behaviour: a force this large on a single canopy
+            // cell means the impulse cascade is already underway, a few steps before any NaN.
+            var isForceExtreme = linearForce.sqrMagnitude > ExtremeForce*ExtremeForce;
+            if (isForceExtreme && !_isReportingExtremeForce) {
+                Debug.LogWarning("[ParachuteAirfoil] Extreme force (> " + ExtremeForce + " N). " +
+                                 DescribeState(previousPosition, liftPressurePoint, windVelocity, airDensity, linearForce));
+            }
+            _isReportingExtremeForce = isForceExtreme;
     
             if (_body) {
                 _body.AddForceAtPosition(linearForce, liftPressurePoint);
                 _body.AddTorqueAtPosition(MomentForce, dragPressurePoint, ForceMode.Force);
             }
+        }
+    
+        private string DescribeState(Vector3 previousPosition, Vector3 pressurePoint, Vector3 windVelocity,
+            float airDensity, Vector3 linearForce) {
+            return string.Format(
+                "airfoil='{0}' fixedFrame={1} dt={2}\n" +
+                "  pressurePoint={3} previousPressurePoint={4} (a jump here means a teleport without Clear())\n" +
+                "  body: position={5} velocity={6} angularVelocity={7}\n" +
+                "  relativeVelocity={8} wind={9} airDensity={10} airSpeed={11} aoa={12}\n" +
+                "  slider={13} optimalPressure={14} deflection=[{15}]\n" +
+                "  lift={16} drag={17} moment={18} linearForce={19}",
+                GetPath(transform), _fixedClock.FrameCount, _fixedClock.DeltaTime.ToString("R"),
+                pressurePoint.ToString("F3"), previousPosition.ToString("F3"),
+                _body ? _body.position.ToString("F3") : "<none>",
+                _body ? _body.linearVelocity.ToString("F3") : "<none>",
+                _body ? _body.angularVelocity.ToString("F3") : "<none>",
+                RelativeVelocity.ToString("F3"), windVelocity.ToString("F3"), airDensity, AirSpeed, AngleOfAttack,
+                _sliderFactor, _optimalPressureFactor,
+                DeflectionInputs == null ? "" : string.Join(", ", Array.ConvertAll(DeflectionInputs, d => d.ToString("F2"))),
+                LiftForce.ToString("F1"), DragForce.ToString("F1"), MomentForce.ToString("F1"), linearForce.ToString("F1"));
+        }
+    
+        private static string GetPath(Transform t) {
+            var path = t.name;
+            while (t.parent != null) {
+                t = t.parent;
+                path = t.name + "/" + path;
+            }
+            return path;
+        }
+    
+        private static bool IsFinite(Vector3 v) {
+            return !float.IsNaN(v.x) && !float.IsNaN(v.y) && !float.IsNaN(v.z) &&
+                   !float.IsInfinity(v.x) && !float.IsInfinity(v.y) && !float.IsInfinity(v.z);
         }
     
         private static float AngleSigned(Vector2 a, Vector2 b) {
