@@ -106,8 +106,9 @@ namespace RamjetAnvil.Volo.Input {
             get {
                 // Gate the raw gamepad trigger value to whichever line pair is currently
                 // "held" (see SetupBindings) - mutually exclusive, matching the reference
-                // build's two-hands-only design. Additively combined with keyboard's own
-                // directly-bound per-line keys, which don't need gating.
+                // build's two-hands-only design. Combined with keyboard's own directly-bound
+                // per-line keys by taking the larger of the two, not the sum: each line pull
+                // must stay in 0..1, since Line.ApplyPull scales the joint limit by it directly.
                 var rawLeftTrigger = PollAxis(ParachuteAction.PullLeftLines);
                 var rawRightTrigger = PollAxis(ParachuteAction.PullRightLines);
                 var holdFront = PollButton(ParachuteAction.HoldFrontLines) == ButtonState.Pressed;
@@ -116,14 +117,14 @@ namespace RamjetAnvil.Volo.Input {
 
                 return new ParachuteInput {
                     Brakes = new Vector2(
-                        PollAxis(ParachuteAction.PullBrakeLineLeft) + (holdNeither ? rawLeftTrigger : 0f),
-                        PollAxis(ParachuteAction.PullBrakeLineRight) + (holdNeither ? rawRightTrigger : 0f)),
+                        Mathf.Max(PollAxis(ParachuteAction.PullBrakeLineLeft), holdNeither ? rawLeftTrigger : 0f),
+                        Mathf.Max(PollAxis(ParachuteAction.PullBrakeLineRight), holdNeither ? rawRightTrigger : 0f)),
                     FrontRisers = new Vector2(
-                        PollAxis(ParachuteAction.PullFrontLineLeft) + (holdFront ? rawLeftTrigger : 0f),
-                        PollAxis(ParachuteAction.PullFrontLineRight) + (holdFront ? rawRightTrigger : 0f)),
+                        Mathf.Max(PollAxis(ParachuteAction.PullFrontLineLeft), holdFront ? rawLeftTrigger : 0f),
+                        Mathf.Max(PollAxis(ParachuteAction.PullFrontLineRight), holdFront ? rawRightTrigger : 0f)),
                     RearRisers = new Vector2(
-                        PollAxis(ParachuteAction.PullRearLineLeft) + (holdRear ? rawLeftTrigger : 0f),
-                        PollAxis(ParachuteAction.PullRearLineRight) + (holdRear ? rawRightTrigger : 0f)),
+                        Mathf.Max(PollAxis(ParachuteAction.PullRearLineLeft), holdRear ? rawLeftTrigger : 0f),
+                        Mathf.Max(PollAxis(ParachuteAction.PullRearLineRight), holdRear ? rawRightTrigger : 0f)),
                     WeightShift = new Vector2(
                         PollAxis(ParachuteAction.WeightShiftRight) - PollAxis(ParachuteAction.WeightShiftLeft),
                         PollAxis(ParachuteAction.WeightShiftFront) - PollAxis(ParachuteAction.WeightShiftBack)),
