@@ -123,7 +123,7 @@ namespace RamjetAnvil.Volo {
         }
 
         private static float ScaleQuadratic(float value, float pow) {
-            return Mathf.Sign(value) * Mathf.Pow(value, pow);
+            return Mathf.Sign(value) * Mathf.Pow(Mathf.Abs(value), pow);
         }
 
         private Vector2 SmoothMouseLineInput(MouseSmoothingConfig config, Vector2 prevInput, Vector2 input, float deltaTime) {
